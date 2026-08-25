@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Complete the Vercel import/deployment and record the resulting public origin when authorized.
+Push and verify the two authorized curated WalkingLab replays and mobile commentary-prominence refinement on Vercel.
 
 ## Current state
 
@@ -16,6 +16,9 @@ Complete the Vercel import/deployment and record the resulting public origin whe
 - Public replay/store code cannot call OpenAI; curated pages are statically generated.
 - Final checks pass: strict TypeScript, clean ESLint, 31 tests, production build, HTTP 200/200/404 smoke checks, desktop/mobile browser acceptance, and private preview acceptance.
 - The supplied private WalkingLab export completed the full pipeline in dry-run mode with default endpoint trimming; no file was written or private values printed.
+- The fixture replay is live at `https://useless-walking-blog.vercel.app/replay/demo-championship-loop`; live mobile verification passed playback, modes, map rendering, and responsive overflow checks.
+- A local CSS refinement moves the current commentary card ahead of the map below 900 px and hides commentary history below 560 px; it is not pushed or deployed yet.
+- `multioak-stairs` and `oakhurst-stairs` are locally curated from the two user-supplied WalkingLab exports with endpoint trimming and hand-authored halfway commentary; raw inputs and ignored candidates remain outside Git.
 
 ## Fixture replay gate
 
@@ -32,15 +35,15 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Import `sdgreenwood/useless_walking_blog` into Vercel using `docs/DEPLOYMENT.md`, deploy, set `NEXT_PUBLIC_SITE_URL` to the final HTTPS origin, and redeploy. A live OpenAI call is optional and should wait for a real reviewed route plus a configured key.
+Commit and push the two curated replays plus mobile commentary refinement under the user’s explicit website-publication request, then verify all three public replay URLs after Vercel redeploys.
 
 ## External gates
 
-- Vercel deployment requires explicit user action/approval in the connected Vercel account.
+- The current request explicitly authorizes publishing the two supplied routes to the website.
 - No live OpenAI request has been made; it requires `OPENAI_API_KEY` and an intentional `--commentary=openai` import.
 - Publishing any real route requires creating a private candidate, visual location/commentary review, and the explicit publish confirmation.
 
 ## Git and external state
 
 - GitHub `origin/main` contains verified V1 commit `e86c1c5cc0afbb3eb90dc6abf0d058ba0bed3c84` as of 2026-08-24.
-- Vercel deployment has not yet been verified.
+- Vercel deployment is live and verified at `https://useless-walking-blog.vercel.app`.

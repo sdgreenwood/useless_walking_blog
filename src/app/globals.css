@@ -97,7 +97,7 @@ h1 { margin:0; font-size:clamp(28px,4vw,48px); letter-spacing:-.04em; }
 @media (max-width:900px) {
   .replay-cards { grid-template-columns:1fr; }
   .shell { padding:14px; }
-  .replay-grid { grid-template-columns:1fr; grid-template-areas:"map" "analysis" "commentary" "controls"; }
+  .replay-grid { grid-template-columns:1fr; grid-template-areas:"commentary" "map" "analysis" "controls"; }
   .map-stage { min-height:55vh; }
   .commentary-panel { min-height:auto; }
   .controls { position:sticky; bottom:8px; z-index:10; flex-wrap:wrap; box-shadow:0 10px 30px #000; }
@@ -119,8 +119,13 @@ h1 { margin:0; font-size:clamp(28px,4vw,48px); letter-spacing:-.04em; }
   .broadcast-header { align-items:flex-start; }
   .live-pill { font-size:0; padding:10px; }
   .map-stage { min-height:48vh; }
+  .commentary-panel { padding:14px; }
+  .panel-heading { padding-bottom:10px; }
+  .panel-heading h2 { font-size:20px; }
+  .current-call { margin:12px 0 0; padding:16px; }
+  .commentary-history { display:none; }
   .metric-row { grid-template-columns:repeat(2,1fr); gap:14px; }
-  .current-call blockquote { font-size:19px; }
+  .current-call blockquote { font-size:20px; }
   .mode-switcher { overflow:auto; }
   .mode-switcher button { white-space:nowrap; }
 }
