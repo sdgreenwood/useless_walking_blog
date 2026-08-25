@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Publish and verify the completed deck.gl visualization migration when the owner explicitly approves the push.
+Prepare the next replay import, live-ingestion design, or visualization layer requested by the owner.
 
 ## Current state
 
@@ -22,6 +22,7 @@ Publish and verify the completed deck.gl visualization migration when the owner 
 - The live commentary-density update gives each replay ten calls and adds validated editorial display timing without creating fictional route events or public model calls.
 - A complete local deck.gl migration now owns route, completed progress, current position, start/finish, events, and active annotations through reusable layers. The old imperative MapLibre renderer is removed; MapLibre/OpenFreeMap remains only a replaceable basemap child.
 - Migration checks pass: strict TypeScript, ESLint, 36 tests including a 10,000-point full-fidelity path, production build, desktop/mobile browser playback, and no deck.gl runtime errors.
+- The deck.gl migration is live. Production verification confirms the new visualization host, removal of the legacy route container, 390 px playback without overflow, and correct Multioak event navigation.
 
 ## Fixture replay gate
 
@@ -38,14 +39,13 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-After explicit push approval, push the local deck.gl migration, let Vercel deploy it, and repeat live desktop/mobile replay acceptance. Keep OpenAI optional and import-time only.
+Await the next owner-selected tranche. Keep OpenAI optional and import-time only unless a separately approved architecture change is requested.
 
 ## External gates
 
 - The current request explicitly authorizes publishing the two supplied routes to the website.
 - No live OpenAI request has been made; it requires `OPENAI_API_KEY` and an intentional `--commentary=openai` import.
 - Publishing any real route requires creating a private candidate, visual location/commentary review, and the explicit publish confirmation.
-- The deck.gl migration changes code and dependencies only; pushing it still requires explicit owner approval.
 
 ## Git and external state
 
@@ -53,3 +53,4 @@ After explicit push approval, push the local deck.gl migration, let Vercel deplo
 - Vercel deployment is live and verified at `https://useless-walking-blog.vercel.app`.
 - Commit `ec111f1` publishes the two curated stair replays and mobile commentary-first layout; both replay URLs and the three-card replay desk are live and verified.
 - Commit `b9860c7` increases all three replays to ten commentary calls; the Vercel production replay reports `10/10` and no runtime errors.
+- Commit `25f1931` makes deck.gl the primary visualization framework; the Vercel production replay is live and verified.

@@ -48,10 +48,11 @@ Updated: 2026-08-24.
 - V1 commit `e86c1c5cc0afbb3eb90dc6abf0d058ba0bed3c84` is pushed to `origin/main`.
 - Curated replay and mobile-commentary commit `ec111f1` is pushed to `origin/main` and deployed.
 - Commentary-cadence commit `b9860c7` is pushed to `origin/main` and deployed.
+- deck.gl migration commit `25f1931` is pushed to `origin/main` and deployed.
 - V1 is deployed on Vercel at `https://useless-walking-blog.vercel.app`.
 
 ## Current gates
 
 Three replays and the mobile commentary-first refinement are live. Future precise personal-location publication remains an explicit user-approval action. Future product ideas are isolated in `docs/NEXT_STEPS.md`.
 
-The verified deck.gl migration is committed locally only until explicit push approval; the current public deployment still uses the previous visualization implementation.
+The deck.gl migration is live on Vercel. Production verification confirms deck.gl plus the supporting basemap, no legacy route renderer, smooth mobile progress at 390 px, and correct event navigation on the 4,730-point Multioak route with zero runtime errors.
