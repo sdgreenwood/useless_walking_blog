@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Launch approval: push the coherent V1 and connect the repository to Vercel when explicitly authorized.
+Complete the Vercel import/deployment and record the resulting public origin when authorized.
 
 ## Current state
 
@@ -32,15 +32,15 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Push the cohesive initial V1 commit to `origin` after explicit approval, then import the GitHub repository into Vercel using `docs/DEPLOYMENT.md`. A live OpenAI call is optional and should wait for a real reviewed route plus a configured key.
+Import `sdgreenwood/useless_walking_blog` into Vercel using `docs/DEPLOYMENT.md`, deploy, set `NEXT_PUBLIC_SITE_URL` to the final HTTPS origin, and redeploy. A live OpenAI call is optional and should wait for a real reviewed route plus a configured key.
 
 ## External gates
 
-- Git push and Vercel deployment require explicit user approval.
+- Vercel deployment requires explicit user action/approval in the connected Vercel account.
 - No live OpenAI request has been made; it requires `OPENAI_API_KEY` and an intentional `--commentary=openai` import.
 - Publishing any real route requires creating a private candidate, visual location/commentary review, and the explicit publish confirmation.
 
 ## Git and external state
 
-- Intended GitHub remote: `https://github.com/sdgreenwood/useless_walking_blog.git` (verified empty on 2026-08-24).
-- Push and deployment are not authorized.
+- GitHub `origin/main` contains verified V1 commit `e86c1c5cc0afbb3eb90dc6abf0d058ba0bed3c84` as of 2026-08-24.
+- Vercel deployment has not yet been verified.

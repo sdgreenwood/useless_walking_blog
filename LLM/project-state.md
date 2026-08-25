@@ -31,13 +31,13 @@ Updated: 2026-08-24.
 - Thirty-one tests pass across importers, analysis, commentary privacy/schema, replay math, pipeline privacy, fragmented-route rejection, and deep replay validation.
 - The supplied private WalkingLab export passed a local count-only compatibility check: one segment, 2,257 samples, zero importer issues, and zero tested private-metadata leaks. No route values or identifiers were printed or committed.
 
-## Not performed
+## External state
 
 - No live OpenAI request.
 - No real private route candidate was written or published.
-- No Git push.
+- V1 commit `e86c1c5cc0afbb3eb90dc6abf0d058ba0bed3c84` is pushed to `origin/main`.
 - No Vercel deployment.
 
 ## Current gates
 
-Product V1 is deployment-ready. Commit/push, deployment, and publishing precise personal location remain explicit user-approval actions. Future product ideas are isolated in `docs/NEXT_STEPS.md`.
+Product V1 is pushed and deployment-ready. Vercel deployment and publishing precise personal location remain explicit user-approval actions. Future product ideas are isolated in `docs/NEXT_STEPS.md`.
