@@ -19,7 +19,7 @@ Prepare the next privately reviewed replay or product refinement requested by th
 - The fixture replay is live at `https://useless-walking-blog.vercel.app/replay/demo-championship-loop`; live mobile verification passed playback, modes, map rendering, and responsive overflow checks.
 - The live CSS moves the current commentary card ahead of the map below 900 px and hides commentary history below 560 px.
 - `multioak-stairs` and `oakhurst-stairs` are live from the two user-supplied WalkingLab exports with endpoint trimming and hand-authored halfway commentary; raw inputs and ignored candidates remain outside Git.
-- A pending commentary-density update gives each replay ten calls and adds validated editorial display timing without creating fictional route events or public model calls.
+- The live commentary-density update gives each replay ten calls and adds validated editorial display timing without creating fictional route events or public model calls.
 
 ## Fixture replay gate
 
@@ -36,7 +36,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Push and verify the owner-requested commentary-density update, then await the next replay import or product refinement. Keep OpenAI optional and import-time only unless a separately approved architecture change is requested.
+Await the next replay import or product refinement. Keep OpenAI optional and import-time only unless a separately approved architecture change is requested.
 
 ## External gates
 
@@ -49,3 +49,4 @@ Push and verify the owner-requested commentary-density update, then await the ne
 - GitHub `origin/main` contains verified V1 commit `e86c1c5cc0afbb3eb90dc6abf0d058ba0bed3c84` as of 2026-08-24.
 - Vercel deployment is live and verified at `https://useless-walking-blog.vercel.app`.
 - Commit `ec111f1` publishes the two curated stair replays and mobile commentary-first layout; both replay URLs and the three-card replay desk are live and verified.
+- Commit `b9860c7` increases all three replays to ten commentary calls; the Vercel production replay reports `10/10` and no runtime errors.

@@ -44,6 +44,7 @@ Updated: 2026-08-24.
 - Two explicitly authorized real-route candidates were locally published into curated replay data; their ignored private candidates remain outside Git.
 - V1 commit `e86c1c5cc0afbb3eb90dc6abf0d058ba0bed3c84` is pushed to `origin/main`.
 - Curated replay and mobile-commentary commit `ec111f1` is pushed to `origin/main` and deployed.
+- Commentary-cadence commit `b9860c7` is pushed to `origin/main` and deployed.
 - V1 is deployed on Vercel at `https://useless-walking-blog.vercel.app`.
 
 ## Current gates
