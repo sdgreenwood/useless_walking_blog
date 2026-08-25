@@ -32,6 +32,7 @@ Updated: 2026-08-24.
 - Browser verification confirmed play/pause, deterministic commentary progression, highlight jumping, no horizontal overflow at 390 px, and no runtime errors.
 - Public Vercel verification confirmed the replay, map, modes, controls, and mobile layout at `https://useless-walking-blog.vercel.app/replay/demo-championship-loop`.
 - Both new curated replays pass deep replay validation and a forbidden-private-metadata key scan; Multioak uses the standard 200 m endpoint trim and the 190 m Oakhurst route uses a disclosed 10 m trim at each end.
+- Live verification confirms all three replay cards, both new public replay pages, requested halfway commentary, map rendering, and zero horizontal overflow at 390 px.
 - Thirty-one tests pass across importers, analysis, commentary privacy/schema, replay math, pipeline privacy, fragmented-route rejection, and deep replay validation.
 - The supplied private WalkingLab export passed a local count-only compatibility check: one segment, 2,257 samples, zero importer issues, and zero tested private-metadata leaks. No route values or identifiers were printed or committed.
 
@@ -40,8 +41,9 @@ Updated: 2026-08-24.
 - No live OpenAI request.
 - Two explicitly authorized real-route candidates were locally published into curated replay data; their ignored private candidates remain outside Git.
 - V1 commit `e86c1c5cc0afbb3eb90dc6abf0d058ba0bed3c84` is pushed to `origin/main`.
+- Curated replay and mobile-commentary commit `ec111f1` is pushed to `origin/main` and deployed.
 - V1 is deployed on Vercel at `https://useless-walking-blog.vercel.app`.
 
 ## Current gates
 
-The fixture-driven V1 is live. The two authorized curated routes and mobile-commentary refinement are pending push and Vercel verification. Future precise personal-location publication remains an explicit user-approval action. Future product ideas are isolated in `docs/NEXT_STEPS.md`.
+Three replays and the mobile commentary-first refinement are live. Future precise personal-location publication remains an explicit user-approval action. Future product ideas are isolated in `docs/NEXT_STEPS.md`.

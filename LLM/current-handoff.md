@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Push and verify the two authorized curated WalkingLab replays and mobile commentary-prominence refinement on Vercel.
+Prepare the next privately reviewed replay or product refinement requested by the owner.
 
 ## Current state
 
@@ -17,8 +17,8 @@ Push and verify the two authorized curated WalkingLab replays and mobile comment
 - Final checks pass: strict TypeScript, clean ESLint, 31 tests, production build, HTTP 200/200/404 smoke checks, desktop/mobile browser acceptance, and private preview acceptance.
 - The supplied private WalkingLab export completed the full pipeline in dry-run mode with default endpoint trimming; no file was written or private values printed.
 - The fixture replay is live at `https://useless-walking-blog.vercel.app/replay/demo-championship-loop`; live mobile verification passed playback, modes, map rendering, and responsive overflow checks.
-- A local CSS refinement moves the current commentary card ahead of the map below 900 px and hides commentary history below 560 px; it is not pushed or deployed yet.
-- `multioak-stairs` and `oakhurst-stairs` are locally curated from the two user-supplied WalkingLab exports with endpoint trimming and hand-authored halfway commentary; raw inputs and ignored candidates remain outside Git.
+- The live CSS moves the current commentary card ahead of the map below 900 px and hides commentary history below 560 px.
+- `multioak-stairs` and `oakhurst-stairs` are live from the two user-supplied WalkingLab exports with endpoint trimming and hand-authored halfway commentary; raw inputs and ignored candidates remain outside Git.
 
 ## Fixture replay gate
 
@@ -35,7 +35,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Commit and push the two curated replays plus mobile commentary refinement under the user’s explicit website-publication request, then verify all three public replay URLs after Vercel redeploys.
+Await the owner’s next replay import or product refinement. Keep OpenAI optional and import-time only unless a separately approved architecture change is requested.
 
 ## External gates
 
@@ -47,3 +47,4 @@ Commit and push the two curated replays plus mobile commentary refinement under 
 
 - GitHub `origin/main` contains verified V1 commit `e86c1c5cc0afbb3eb90dc6abf0d058ba0bed3c84` as of 2026-08-24.
 - Vercel deployment is live and verified at `https://useless-walking-blog.vercel.app`.
+- Commit `ec111f1` publishes the two curated stair replays and mobile commentary-first layout; both replay URLs and the three-card replay desk are live and verified.
