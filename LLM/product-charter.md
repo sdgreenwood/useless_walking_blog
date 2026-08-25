@@ -45,4 +45,4 @@ Authentication, health/fitness integrations, live GPS, social features, payments
 
 ## Technical direction
 
-Next.js, React, TypeScript, MapLibre GL JS, and GeoJSON in a modular monolith deployable to Vercel. Reviewed replay JSON is committed and statically generated; raw inputs and candidates remain private and ignored. No database is used. OpenAI is optional during local import and absent from public replay reads.
+Next.js, React, TypeScript, deck.gl, and GeoJSON-compatible typed coordinates in a modular monolith deployable to Vercel. deck.gl owns replay visualization; the V1 MapLibre/OpenFreeMap basemap is replaceable supporting context only. Reviewed replay JSON is committed and statically generated; raw inputs and candidates remain private and ignored. No database is used. OpenAI is optional during local import and absent from public replay reads.

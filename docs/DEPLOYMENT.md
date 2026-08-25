@@ -1,6 +1,6 @@
 # Vercel deployment
 
-Walking Ocho is a statically generated Next.js application with public MapLibre tiles. It needs no database or writable production filesystem.
+Walking Ocho is a statically generated Next.js application with client-side deck.gl replay layers and a public supporting basemap. It needs no database or writable production filesystem.
 
 ## Before deployment
 
@@ -17,9 +17,9 @@ Import the GitHub repository into Vercel and keep the detected Next.js defaults.
 
 Each merge to the production branch creates a new static deployment. Curated replay JSON is read during build and produces `/replay/<id>` pages. Page views do not write files or contact OpenAI.
 
-## Map service
+## Visualization and map service
 
-V1 uses OpenFreeMap's public dark style with visible required attribution. Review the tile provider's current service terms and capacity before meaningful traffic or commercial use; replacing the style URL does not change the replay data architecture.
+deck.gl renders every route, progress, position, endpoint, and event layer. V1 uses OpenFreeMap's public dark style through MapLibre only for understated geographic context and visible required attribution. Review the tile provider's current service terms and capacity before meaningful traffic or commercial use. Replacing or removing the basemap does not change replay data, playback, or deck.gl layer composition.
 
 ## Rollback
 

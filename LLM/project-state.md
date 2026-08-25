@@ -7,7 +7,7 @@ Updated: 2026-08-24.
 - Milestone-zero replay fixture and source GPX.
 - Fixture contract and acceptance criteria.
 - Repository agent guide, product charter, operational handoff, role prompts, and reusable project skill.
-- Next.js 15, React 19, TypeScript, MapLibre, ESLint, and Vitest scaffold.
+- Next.js 15, React 19, TypeScript, deck.gl, a replaceable MapLibre supporting basemap, ESLint, and Vitest scaffold.
 - Fixture-driven replay map, moving position, commentary synchronization, metrics, elevation profile, scrubber, replay speeds, restart, and highlight navigation.
 - Responsive desktop/mobile presentation and reduced-motion handling.
 - Framework-independent normalized route domain and WalkingLab schema-v1 importer.
@@ -19,6 +19,8 @@ Updated: 2026-08-24.
 - Static replay discovery, landing/replay desk, stable public replay URLs, share control, missing-route state, three replay modes, completed-route rendering, endpoints, and event markers.
 - Mobile replay hierarchy promotes the current commentary call ahead of the map and hides older commentary history on small screens.
 - Commentary supports an optional validated `displayProgress` for editorial beats between deterministic route events; all three live replays now contain ten commentary calls across the 90-second broadcast.
+- deck.gl is the primary replay visualization boundary. A typed layer composer builds base/remaining/completed paths, current position, route events, active-event annotation, and start/finish markers; MapLibre/OpenFreeMap is a replaceable supporting basemap only.
+- The former imperative MapLibre route-source component has been removed. Replay timing and interpolation remain independent application/domain logic.
 - Two user-authorized WalkingLab routes are curated as `multioak-stairs` and `oakhurst-stairs`, with hand-authored commentary anchored to deterministic halfway events.
 
 ## Verified
@@ -35,6 +37,7 @@ Updated: 2026-08-24.
 - Both new curated replays pass deep replay validation and a forbidden-private-metadata key scan; Multioak uses the standard 200 m endpoint trim and the 190 m Oakhurst route uses a disclosed 10 m trim at each end.
 - Live verification confirms all three replay cards, both new public replay pages, requested halfway commentary, map rendering, and zero horizontal overflow at 390 px.
 - Dense-commentary timing is locally verified at roughly 9–14 seconds between editorial beats, aside from naturally clustered deterministic events.
+- The deck.gl migration passes strict TypeScript, ESLint, 36 tests, a 10,000-point full-fidelity layer test, production static build, desktop browser acceptance, mobile playback acceptance at 390 px, and zero deck.gl runtime errors.
 - Thirty-one tests pass across importers, analysis, commentary privacy/schema, replay math, pipeline privacy, fragmented-route rejection, and deep replay validation.
 - The supplied private WalkingLab export passed a local count-only compatibility check: one segment, 2,257 samples, zero importer issues, and zero tested private-metadata leaks. No route values or identifiers were printed or committed.
 
@@ -50,3 +53,5 @@ Updated: 2026-08-24.
 ## Current gates
 
 Three replays and the mobile commentary-first refinement are live. Future precise personal-location publication remains an explicit user-approval action. Future product ideas are isolated in `docs/NEXT_STEPS.md`.
+
+The verified deck.gl migration is committed locally only until explicit push approval; the current public deployment still uses the previous visualization implementation.

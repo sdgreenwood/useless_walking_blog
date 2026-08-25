@@ -62,7 +62,8 @@ h1 { margin:0; font-size:clamp(28px,4vw,48px); letter-spacing:-.04em; }
 .mode-switcher button.active { background:var(--accent-dim); color:var(--accent); }
 .replay-grid { display:grid; grid-template-columns:minmax(0,1.8fr) minmax(320px,.72fr); grid-template-areas:"map commentary" "analysis commentary" "controls commentary"; gap:10px; }
 .map-stage { grid-area:map; position:relative; min-height:520px; overflow:hidden; border:1px solid var(--line); border-radius:16px; background:#0a1012; }
-.route-map { position:absolute; inset:0; }
+.route-visualization { position:absolute; inset:0; background:radial-gradient(circle at 50% 45%, #10201b 0, #071012 72%); }
+.route-visualization canvas { outline:none; }
 .scorebug { position:absolute; left:16px; bottom:16px; display:grid; grid-template-columns:auto auto; gap:2px 14px; padding:12px 14px; background:rgba(7,10,12,.9); border:1px solid #263338; border-radius:10px; backdrop-filter:blur(10px); }
 .scorebug span { color:var(--accent); font-weight:900; font-size:22px; grid-row:span 2; align-self:center; }
 .scorebug strong { font-size:17px; }

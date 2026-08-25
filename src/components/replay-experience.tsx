@@ -6,7 +6,7 @@ import { ElevationProfile } from "./elevation-profile";
 import { clampProgress, formatClock, formatDistance, sampleAtProgress, visibleCommentary } from "@/lib/replay-math";
 import type { ReplayDocument } from "@/lib/replay-types";
 
-const RouteMap = dynamic(() => import("./route-map").then((module) => module.RouteMap), { ssr: false });
+const RouteVisualization = dynamic(() => import("./route-visualization").then((module) => module.RouteVisualization), { ssr: false });
 const REPLAY_SECONDS = 90;
 type ReplayMode = "Condensed" | "Highlights" | "Instant Recap";
 const speakerNames = { play_by_play: "Play-by-play", color: "Color", stats_desk: "Stats desk", field_reporter: "Field report" };
@@ -18,15 +18,17 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
   const [speed, setSpeed] = useState(1);
   const [mode, setMode] = useState<ReplayMode>("Condensed");
   const previousFrame = useRef<number | null>(null);
-  const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const current = useMemo(() => sampleAtProgress(route.samples, progress), [route.samples, progress]);
   const commentary = useMemo(() => {
     const visible = visibleCommentary(route, progress);
     return mode === "Highlights" ? visible.filter((line) => line.importance >= 2) : visible;
   }, [mode, route, progress]);
   const currentLine = commentary.at(-1);
+  const activeEvent = useMemo(
+    () => [...route.events].reverse().find((event) => event.routeProgress <= progress),
+    [progress, route.events]
+  );
   const highlights = useMemo(() => route.events.filter((event) => event.importance >= 2), [route.events]);
-  const highlightCoordinates = useMemo(() => highlights.map((event) => event.coordinates), [highlights]);
 
   useEffect(() => {
     if (!playing) {
@@ -80,12 +82,11 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
 
       <section className="replay-grid">
         <div className="map-stage">
-          <RouteMap
-            coordinates={route.geometry.coordinates}
+          <RouteVisualization
+            route={route}
             current={current.coordinates}
-            eventCoordinates={highlightCoordinates}
             progress={progress}
-            reducedMotion={reducedMotion}
+            activeEventId={activeEvent?.id}
           />
           <div className="scorebug">
             <span>{Math.round(progress * 100)}%</span>

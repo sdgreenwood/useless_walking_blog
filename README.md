@@ -1,13 +1,14 @@
 # Walking Ocho
 
-Walking Ocho turns an ordinary historical walk into an absurdly serious sports replay. It combines deterministic route analysis with a polished MapLibre replay, synchronized commentary, elevation telemetry, public share URLs, and three viewing modes.
+Walking Ocho turns an ordinary historical walk into an absurdly serious sports replay. It combines deterministic route analysis with a deck.gl broadcast visualization, synchronized commentary, elevation telemetry, public share URLs, and three viewing modes.
 
 V1 is deliberately curated: private WalkingLab JSON or GPX is processed locally, privacy-trimmed, reviewed, and published as a static replay JSON file. The deployed application needs no database and never calls OpenAI when a replay is viewed.
 
 ## Stack
 
 - Next.js 15, React 19, and strict TypeScript
-- MapLibre GL JS with GeoJSON route geometry
+- deck.gl route, progress, position, endpoint, event, and annotation layers
+- replaceable MapLibre/OpenFreeMap supporting basemap
 - deterministic framework-independent route analysis
 - optional server-only OpenAI Responses commentary generation
 - Vitest and ESLint
@@ -33,7 +34,7 @@ pnpm test
 pnpm build
 ```
 
-Map tiles currently use OpenFreeMap's public dark style. The replay payload, timing, metrics, commentary, and controls are local; if tiles are unavailable, generation is still not required.
+Map tiles currently use OpenFreeMap's public dark style as quiet context. The deck.gl replay layers, payload, timing, metrics, commentary, and controls are local; if tiles are unavailable, the route visualization remains independent and generation is still not required.
 
 ## Import a private route
 
@@ -68,7 +69,7 @@ Run the full verification commands and inspect `/replay/weekend-loop` before com
 
 Both importers project into `NormalizedRoute`. `analyzeRoute()` produces versioned facts, samples, quality flags, and compact events. `buildReplay()` applies endpoint trimming and creates the self-contained public payload. Commentary receives only allowlisted route facts and events—never raw samples, coordinates, or GPX.
 
-Curated files under `data/replays/` are discovered during build. The landing page lists them and Next.js pre-renders stable `/replay/<id>` pages. The replay clock, map, commentary, and controls operate entirely from that saved payload.
+Curated files under `data/replays/` are discovered during build. The landing page lists them and Next.js pre-renders stable `/replay/<id>` pages. The replay clock, deck.gl layers, commentary, and controls operate entirely from that saved payload.
 
 Key documents:
 
@@ -76,6 +77,8 @@ Key documents:
 - [`docs/COMMENTARY_ENGINE.md`](docs/COMMENTARY_ENGINE.md)
 - [`docs/WALKINGLAB_IMPORT.md`](docs/WALKINGLAB_IMPORT.md)
 - [`docs/UI_DESIGN.md`](docs/UI_DESIGN.md)
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+- [`docs/IMPLEMENTATION_PLAN.md`](docs/IMPLEMENTATION_PLAN.md)
 - [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
 
 ## Deployment

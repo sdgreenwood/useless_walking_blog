@@ -19,7 +19,7 @@ A compact scorebug overlays the map and reports progress, distance, and route ti
 
 ## Mobile layout
 
-Below 900 px the layout becomes one column in product-priority order: map, metrics/profile, commentary, controls. Controls become a sticky wrapping surface with the scrubber on its own row. Below 560 px, metrics use a two-column grid and the fixture badge collapses to its status light. The page has no horizontal overflow at a verified 390 px viewport.
+Below 900 px the layout becomes one column in product-priority order: commentary, route visualization, metrics/profile, controls. Controls become a sticky wrapping surface with the scrubber on its own row. Below 560 px, older commentary history is hidden, metrics use a two-column grid, and the fixture badge collapses to its status light. The page has no horizontal overflow at a verified 390 px viewport.
 
 ## Interaction model
 
@@ -30,17 +30,24 @@ Controls provide play/pause, restart, continuous scrubbing, 0.5×/1×/2×/4× sp
 ## Components
 
 - `ReplayExperience`: replay clock, state, modes, metrics, commentary, and controls
-- `RouteMap`: MapLibre style, route line, moving position, and fitted bounds
+- `RouteVisualization`: deck.gl host and replaceable quiet basemap adapter
+- `buildRouteLayers`: reusable PathLayer, ScatterplotLayer, and TextLayer composition for route, progress, position, events, endpoints, and active-event annotation
 - `ElevationProfile`: compact SVG visualization and seek surface
 - `replay-math`: framework-independent interpolation, formatting, and commentary timing
 
 ## Accessibility
 
-Controls use native buttons, range input, select, and labels. Commentary uses a polite live region. The map and elevation seek surface have accessible names. Reduced-motion preference suppresses camera-follow animation and globally minimizes CSS motion.
+Controls use native buttons, range input, select, and labels. Commentary uses a polite live region. The route visualization and elevation seek surface have accessible names. The route uses fixed fitted framing rather than camera-follow motion, and reduced-motion preference globally minimizes CSS motion.
 
 ## Current limitations
 
-- The public tile style requires network access and emits a harmless missing optional sprite warning.
+- The quiet public tile style requires network access; deck.gl route graphics remain the primary layer and do not depend on tile availability.
 - Highlights uses a faster replay clock and filters the feed to important commentary. Instant Recap presents the finish state and deterministic summary immediately.
 - The primary metric shows total verified gain; cumulative gain-so-far remains deferred until analysis exposes it per sample.
-- Route start/finish and notable-event map markers remain to be added.
+- Labels are deliberately compact; richer event annotation layout and collision handling remain deferred.
+
+## Visualization hierarchy
+
+The route is the visual subject. A muted full path communicates what remains, the green completed path advances from normalized replay progress, and the current-position halo is the strongest map-stage element. Event colors distinguish climbs/steep sections, summits/high points, halfway, finish, and other notable events. Start and finish are reusable deck.gl point and text layers rather than DOM markers.
+
+The basemap is lower contrast and provides only roads, place context, and attribution. No replay behavior calls basemap APIs.

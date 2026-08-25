@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Prepare the next privately reviewed replay or product refinement requested by the owner.
+Publish and verify the completed deck.gl visualization migration when the owner explicitly approves the push.
 
 ## Current state
 
@@ -20,6 +20,8 @@ Prepare the next privately reviewed replay or product refinement requested by th
 - The live CSS moves the current commentary card ahead of the map below 900 px and hides commentary history below 560 px.
 - `multioak-stairs` and `oakhurst-stairs` are live from the two user-supplied WalkingLab exports with endpoint trimming and hand-authored halfway commentary; raw inputs and ignored candidates remain outside Git.
 - The live commentary-density update gives each replay ten calls and adds validated editorial display timing without creating fictional route events or public model calls.
+- A complete local deck.gl migration now owns route, completed progress, current position, start/finish, events, and active annotations through reusable layers. The old imperative MapLibre renderer is removed; MapLibre/OpenFreeMap remains only a replaceable basemap child.
+- Migration checks pass: strict TypeScript, ESLint, 36 tests including a 10,000-point full-fidelity path, production build, desktop/mobile browser playback, and no deck.gl runtime errors.
 
 ## Fixture replay gate
 
@@ -36,13 +38,14 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Await the next replay import or product refinement. Keep OpenAI optional and import-time only unless a separately approved architecture change is requested.
+After explicit push approval, push the local deck.gl migration, let Vercel deploy it, and repeat live desktop/mobile replay acceptance. Keep OpenAI optional and import-time only.
 
 ## External gates
 
 - The current request explicitly authorizes publishing the two supplied routes to the website.
 - No live OpenAI request has been made; it requires `OPENAI_API_KEY` and an intentional `--commentary=openai` import.
 - Publishing any real route requires creating a private candidate, visual location/commentary review, and the explicit publish confirmation.
+- The deck.gl migration changes code and dependencies only; pushing it still requires explicit owner approval.
 
 ## Git and external state
 

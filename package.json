@@ -14,10 +14,14 @@
     "publish:route": "tsx scripts/publish-route.ts"
   },
   "dependencies": {
+    "@deck.gl/core": "^9.3.10",
+    "@deck.gl/layers": "^9.3.10",
+    "@deck.gl/react": "^9.3.10",
     "maplibre-gl": "^5.7.1",
     "next": "^15.5.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-map-gl": "^8.1.2",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
@@ -32,8 +36,8 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "jsdom": "^26.1.0",
-    "typescript": "^5.9.2",
     "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }
 }

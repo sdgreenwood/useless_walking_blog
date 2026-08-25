@@ -16,7 +16,7 @@ Make `fixtures/demo-replay.json` drive a polished, responsive replay that satisf
 
 - minimal Next.js/TypeScript application scaffold if not already present
 - dark premium sports-analysis visual system without copied trade dress
-- large MapLibre route view with completed route, current marker, start/finish, and notable events
+- large deck.gl route view with completed route, current marker, start/finish, and notable events; any basemap remains supporting context only
 - deterministic replay clock with play/pause/restart/scrub/speed and previous/next highlight
 - synchronized current distance, remaining distance, elevation, grade, gain, commentary, and elevation profile
 - Condensed, Highlights, and Instant Recap controls with honest bounded behavior
