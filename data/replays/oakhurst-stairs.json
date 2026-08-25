@@ -2597,6 +2597,30 @@
         "source": "deterministic"
       },
       {
+        "eventId": "analysis-v1-001-start",
+        "displayProgress": 0.14,
+        "speaker": "color",
+        "text": "Opening moments, and already several stair-related choices have been made without adult supervision.",
+        "importance": 1,
+        "source": "deterministic"
+      },
+      {
+        "eventId": "analysis-v1-001-start",
+        "displayProgress": 0.28,
+        "speaker": "field_reporter",
+        "text": "Still here. The concept of stopping has not been activated.",
+        "importance": 1,
+        "source": "deterministic"
+      },
+      {
+        "eventId": "analysis-v1-001-start",
+        "displayProgress": 0.4,
+        "speaker": "stats_desk",
+        "text": "Our analysts confirm this is exercise, despite strong evidence it is a personal grudge.",
+        "importance": 1,
+        "source": "deterministic"
+      },
+      {
         "eventId": "analysis-v1-002-halfway",
         "speaker": "color",
         "text": "You could spend your time living, or you could go do another rep of stairs, I guess.",
@@ -2608,6 +2632,22 @@
         "speaker": "stats_desk",
         "text": "The fastest verified section is on the board. The replay desk is declining to call it a sprint.",
         "importance": 2,
+        "source": "deterministic"
+      },
+      {
+        "eventId": "analysis-v1-003-fastest_section",
+        "displayProgress": 0.78,
+        "speaker": "play_by_play",
+        "text": "A burst of speed from a man who knows the staircase cannot leave.",
+        "importance": 1,
+        "source": "deterministic"
+      },
+      {
+        "eventId": "analysis-v1-001-start",
+        "displayProgress": 0.9,
+        "speaker": "color",
+        "text": "The stairs have seen him before. They appear unwilling to comment.",
+        "importance": 1,
         "source": "deterministic"
       },
       {

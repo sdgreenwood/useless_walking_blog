@@ -71131,10 +71131,47 @@
         "source": "deterministic"
       },
       {
+        "eventId": "analysis-v1-004-distance_milestone",
+        "speaker": "color",
+        "text": "One kilometer down. The legs have filed no formal objection, which apparently counts as consent.",
+        "importance": 1,
+        "source": "deterministic"
+      },
+      {
+        "eventId": "analysis-v1-001-start",
+        "displayProgress": 0.38,
+        "speaker": "play_by_play",
+        "text": "He has now been walking long enough for this to qualify as a programming decision.",
+        "importance": 1,
+        "source": "deterministic"
+      },
+      {
         "eventId": "analysis-v1-005-halfway",
         "speaker": "field_reporter",
         "text": "Yup, he’s still walking. For some reason he’s decided to go back to the stairs!!!!!!!",
         "importance": 2,
+        "source": "deterministic"
+      },
+      {
+        "eventId": "analysis-v1-005-halfway",
+        "displayProgress": 0.64,
+        "speaker": "color",
+        "text": "The stairs remain available. Unfortunately, so does his free will.",
+        "importance": 1,
+        "source": "deterministic"
+      },
+      {
+        "eventId": "analysis-v1-007-distance_milestone",
+        "speaker": "stats_desk",
+        "text": "Three kilometers. At this point the sidewalk is basically a coworker.",
+        "importance": 1,
+        "source": "deterministic"
+      },
+      {
+        "eventId": "analysis-v1-008-low_point",
+        "speaker": "field_reporter",
+        "text": "A verified low point, geographically. Spiritually, the booth stopped measuring.",
+        "importance": 1,
         "source": "deterministic"
       },
       {

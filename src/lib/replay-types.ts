@@ -22,6 +22,7 @@ export type RouteEvent = {
 
 export type Commentary = {
   eventId: string;
+  displayProgress?: number;
   speaker: "play_by_play" | "color" | "stats_desk" | "field_reporter";
   text: string;
   importance: number;

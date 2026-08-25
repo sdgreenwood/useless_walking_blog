@@ -33,7 +33,7 @@ export function sampleAtProgress(samples: RouteSample[], progress: number): Rout
 
 export function visibleCommentary(route: ReplayRoute, progress: number): Commentary[] {
   const eventProgress = new Map(route.events.map((event) => [event.id, event.routeProgress]));
-  return route.commentary.filter((line) => (eventProgress.get(line.eventId) ?? 2) <= progress);
+  return route.commentary.filter((line) => (line.displayProgress ?? eventProgress.get(line.eventId) ?? 2) <= progress);
 }
 
 export function formatClock(seconds: number): string {

@@ -23,5 +23,19 @@ describe("replay math", () => {
     expect(visibleCommentary(route, 1)).toHaveLength(route.commentary.length);
   });
 
+  it("uses an editorial display beat without changing its event anchor", () => {
+    const scheduledRoute = structuredClone(route);
+    scheduledRoute.commentary.push({
+      eventId: scheduledRoute.events[0].id,
+      displayProgress: 0.5,
+      speaker: "color",
+      text: "A scheduled editorial beat.",
+      importance: 1,
+      source: "deterministic"
+    });
+    expect(visibleCommentary(scheduledRoute, 0.49)).toHaveLength(visibleCommentary(route, 0.49).length);
+    expect(visibleCommentary(scheduledRoute, 0.5)).toHaveLength(visibleCommentary(route, 0.5).length + 1);
+  });
+
   it("formats elapsed time", () => expect(formatClock(2630)).toBe("43:50"));
 });

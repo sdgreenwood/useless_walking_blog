@@ -82,6 +82,7 @@ export function parseReplayDocument(value: unknown, expectedId?: string): Replay
   commentary.forEach((raw, index) => {
     const line = object(raw, `commentary[${index}]`);
     if (!eventIds.has(text(line.eventId, `commentary[${index}].eventId`))) fail(`commentary[${index}] references an unknown event`);
+    if (line.displayProgress !== undefined) bounded(line.displayProgress, `commentary[${index}].displayProgress`, 0, 1);
     if (!new Set(["play_by_play", "color", "stats_desk", "field_reporter"]).has(String(line.speaker))) fail(`commentary[${index}].speaker is invalid`);
     text(line.text, `commentary[${index}].text`);
     bounded(line.importance, `commentary[${index}].importance`, 1, 3);

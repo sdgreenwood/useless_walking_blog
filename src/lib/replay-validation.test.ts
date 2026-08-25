@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import demo from "../../fixtures/demo-replay.json";
 import { parseReplayDocument } from "./replay-validation";
+import type { ReplayDocument } from "./replay-types";
 
 describe("parseReplayDocument", () => {
   it("accepts the canonical fixture", () => {
@@ -26,5 +27,14 @@ describe("parseReplayDocument", () => {
     const invalid = structuredClone(demo);
     invalid.route.geometry.coordinates[0][0] = 500;
     expect(() => parseReplayDocument(invalid)).toThrow("between -180 and 180");
+  });
+
+  it("accepts bounded commentary display beats and rejects invalid ones", () => {
+    const scheduled = structuredClone(demo) as unknown as ReplayDocument;
+    scheduled.route.commentary[0] = { ...scheduled.route.commentary[0], displayProgress: 0.25 };
+    expect(parseReplayDocument(scheduled).route.commentary[0].displayProgress).toBe(0.25);
+
+    scheduled.route.commentary[0].displayProgress = 1.1;
+    expect(() => parseReplayDocument(scheduled)).toThrow("displayProgress");
   });
 });
