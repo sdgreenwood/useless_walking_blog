@@ -1,0 +1,14 @@
+.next/
+node_modules/
+coverage/
+.env*
+!.env.example
+*.log
+*.tsbuildinfo
+.DS_Store
+
+# Never commit personal source routes. Only reviewed fixtures and processed replay data belong in Git.
+private-routes/
+private-imports/
+*.private.gpx
+*.private.json

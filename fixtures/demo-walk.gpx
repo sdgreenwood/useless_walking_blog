@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Walking Ocho Demo Fixture" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>The Championship Loop</name>
+    <time>2026-08-16T17:00:00Z</time>
+  </metadata>
+  <trk>
+    <name>The Championship Loop</name>
+    <trkseg>
+      <trkpt lat="37.76942" lon="-122.48620"><ele>42.0</ele><time>2026-08-16T17:00:00Z</time></trkpt>
+      <trkpt lat="37.77010" lon="-122.48390"><ele>44.0</ele><time>2026-08-16T17:03:05Z</time></trkpt>
+      <trkpt lat="37.77105" lon="-122.48130"><ele>48.0</ele><time>2026-08-16T17:06:30Z</time></trkpt>
+      <trkpt lat="37.77210" lon="-122.47855"><ele>58.0</ele><time>2026-08-16T17:10:20Z</time></trkpt>
+      <trkpt lat="37.77320" lon="-122.47585"><ele>72.0</ele><time>2026-08-16T17:14:15Z</time></trkpt>
+      <trkpt lat="37.77410" lon="-122.47330"><ele>81.0</ele><time>2026-08-16T17:18:05Z</time></trkpt>
+      <trkpt lat="37.77335" lon="-122.47120"><ele>76.0</ele><time>2026-08-16T17:21:10Z</time></trkpt>
+      <trkpt lat="37.77190" lon="-122.47035"><ele>63.0</ele><time>2026-08-16T17:24:10Z</time></trkpt>
+      <trkpt lat="37.77040" lon="-122.47175"><ele>55.0</ele><time>2026-08-16T17:27:25Z</time></trkpt>
+      <trkpt lat="37.76925" lon="-122.47425"><ele>49.0</ele><time>2026-08-16T17:30:45Z</time></trkpt>
+      <trkpt lat="37.76855" lon="-122.47710"><ele>46.0</ele><time>2026-08-16T17:34:05Z</time></trkpt>
+      <trkpt lat="37.76820" lon="-122.48020"><ele>43.0</ele><time>2026-08-16T17:37:20Z</time></trkpt>
+      <trkpt lat="37.76865" lon="-122.48345"><ele>42.0</ele><time>2026-08-16T17:40:35Z</time></trkpt>
+      <trkpt lat="37.76942" lon="-122.48620"><ele>42.0</ele><time>2026-08-16T17:43:50Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

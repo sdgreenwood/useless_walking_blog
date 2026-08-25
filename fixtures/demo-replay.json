@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "route": {
+    "id": "demo-championship-loop",
+    "name": "The Championship Loop",
+    "createdAt": "2026-08-16T17:43:50Z",
+    "source": "fixture",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [-122.4862, 37.76942], [-122.4839, 37.7701],
+        [-122.4813, 37.77105], [-122.47855, 37.7721],
+        [-122.47585, 37.7732], [-122.4733, 37.7741],
+        [-122.4712, 37.77335], [-122.47035, 37.7719],
+        [-122.47175, 37.7704], [-122.47425, 37.76925],
+        [-122.4771, 37.76855], [-122.4802, 37.7682],
+        [-122.48345, 37.76865], [-122.4862, 37.76942]
+      ]
+    },
+    "samples": [
+      {"progress": 0, "distanceMeters": 0, "elapsedSeconds": 0, "coordinates": [-122.4862, 37.76942], "elevationMeters": 42, "gradePercent": 0},
+      {"progress": 0.071, "distanceMeters": 218, "elapsedSeconds": 185, "coordinates": [-122.4839, 37.7701], "elevationMeters": 44, "gradePercent": 0.9},
+      {"progress": 0.145, "distanceMeters": 446, "elapsedSeconds": 390, "coordinates": [-122.4813, 37.77105], "elevationMeters": 48, "gradePercent": 1.8},
+      {"progress": 0.226, "distanceMeters": 695, "elapsedSeconds": 620, "coordinates": [-122.47855, 37.7721], "elevationMeters": 58, "gradePercent": 4},
+      {"progress": 0.306, "distanceMeters": 941, "elapsedSeconds": 855, "coordinates": [-122.47585, 37.7732], "elevationMeters": 72, "gradePercent": 5.7},
+      {"progress": 0.379, "distanceMeters": 1166, "elapsedSeconds": 1085, "coordinates": [-122.4733, 37.7741], "elevationMeters": 81, "gradePercent": 4},
+      {"progress": 0.443, "distanceMeters": 1362, "elapsedSeconds": 1270, "coordinates": [-122.4712, 37.77335], "elevationMeters": 76, "gradePercent": -2.6},
+      {"progress": 0.504, "distanceMeters": 1550, "elapsedSeconds": 1450, "coordinates": [-122.47035, 37.7719], "elevationMeters": 63, "gradePercent": -6.9},
+      {"progress": 0.58, "distanceMeters": 1784, "elapsedSeconds": 1645, "coordinates": [-122.47175, 37.7704], "elevationMeters": 55, "gradePercent": -3.4},
+      {"progress": 0.659, "distanceMeters": 2028, "elapsedSeconds": 1845, "coordinates": [-122.47425, 37.76925], "elevationMeters": 49, "gradePercent": -2.5},
+      {"progress": 0.739, "distanceMeters": 2273, "elapsedSeconds": 2045, "coordinates": [-122.4771, 37.76855], "elevationMeters": 46, "gradePercent": -1.2},
+      {"progress": 0.829, "distanceMeters": 2550, "elapsedSeconds": 2240, "coordinates": [-122.4802, 37.7682], "elevationMeters": 43, "gradePercent": -1.1},
+      {"progress": 0.923, "distanceMeters": 2839, "elapsedSeconds": 2435, "coordinates": [-122.48345, 37.76865], "elevationMeters": 42, "gradePercent": -0.3},
+      {"progress": 1, "distanceMeters": 3076, "elapsedSeconds": 2630, "coordinates": [-122.4862, 37.76942], "elevationMeters": 42, "gradePercent": 0}
+    ],
+    "distanceMeters": 3076,
+    "elevationGainMeters": 39,
+    "durationSeconds": 2630,
+    "stats": {
+      "averagePaceSecondsPerKilometer": 855,
+      "highestElevationMeters": 81,
+      "lowestElevationMeters": 42,
+      "steepestGradePercent": 5.7,
+      "longestClimbMeters": 948,
+      "sampleCount": 14
+    },
+    "events": [
+      {"id": "event-start", "type": "route_start", "routeProgress": 0, "distanceMeters": 0, "elapsedSeconds": 0, "coordinates": [-122.4862, 37.76942], "metrics": {"elevationMeters": 42}, "importance": 3},
+      {"id": "event-climb", "type": "climb_start", "routeProgress": 0.145, "distanceMeters": 446, "elapsedSeconds": 390, "coordinates": [-122.4813, 37.77105], "metrics": {"climbMeters": 948, "elevationGainMeters": 37}, "importance": 2},
+      {"id": "event-steepest", "type": "steepest_segment", "routeProgress": 0.306, "distanceMeters": 941, "elapsedSeconds": 855, "coordinates": [-122.47585, 37.7732], "metrics": {"gradePercent": 5.7}, "importance": 3},
+      {"id": "event-summit", "type": "summit", "routeProgress": 0.379, "distanceMeters": 1166, "elapsedSeconds": 1085, "coordinates": [-122.4733, 37.7741], "metrics": {"elevationMeters": 81}, "importance": 3},
+      {"id": "event-descent", "type": "descent_start", "routeProgress": 0.443, "distanceMeters": 1362, "elapsedSeconds": 1270, "coordinates": [-122.4712, 37.77335], "metrics": {"gradePercent": -2.6}, "importance": 1},
+      {"id": "event-halfway", "type": "halfway", "routeProgress": 0.504, "distanceMeters": 1550, "elapsedSeconds": 1450, "coordinates": [-122.47035, 37.7719], "metrics": {"elapsedSeconds": 1450}, "importance": 2},
+      {"id": "event-final-km", "type": "final_kilometer", "routeProgress": 0.659, "distanceMeters": 2028, "elapsedSeconds": 1845, "coordinates": [-122.47425, 37.76925], "metrics": {"remainingMeters": 1048}, "importance": 2},
+      {"id": "event-finish", "type": "finish", "routeProgress": 1, "distanceMeters": 3076, "elapsedSeconds": 2630, "coordinates": [-122.4862, 37.76942], "metrics": {"durationSeconds": 2630, "distanceMeters": 3076}, "importance": 3}
+    ],
+    "commentary": [
+      {"eventId": "event-start", "speaker": "play_by_play", "text": "And we are underway: 3.08 kilometers of consequences, all of them self-imposed.", "importance": 3, "source": "fixture"},
+      {"eventId": "event-climb", "speaker": "color", "text": "The early flat section is over. Management has apparently approved 37 meters of climbing.", "importance": 2, "source": "fixture"},
+      {"eventId": "event-steepest", "speaker": "stats_desk", "text": "A 5.7% grade: the steepest verified segment and a serious challenge to conversational pacing.", "importance": 3, "source": "fixture"},
+      {"eventId": "event-summit", "speaker": "field_reporter", "text": "The walker tops out at 81 meters. Conditions remain ideal for standing briefly and taking credit.", "importance": 3, "source": "fixture"},
+      {"eventId": "event-descent", "speaker": "play_by_play", "text": "Now the descent begins, converting hard-earned elevation into suspicious confidence.", "importance": 1, "source": "fixture"},
+      {"eventId": "event-halfway", "speaker": "stats_desk", "text": "Halfway arrives after 24 minutes, 10 seconds. The second half remains statistically unavoidable.", "importance": 2, "source": "fixture"},
+      {"eventId": "event-final-km", "speaker": "color", "text": "Roughly one kilometer remains. This is where elite walkers begin thinking seriously about snacks.", "importance": 2, "source": "fixture"},
+      {"eventId": "event-finish", "speaker": "play_by_play", "text": "Finished in 43 minutes, 50 seconds. The loop is closed; the questions about strategy are not.", "importance": 3, "source": "fixture"}
+    ]
+  }
+}

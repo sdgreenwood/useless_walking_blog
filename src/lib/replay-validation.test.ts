@@ -1,0 +1,30 @@
+import { describe, expect, it } from "vitest";
+import demo from "../../fixtures/demo-replay.json";
+import { parseReplayDocument } from "./replay-validation";
+
+describe("parseReplayDocument", () => {
+  it("accepts the canonical fixture", () => {
+    expect(parseReplayDocument(demo, "demo-championship-loop").route.id).toBe("demo-championship-loop");
+  });
+
+  it("rejects empty samples, non-finite metrics, and broken commentary links", () => {
+    const empty = structuredClone(demo) as unknown as { route: { samples: unknown[] } };
+    empty.route.samples = [];
+    expect(() => parseReplayDocument(empty)).toThrow("at least two samples");
+
+    const nonFinite = structuredClone(demo);
+    nonFinite.route.events[0].metrics.elevationMeters = Number.NaN;
+    expect(() => parseReplayDocument(nonFinite)).toThrow("must be finite");
+
+    const broken = structuredClone(demo);
+    broken.route.commentary[0].eventId = "unknown-event";
+    expect(() => parseReplayDocument(broken)).toThrow("unknown event");
+  });
+
+  it("rejects filename/id mismatch and invalid coordinates", () => {
+    expect(() => parseReplayDocument(demo, "wrong-id")).toThrow("filename");
+    const invalid = structuredClone(demo);
+    invalid.route.geometry.coordinates[0][0] = 500;
+    expect(() => parseReplayDocument(invalid)).toThrow("between -180 and 180");
+  });
+});

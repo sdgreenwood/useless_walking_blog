@@ -1,0 +1,4 @@
+interface:
+  display_name: "Walking Ocho Delivery"
+  short_description: "Build and coordinate Walking Ocho safely"
+  default_prompt: "Orient to the current Walking Ocho handoff, then complete the requested bounded work while preserving product gates and subsystem ownership."
