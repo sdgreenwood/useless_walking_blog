@@ -63,7 +63,7 @@
       {"eventId": "event-halfway", "speaker": "stats_desk", "text": "Halfway arrives after 24 minutes, 10 seconds. The second half remains statistically unavoidable.", "importance": 2, "source": "fixture"},
       {"eventId": "event-final-km", "speaker": "color", "text": "Roughly one kilometer remains. This is where elite walkers begin thinking seriously about snacks.", "importance": 2, "source": "fixture"},
       {"eventId": "event-final-km", "displayProgress": 0.79, "speaker": "field_reporter", "text": "Officials are checking whether this remains a walk or has become a very slow escape.", "importance": 1, "source": "fixture"},
-      {"eventId": "event-final-km", "displayProgress": 0.9, "speaker": "color", "text": "Final stretch. No trophy has been located, but the athlete continues under that assumption.", "importance": 1, "source": "fixture"},
+      {"eventId": "event-final-km", "displayProgress": 0.9, "speaker": "play_by_play", "text": "OH MY GOODNESS, THE WALKER IS ALMOST AT THE FINISH LINE—AND HE IS STILL WALKING!!!!! Not even a courtesy jog for the cameras!", "importance": 1, "source": "fixture"},
       {"eventId": "event-finish", "speaker": "play_by_play", "text": "Finished in 43 minutes, 50 seconds. The loop is closed; the questions about strategy are not.", "importance": 3, "source": "fixture"}
     ]
   }

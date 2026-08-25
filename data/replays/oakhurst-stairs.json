@@ -2645,8 +2645,8 @@
       {
         "eventId": "analysis-v1-001-start",
         "displayProgress": 0.9,
-        "speaker": "color",
-        "text": "The stairs have seen him before. They appear unwilling to comment.",
+        "speaker": "play_by_play",
+        "text": "HE CAN SEE THE FINISH! THE CROWD IS ROARING! AND HE IS RESPONDING BY WALKING AT ESSENTIALLY THE SAME SPEED!!!!!",
         "importance": 1,
         "source": "deterministic"
       },
