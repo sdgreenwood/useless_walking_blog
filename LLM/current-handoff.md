@@ -25,7 +25,7 @@ Prepare the next replay import, live-ingestion design, or visualization layer re
 - The deck.gl migration is live. Production verification confirms the new visualization host, removal of the legacy route container, 390 px playback without overflow, and correct Multioak event navigation.
 - Current, Hex Ghost, and Relief visualization modes are live behind the map-stage toggle. Production verification confirms both new modes activate with zero runtime errors; they share replay progress and deterministic route data.
 - The DEM-backed Relief correction is live: Mapzen terrain tiles from AWS Open Data provide the surface and all replay overlays share the elevated frame. Production verification passed on Multioak at desktop and 390 px with attribution, no overflow, and zero runtime errors. The owner explicitly approved disclosure of visible route-area tile coordinates to AWS.
-- A root-cause spatial audit is implemented locally. It proves the coordinate/tile/decoder pipeline with five controls, adds `?spatial-debug=1`, removes the unexplained 3 m lift, and disables MapLibre terrain camera clamping so both canvases share a sea-level view frame. Recorded GPS elevation remains analysis evidence. Deployment is pending.
+- The root-cause spatial audit is live. It proves the coordinate/tile/decoder pipeline with five controls, adds `?spatial-debug=1`, removes the unexplained 3 m lift, and disables MapLibre terrain camera clamping so both canvases share a sea-level view frame. Recorded GPS elevation remains analysis evidence. Production verification passed the hidden proof mode and ordinary Relief view without terrain-camera or overzoom warnings.
 
 ## Fixture replay gate
 
@@ -59,3 +59,4 @@ Await the next owner-selected tranche. Keep OpenAI optional and import-time only
 - Commit `25f1931` makes deck.gl the primary visualization framework; the Vercel production replay is live and verified.
 - Commit `be176cd` adds Hex Ghost and Relief presentation modes; both are live and verified on the Vercel production replay.
 - Commit `eed2ec0` adds the DEM-backed Relief terrain surface and aligned elevated replay overlays; the production Multioak replay is live and verified.
+- Commit `cd5b208` proves and corrects the spatial pipeline; the production Multioak proof and public Relief modes are live and verified.
