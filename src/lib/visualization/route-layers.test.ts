@@ -64,8 +64,24 @@ describe("deck.gl route layer composition", () => {
   it("uses sampled terrain elevation as the Relief display datum", () => {
     const terrain = route.samples.map(() => 125);
     const visualizationRoute = createVisualizationRoute(route, terrain);
-    expect(visualizationRoute.elevationPathData[0].path.every((coordinate) => coordinate[2] === 128)).toBe(true);
-    expect(visualizationRoute.endpointData.every((point) => point.elevatedCoordinates[2] === 128)).toBe(true);
-    expect(visualizationRoute.eventData.every((datum) => datum.elevatedCoordinates[2] === 128)).toBe(true);
+    expect(visualizationRoute.elevationPathData[0].path.every((coordinate) => coordinate[2] === 125)).toBe(true);
+    expect(visualizationRoute.endpointData.every((point) => point.elevatedCoordinates[2] === 125)).toBe(true);
+    expect(visualizationRoute.eventData.every((datum) => datum.elevatedCoordinates[2] === 125)).toBe(true);
+  });
+
+  it("adds five control points, route bounds, and DEM XYZ tile bounds in spatial debug mode", () => {
+    const layers = buildRouteLayers({
+      route: createVisualizationRoute(route),
+      progress: 0,
+      current: route.samples[0].coordinates,
+      spatialDebug: true
+    });
+    const ids = (layers as Array<{ id: string }>).map((layer) => layer.id);
+    expect(ids).toEqual(expect.arrayContaining([
+      "spatial-debug-route-bounds",
+      "spatial-debug-dem-tiles",
+      "spatial-debug-controls",
+      "spatial-debug-labels"
+    ]));
   });
 });

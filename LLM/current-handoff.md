@@ -25,7 +25,7 @@ Prepare the next replay import, live-ingestion design, or visualization layer re
 - The deck.gl migration is live. Production verification confirms the new visualization host, removal of the legacy route container, 390 px playback without overflow, and correct Multioak event navigation.
 - Current, Hex Ghost, and Relief visualization modes are live behind the map-stage toggle. Production verification confirms both new modes activate with zero runtime errors; they share replay progress and deterministic route data.
 - The DEM-backed Relief correction is live: Mapzen terrain tiles from AWS Open Data provide the surface and all replay overlays share the elevated frame. Production verification passed on Multioak at desktop and 390 px with attribution, no overflow, and zero runtime errors. The owner explicitly approved disclosure of visible route-area tile coordinates to AWS.
-- A local Relief alignment refinement samples the DEM as the shared display datum and moves hillshade below streets/labels. It preserves recorded GPS elevation for analysis. Deployment is pending.
+- A root-cause spatial audit is implemented locally. It proves the coordinate/tile/decoder pipeline with five controls, adds `?spatial-debug=1`, removes the unexplained 3 m lift, and disables MapLibre terrain camera clamping so both canvases share a sea-level view frame. Recorded GPS elevation remains analysis evidence. Deployment is pending.
 
 ## Fixture replay gate
 

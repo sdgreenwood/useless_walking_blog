@@ -9,6 +9,7 @@ import type { MapRef } from "react-map-gl/maplibre";
 import { buildRouteLayers, createVisualizationRoute } from "@/lib/visualization/route-layers";
 import type { VisualizationMode } from "@/lib/visualization/route-layers";
 import type { Coordinate, ReplayRoute } from "@/lib/replay-types";
+import { DEM_DATA_MAX_ZOOM, DEM_MAX_ZOOM, DEM_TILE_SIZE, longitudeLatitudeToXyzTile } from "@/lib/visualization/spatial-reference";
 
 type Props = {
   route: ReplayRoute;
@@ -17,31 +18,34 @@ type Props = {
   progress: number;
   activeEventId?: string;
   mode: VisualizationMode;
+  spatialDebug?: boolean;
 };
 
 const BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/dark";
 const TERRAIN_SOURCE_ID = "walking-ocho-terrain";
+const HILLSHADE_SOURCE_ID = "walking-ocho-hillshade-dem";
 const HILLSHADE_LAYER_ID = "walking-ocho-hillshade";
 const TERRAIN_TILE_URL = "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png";
 
-export function RouteVisualization({ route, current, currentElevationMeters, progress, activeEventId, mode }: Props) {
+export function RouteVisualization({ route, current, currentElevationMeters, progress, activeEventId, mode, spatialDebug = false }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapRef>(null);
   const [size, setSize] = useState({ width: 1000, height: 600 });
   const [mapReady, setMapReady] = useState(false);
   const [terrainElevations, setTerrainElevations] = useState<Array<number | null> | null>(null);
+  const [inspectedCoordinate, setInspectedCoordinate] = useState<Coordinate | null>(null);
   const visualizationRoute = useMemo(() => createVisualizationRoute(route, terrainElevations), [route, terrainElevations]);
   const currentDisplayElevation = useMemo(
     () => terrainElevations ? elevationAtProgress(route, terrainElevations, progress) : currentElevationMeters,
     [currentElevationMeters, progress, route, terrainElevations]
   );
   const initialViewState = useMemo(
-    () => fitRouteView(visualizationRoute.coordinates, size.width, size.height, mode),
-    [mode, size.height, size.width, visualizationRoute.coordinates]
+    () => fitRouteView(visualizationRoute.coordinates, size.width, size.height, mode, spatialDebug),
+    [mode, size.height, size.width, spatialDebug, visualizationRoute.coordinates]
   );
   const layers = useMemo(
-    () => buildRouteLayers({ route: visualizationRoute, progress, current, currentElevationMeters: currentDisplayElevation, activeEventId, mode }),
-    [activeEventId, current, currentDisplayElevation, mode, progress, visualizationRoute]
+    () => buildRouteLayers({ route: visualizationRoute, progress, current, currentElevationMeters: currentDisplayElevation, activeEventId, mode, spatialDebug }),
+    [activeEventId, current, currentDisplayElevation, mode, progress, spatialDebug, visualizationRoute]
   );
 
   useEffect(() => {
@@ -65,8 +69,18 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
       map.addSource(TERRAIN_SOURCE_ID, {
         type: "raster-dem",
         tiles: [TERRAIN_TILE_URL],
-        tileSize: 256,
-        maxzoom: 15,
+        tileSize: DEM_TILE_SIZE,
+        maxzoom: DEM_MAX_ZOOM,
+        encoding: "terrarium",
+        attribution: "Elevation: Mapzen Terrain Tiles via AWS Open Data"
+      });
+    }
+    if (!map.getSource(HILLSHADE_SOURCE_ID)) {
+      map.addSource(HILLSHADE_SOURCE_ID, {
+        type: "raster-dem",
+        tiles: [TERRAIN_TILE_URL],
+        tileSize: DEM_TILE_SIZE,
+        maxzoom: DEM_MAX_ZOOM,
         encoding: "terrarium",
         attribution: "Elevation: Mapzen Terrain Tiles via AWS Open Data"
       });
@@ -76,7 +90,7 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
       map.addLayer({
         id: HILLSHADE_LAYER_ID,
         type: "hillshade",
-        source: TERRAIN_SOURCE_ID,
+        source: HILLSHADE_SOURCE_ID,
         layout: { visibility: "none" },
         paint: {
           "hillshade-shadow-color": "#020504",
@@ -88,6 +102,8 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
     }
 
     const relief = mode === "relief";
+    map.setCenterClampedToGround(false);
+    map.showTileBoundaries = spatialDebug;
     map.setLayoutProperty(HILLSHADE_LAYER_ID, "visibility", relief ? "visible" : "none");
     map.setTerrain(relief ? { source: TERRAIN_SOURCE_ID, exaggeration: 1 } : null);
 
@@ -98,7 +114,7 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
     };
     map.once("idle", sampleTerrain);
     return () => { map.off("idle", sampleTerrain); };
-  }, [mapReady, mode, route.samples, terrainElevations]);
+  }, [mapReady, mode, route.samples, spatialDebug, terrainElevations]);
 
   return (
     <div className={`route-visualization visualization-${mode}`} ref={containerRef} role="img" aria-label={`Animated ${modeLabel(mode)} visualization of the replay route`}>
@@ -106,6 +122,9 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
         initialViewState={initialViewState}
         controller={{ dragRotate: false, touchRotate: false }}
         layers={layers}
+        onClick={(info) => {
+          if (spatialDebug && info.coordinate) setInspectedCoordinate([info.coordinate[0], info.coordinate[1]]);
+        }}
         getCursor={({ isDragging }) => isDragging ? "grabbing" : "grab"}
       >
         <Map
@@ -116,11 +135,20 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
           reuseMaps
         />
       </DeckGL>
+      {spatialDebug && (
+        <output className="spatial-debug-panel">
+          <strong>Spatial proof mode</strong>
+          <span>WGS84 [longitude, latitude] degrees → deck.gl/MapLibre Web Mercator</span>
+          <span>DEM: XYZ · data z0-{DEM_DATA_MAX_ZOOM} · render z{DEM_MAX_ZOOM} · {DEM_TILE_SIZE}px · Terrarium meters</span>
+          <span>Camera: bearing 0 · pitch 0 · center elevation 0</span>
+          {inspectedCoordinate && <span>Tap: {inspectedCoordinate[0].toFixed(6)}, {inspectedCoordinate[1].toFixed(6)} · tile {formatTile(inspectedCoordinate)}</span>}
+        </output>
+      )}
     </div>
   );
 }
 
-export function fitRouteView(coordinates: Coordinate[], width: number, height: number, mode: VisualizationMode = "current"): MapViewState {
+export function fitRouteView(coordinates: Coordinate[], width: number, height: number, mode: VisualizationMode = "current", spatialDebug = false): MapViewState {
   const longitudes = coordinates.map(([longitude]) => longitude);
   const latitudes = coordinates.map(([, latitude]) => latitude);
   const bounds: [[number, number], [number, number]] = [
@@ -135,9 +163,14 @@ export function fitRouteView(coordinates: Coordinate[], width: number, height: n
     longitude: viewport.longitude,
     latitude: viewport.latitude,
     zoom: viewport.zoom,
-    pitch: mode === "relief" ? 38 : 0,
-    bearing: mode === "relief" ? -12 : 0
+    pitch: mode === "relief" && !spatialDebug ? 38 : 0,
+    bearing: mode === "relief" && !spatialDebug ? -12 : 0
   };
+}
+
+function formatTile(coordinate: Coordinate): string {
+  const tile = longitudeLatitudeToXyzTile(coordinate, DEM_MAX_ZOOM);
+  return `${tile.z}/${tile.x}/${tile.y}`;
 }
 
 function modeLabel(mode: VisualizationMode): string {

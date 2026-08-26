@@ -1,6 +1,7 @@
 import type { LayersList } from "@deck.gl/core";
 import { PathLayer, PolygonLayer, ScatterplotLayer, TextLayer } from "@deck.gl/layers";
 import type { Coordinate, ReplayRoute, RouteEvent } from "@/lib/replay-types";
+import { boundsPolygon, DEM_MAX_ZOOM, longitudeLatitudeToXyzTile, routeBounds, tilesCoveringBounds, xyzTileBounds } from "./spatial-reference";
 
 export type VisualizationRoute = {
   coordinates: Coordinate[];
@@ -23,6 +24,7 @@ export type RouteLayerState = {
   currentElevationMeters?: number | null;
   activeEventId?: string;
   mode?: VisualizationMode;
+  spatialDebug?: boolean;
 };
 
 type PathDatum = { path: Coordinate[] };
@@ -31,7 +33,7 @@ type PointDatum = { coordinates: Coordinate; elevatedCoordinates: ElevatedCoordi
 type EventDatum = { event: RouteEvent; elevatedCoordinates: ElevatedCoordinate };
 type ElevationPathDatum = { path: [number, number, number][] };
 type HexCellDatum = { polygon: Coordinate[]; routeProgress: number | null };
-const RELIEF_ROUTE_OFFSET_METERS = 3;
+type DebugControlDatum = { coordinates: Coordinate; label: string };
 
 export function createVisualizationRoute(route: ReplayRoute, terrainElevations: Array<number | null> | null = null): VisualizationRoute {
   const start = route.geometry.coordinates[0];
@@ -76,10 +78,12 @@ export function completedRoutePath(coordinates: Coordinate[], current: Coordinat
   return [...coordinates.slice(0, lastIndex + 1), current];
 }
 
-export function buildRouteLayers({ route, progress, current, currentElevationMeters, activeEventId, mode = "current" }: RouteLayerState): LayersList {
+export function buildRouteLayers({ route, progress, current, currentElevationMeters, activeEventId, mode = "current", spatialDebug = false }: RouteLayerState): LayersList {
   const completedPath: PathDatum[] = [{ path: completedRoutePath(route.coordinates, current, progress) }];
   const activeEvent = route.eventData.find(({ event }) => event.id === activeEventId);
   const currentPosition = mode === "relief" ? elevate(current, currentElevationMeters) : current;
+  const debugControls = spatialDebug ? createDebugControls(route.coordinates) : [];
+  const debugTiles = spatialDebug ? tilesCoveringBounds(routeBounds(route.coordinates), DEM_MAX_ZOOM) : [];
 
   return [
     mode === "hex-ghost" && new PolygonLayer<HexCellDatum>({
@@ -189,12 +193,62 @@ export function buildRouteLayers({ route, progress, current, currentElevationMet
       getTextAnchor: "middle",
       getAlignmentBaseline: "bottom",
       fontWeight: 700
+    }),
+    spatialDebug && new PathLayer<PathDatum>({
+      id: "spatial-debug-route-bounds",
+      data: [{ path: boundsPolygon(routeBounds(route.coordinates)) }],
+      getPath: (datum) => datum.path,
+      getColor: [255, 81, 140, 255],
+      getWidth: 2,
+      widthUnits: "pixels"
+    }),
+    spatialDebug && new PathLayer<PathDatum>({
+      id: "spatial-debug-dem-tiles",
+      data: debugTiles.map((tile) => ({ path: boundsPolygon(xyzTileBounds(tile)) })),
+      getPath: (datum) => datum.path,
+      getColor: [93, 190, 255, 220],
+      getWidth: 1,
+      widthUnits: "pixels"
+    }),
+    spatialDebug && new ScatterplotLayer<DebugControlDatum>({
+      id: "spatial-debug-controls",
+      data: debugControls,
+      getPosition: (datum) => datum.coordinates,
+      getRadius: 6,
+      radiusUnits: "pixels",
+      getFillColor: [255, 81, 140, 255],
+      stroked: true,
+      getLineColor: [255, 255, 255, 255],
+      getLineWidth: 1,
+      lineWidthUnits: "pixels"
+    }),
+    spatialDebug && new TextLayer<DebugControlDatum>({
+      id: "spatial-debug-labels",
+      data: debugControls,
+      getPosition: (datum) => datum.coordinates,
+      getText: (datum) => datum.label,
+      getColor: [255, 255, 255, 255],
+      getBackgroundColor: [4, 10, 8, 235],
+      background: true,
+      getPixelOffset: [0, -16],
+      getSize: 10,
+      sizeUnits: "pixels",
+      getTextAnchor: "middle",
+      getAlignmentBaseline: "bottom"
     })
   ].filter(Boolean) as LayersList;
 }
 
 function elevate([longitude, latitude]: Coordinate, elevationMeters: number | null | undefined): ElevatedCoordinate {
-  return [longitude, latitude, Math.max(0, elevationMeters ?? 0) + RELIEF_ROUTE_OFFSET_METERS];
+  return [longitude, latitude, elevationMeters ?? 0];
+}
+
+function createDebugControls(coordinates: Coordinate[]): DebugControlDatum[] {
+  return [0, 0.25, 0.5, 0.75, 1].map((progress, index) => {
+    const coordinatesAtProgress = coordinates[Math.round(progress * (coordinates.length - 1))];
+    const tile = longitudeLatitudeToXyzTile(coordinatesAtProgress, DEM_MAX_ZOOM);
+    return { coordinates: coordinatesAtProgress, label: `CP${index + 1} - ${tile.z}/${tile.x}/${tile.y}` };
+  });
 }
 
 function completedElevationPath(path: [number, number, number][], progress: number): ElevationPathDatum[] {

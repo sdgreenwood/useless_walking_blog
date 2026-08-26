@@ -19,6 +19,7 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
   const [speed, setSpeed] = useState(1);
   const [mode, setMode] = useState<ReplayMode>("Condensed");
   const [visualizationMode, setVisualizationMode] = useState<VisualizationMode>("current");
+  const [spatialDebug, setSpatialDebug] = useState(false);
   const previousFrame = useRef<number | null>(null);
   const current = useMemo(() => sampleAtProgress(route.samples, progress), [route.samples, progress]);
   const commentary = useMemo(() => {
@@ -31,6 +32,10 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
     [progress, route.events]
   );
   const highlights = useMemo(() => route.events.filter((event) => event.importance >= 2), [route.events]);
+
+  useEffect(() => {
+    setSpatialDebug(new URLSearchParams(window.location.search).get("spatial-debug") === "1");
+  }, []);
 
   useEffect(() => {
     if (!playing) {
@@ -105,6 +110,7 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
             progress={progress}
             activeEventId={activeEvent?.id}
             mode={visualizationMode}
+            spatialDebug={spatialDebug}
           />
           <div className="scorebug">
             <span>{Math.round(progress * 100)}%</span>
