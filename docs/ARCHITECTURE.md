@@ -30,7 +30,7 @@ deck.gl owns the complete route, remaining route, completed route, current-posit
 
 The replay exposes three presentation modes over that same state. Current retains the quiet street context. Hex Ghost adds deterministic polygon cells derived solely from route geometry and colors visited territory from normalized progress. Relief Broadcast preserves sample elevation as the third coordinate, pitches the deck.gl view, and renders the route as an elevated analytical trace. These are presentation choices: they do not alter samples, metrics, commentary timing, or the replay clock.
 
-The V1 basemap is an understated OpenFreeMap dark style rendered by MapLibre through `react-map-gl`. It owns only tiles, labels, attribution, and geographic context. It receives deck.gl's camera state but receives no replay data. Swapping the provider or rendering deck.gl standalone must not change replay logic or layer composition.
+The V1 basemap is an understated OpenFreeMap dark style rendered by MapLibre through `react-map-gl`. It owns tiles, labels, attribution, and geographic context. Relief mode additionally enables open Mapzen Terrarium DEM tiles hosted by AWS Open Data as a MapLibre terrain surface and hillshade. The route, current position, endpoints, events, and annotations use the replay samples' elevation in that mode with a small visibility offset. Current and Hex Ghost remain flat. Swapping the provider or rendering deck.gl standalone must not change replay logic or layer composition.
 
 ## Route representation and performance
 
@@ -40,4 +40,4 @@ Static visualization data is memoized per route. A progress update changes only 
 
 ## Deployment and public sharing
 
-The migration adds client-side WebGL packages but no service, database, token, API route, or server state. Public URLs and static replay JSON remain unchanged. If tiles fail, deck.gl still renders the route graphics against the broadcast-stage background.
+The migration adds client-side WebGL packages but no service, database, token, API route, or server state. Public URLs and static replay JSON remain unchanged. Activating Relief requests public DEM tiles for the visible geographic area from AWS Open Data; owner approval for that location disclosure was recorded in the implementation conversation. If terrain or basemap tiles fail, deck.gl still renders the route graphics against the broadcast-stage background.

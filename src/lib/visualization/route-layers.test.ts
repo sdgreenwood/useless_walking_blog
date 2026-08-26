@@ -57,5 +57,7 @@ describe("deck.gl route layer composition", () => {
     const visualizationRoute = createVisualizationRoute(route);
     expect(visualizationRoute.elevationPathData[0].path).toHaveLength(route.samples.length);
     expect(visualizationRoute.elevationPathData[0].path.every((coordinate) => coordinate.length === 3)).toBe(true);
+    expect(visualizationRoute.endpointData.every((point) => point.elevatedCoordinates.length === 3)).toBe(true);
+    expect(visualizationRoute.eventData).toHaveLength(route.events.length);
   });
 });

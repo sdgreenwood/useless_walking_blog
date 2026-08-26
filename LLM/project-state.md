@@ -22,6 +22,7 @@ Updated: 2026-08-24.
 - deck.gl is the primary replay visualization boundary. A typed layer composer builds base/remaining/completed paths, current position, route events, active-event annotation, and start/finish markers; MapLibre/OpenFreeMap is a replaceable supporting basemap only.
 - The former imperative MapLibre route-source component has been removed. Replay timing and interpolation remain independent application/domain logic.
 - The replay map now offers Current, Hex Ghost, and Relief presentation modes. Hex Ghost derives a deterministic territory grid from route geometry; Relief preserves sample elevation in a pitched deck.gl trace. Both consume the existing normalized progress and create no new route facts.
+- Relief now uses open Mapzen Terrarium DEM tiles from AWS Open Data for an actual MapLibre terrain surface and restrained hillshade. All deck.gl route markers and annotations share the elevated coordinate frame; Current and Hex Ghost remain flat.
 - Two user-authorized WalkingLab routes are curated as `multioak-stairs` and `oakhurst-stairs`, with hand-authored commentary anchored to deterministic halfway events.
 
 ## Verified

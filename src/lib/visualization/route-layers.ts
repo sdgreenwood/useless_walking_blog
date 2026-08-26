@@ -9,6 +9,7 @@ export type VisualizationRoute = {
   finish: Coordinate;
   pathData: PathDatum[];
   endpointData: PointDatum[];
+  eventData: EventDatum[];
   elevationPathData: ElevationPathDatum[];
   hexCells: HexCellDatum[];
 };
@@ -19,14 +20,18 @@ export type RouteLayerState = {
   route: VisualizationRoute;
   progress: number;
   current: Coordinate;
+  currentElevationMeters?: number | null;
   activeEventId?: string;
   mode?: VisualizationMode;
 };
 
 type PathDatum = { path: Coordinate[] };
-type PointDatum = { coordinates: Coordinate; kind: "start" | "finish" };
+type ElevatedCoordinate = [number, number, number];
+type PointDatum = { coordinates: Coordinate; elevatedCoordinates: ElevatedCoordinate; kind: "start" | "finish" };
+type EventDatum = { event: RouteEvent; elevatedCoordinates: ElevatedCoordinate };
 type ElevationPathDatum = { path: [number, number, number][] };
 type HexCellDatum = { polygon: Coordinate[]; routeProgress: number | null };
+const RELIEF_ROUTE_OFFSET_METERS = 3;
 
 export function createVisualizationRoute(route: ReplayRoute): VisualizationRoute {
   const start = route.geometry.coordinates[0];
@@ -38,11 +43,15 @@ export function createVisualizationRoute(route: ReplayRoute): VisualizationRoute
     finish,
     pathData: [{ path: route.geometry.coordinates }],
     endpointData: [
-      { coordinates: start, kind: "start" },
-      { coordinates: finish, kind: "finish" }
+      { coordinates: start, elevatedCoordinates: elevate(start, route.samples[0]?.elevationMeters), kind: "start" },
+      { coordinates: finish, elevatedCoordinates: elevate(finish, route.samples.at(-1)?.elevationMeters), kind: "finish" }
     ],
+    eventData: route.events.map((event) => {
+      const sampleIndex = Math.round(event.routeProgress * Math.max(0, route.samples.length - 1));
+      return { event, elevatedCoordinates: elevate(event.coordinates, route.samples[sampleIndex]?.elevationMeters) };
+    }),
     elevationPathData: [{
-      path: route.samples.map((sample) => [sample.coordinates[0], sample.coordinates[1], Math.max(0, sample.elevationMeters ?? 0)])
+      path: route.samples.map((sample) => elevate(sample.coordinates, sample.elevationMeters))
     }],
     hexCells: createHexCells(route.geometry.coordinates)
   };
@@ -53,9 +62,10 @@ export function completedRoutePath(coordinates: Coordinate[], current: Coordinat
   return [...coordinates.slice(0, lastIndex + 1), current];
 }
 
-export function buildRouteLayers({ route, progress, current, activeEventId, mode = "current" }: RouteLayerState): LayersList {
+export function buildRouteLayers({ route, progress, current, currentElevationMeters, activeEventId, mode = "current" }: RouteLayerState): LayersList {
   const completedPath: PathDatum[] = [{ path: completedRoutePath(route.coordinates, current, progress) }];
-  const activeEvent = route.events.find((event) => event.id === activeEventId);
+  const activeEvent = route.eventData.find(({ event }) => event.id === activeEventId);
+  const currentPosition = mode === "relief" ? elevate(current, currentElevationMeters) : current;
 
   return [
     mode === "hex-ghost" && new PolygonLayer<HexCellDatum>({
@@ -105,13 +115,13 @@ export function buildRouteLayers({ route, progress, current, activeEventId, mode
       capRounded: true,
       jointRounded: true
     }),
-    new ScatterplotLayer<RouteEvent>({
+    new ScatterplotLayer<EventDatum>({
       id: "route-events",
-      data: route.events,
-      getPosition: (event) => event.coordinates,
-      getRadius: (event) => event.id === activeEventId ? 7 : 4,
+      data: route.eventData,
+      getPosition: (datum) => mode === "relief" ? datum.elevatedCoordinates : datum.event.coordinates,
+      getRadius: ({ event }) => event.id === activeEventId ? 7 : 4,
       radiusUnits: "pixels",
-      getFillColor: (event) => eventColor(event),
+      getFillColor: ({ event }) => eventColor(event),
       stroked: true,
       getLineColor: [4, 12, 11, 255],
       getLineWidth: 1.5,
@@ -121,7 +131,7 @@ export function buildRouteLayers({ route, progress, current, activeEventId, mode
     new ScatterplotLayer<PointDatum>({
       id: "route-start-finish",
       data: route.endpointData,
-      getPosition: (point) => point.coordinates,
+      getPosition: (point) => mode === "relief" ? point.elevatedCoordinates : point.coordinates,
       getRadius: 7,
       radiusUnits: "pixels",
       getFillColor: (point) => point.kind === "start" ? [82, 242, 173, 255] : [246, 248, 247, 255],
@@ -130,17 +140,17 @@ export function buildRouteLayers({ route, progress, current, activeEventId, mode
       getLineWidth: 2,
       lineWidthUnits: "pixels"
     }),
-    new ScatterplotLayer<Coordinate>({
+    new ScatterplotLayer<Coordinate | ElevatedCoordinate>({
       id: "current-position-halo",
-      data: [current],
+      data: [currentPosition],
       getPosition: (coordinate) => coordinate,
       getRadius: 16,
       radiusUnits: "pixels",
       getFillColor: [82, 242, 173, 54]
     }),
-    new ScatterplotLayer<Coordinate>({
+    new ScatterplotLayer<Coordinate | ElevatedCoordinate>({
       id: "current-position",
-      data: [current],
+      data: [currentPosition],
       getPosition: (coordinate) => coordinate,
       getRadius: 7,
       radiusUnits: "pixels",
@@ -150,11 +160,11 @@ export function buildRouteLayers({ route, progress, current, activeEventId, mode
       getLineWidth: 3,
       lineWidthUnits: "pixels"
     }),
-    activeEvent && new TextLayer<RouteEvent>({
+    activeEvent && new TextLayer<EventDatum>({
       id: "active-event-label",
       data: [activeEvent],
-      getPosition: (event) => event.coordinates,
-      getText: (event) => eventLabel(event.type),
+      getPosition: (datum) => mode === "relief" ? datum.elevatedCoordinates : datum.event.coordinates,
+      getText: ({ event }) => eventLabel(event.type),
       getColor: [230, 244, 238, 255],
       getBackgroundColor: [7, 14, 14, 225],
       background: true,
@@ -167,6 +177,10 @@ export function buildRouteLayers({ route, progress, current, activeEventId, mode
       fontWeight: 700
     })
   ].filter(Boolean) as LayersList;
+}
+
+function elevate([longitude, latitude]: Coordinate, elevationMeters: number | null | undefined): ElevatedCoordinate {
+  return [longitude, latitude, Math.max(0, elevationMeters ?? 0) + RELIEF_ROUTE_OFFSET_METERS];
 }
 
 function completedElevationPath(path: [number, number, number][], progress: number): ElevationPathDatum[] {

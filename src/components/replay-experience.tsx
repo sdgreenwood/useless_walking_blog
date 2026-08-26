@@ -101,6 +101,7 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
           <RouteVisualization
             route={route}
             current={current.coordinates}
+            currentElevationMeters={current.elevationMeters}
             progress={progress}
             activeEventId={activeEvent?.id}
             mode={visualizationMode}

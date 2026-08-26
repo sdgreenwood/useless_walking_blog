@@ -24,6 +24,7 @@ Prepare the next replay import, live-ingestion design, or visualization layer re
 - Migration checks pass: strict TypeScript, ESLint, 36 tests including a 10,000-point full-fidelity path, production build, desktop/mobile browser playback, and no deck.gl runtime errors.
 - The deck.gl migration is live. Production verification confirms the new visualization host, removal of the legacy route container, 390 px playback without overflow, and correct Multioak event navigation.
 - Current, Hex Ghost, and Relief visualization modes are live behind the map-stage toggle. Production verification confirms both new modes activate with zero runtime errors; they share replay progress and deterministic route data.
+- A DEM-backed Relief correction is implemented locally: Mapzen terrain tiles from AWS Open Data provide the surface and all replay overlays share the elevated frame. The owner explicitly approved disclosure of visible route-area tile coordinates to AWS. Deployment is pending.
 
 ## Fixture replay gate
 
