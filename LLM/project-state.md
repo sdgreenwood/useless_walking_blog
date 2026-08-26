@@ -21,6 +21,7 @@ Updated: 2026-08-24.
 - Commentary supports an optional validated `displayProgress` for editorial beats between deterministic route events; all three live replays now contain ten commentary calls across the 90-second broadcast.
 - deck.gl is the primary replay visualization boundary. A typed layer composer builds base/remaining/completed paths, current position, route events, active-event annotation, and start/finish markers; MapLibre/OpenFreeMap is a replaceable supporting basemap only.
 - The former imperative MapLibre route-source component has been removed. Replay timing and interpolation remain independent application/domain logic.
+- The replay map now offers Current, Hex Ghost, and Relief presentation modes. Hex Ghost derives a deterministic territory grid from route geometry; Relief preserves sample elevation in a pitched deck.gl trace. Both consume the existing normalized progress and create no new route facts.
 - Two user-authorized WalkingLab routes are curated as `multioak-stairs` and `oakhurst-stairs`, with hand-authored commentary anchored to deterministic halfway events.
 
 ## Verified

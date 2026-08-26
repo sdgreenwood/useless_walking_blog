@@ -1,5 +1,5 @@
 import type { LayersList } from "@deck.gl/core";
-import { PathLayer, ScatterplotLayer, TextLayer } from "@deck.gl/layers";
+import { PathLayer, PolygonLayer, ScatterplotLayer, TextLayer } from "@deck.gl/layers";
 import type { Coordinate, ReplayRoute, RouteEvent } from "@/lib/replay-types";
 
 export type VisualizationRoute = {
@@ -9,17 +9,24 @@ export type VisualizationRoute = {
   finish: Coordinate;
   pathData: PathDatum[];
   endpointData: PointDatum[];
+  elevationPathData: ElevationPathDatum[];
+  hexCells: HexCellDatum[];
 };
+
+export type VisualizationMode = "current" | "hex-ghost" | "relief";
 
 export type RouteLayerState = {
   route: VisualizationRoute;
   progress: number;
   current: Coordinate;
   activeEventId?: string;
+  mode?: VisualizationMode;
 };
 
 type PathDatum = { path: Coordinate[] };
 type PointDatum = { coordinates: Coordinate; kind: "start" | "finish" };
+type ElevationPathDatum = { path: [number, number, number][] };
+type HexCellDatum = { polygon: Coordinate[]; routeProgress: number | null };
 
 export function createVisualizationRoute(route: ReplayRoute): VisualizationRoute {
   const start = route.geometry.coordinates[0];
@@ -33,7 +40,11 @@ export function createVisualizationRoute(route: ReplayRoute): VisualizationRoute
     endpointData: [
       { coordinates: start, kind: "start" },
       { coordinates: finish, kind: "finish" }
-    ]
+    ],
+    elevationPathData: [{
+      path: route.samples.map((sample) => [sample.coordinates[0], sample.coordinates[1], Math.max(0, sample.elevationMeters ?? 0)])
+    }],
+    hexCells: createHexCells(route.geometry.coordinates)
   };
 }
 
@@ -42,26 +53,43 @@ export function completedRoutePath(coordinates: Coordinate[], current: Coordinat
   return [...coordinates.slice(0, lastIndex + 1), current];
 }
 
-export function buildRouteLayers({ route, progress, current, activeEventId }: RouteLayerState): LayersList {
+export function buildRouteLayers({ route, progress, current, activeEventId, mode = "current" }: RouteLayerState): LayersList {
   const completedPath: PathDatum[] = [{ path: completedRoutePath(route.coordinates, current, progress) }];
   const activeEvent = route.events.find((event) => event.id === activeEventId);
 
   return [
+    mode === "hex-ghost" && new PolygonLayer<HexCellDatum>({
+      id: "hex-ghost-territory",
+      data: route.hexCells,
+      getPolygon: (cell) => cell.polygon,
+      filled: true,
+      stroked: true,
+      getFillColor: (cell) => {
+        if (cell.routeProgress === null) return [5, 14, 11, 22];
+        return cell.routeProgress <= progress ? [45, 112, 74, 118] : [23, 51, 38, 58];
+      },
+      getLineColor: (cell) => cell.routeProgress !== null && cell.routeProgress <= progress
+        ? [82, 242, 173, 126]
+        : [74, 101, 86, 58],
+      getLineWidth: 1,
+      lineWidthUnits: "pixels",
+      pickable: false
+    }),
     new PathLayer<PathDatum>({
       id: "route-base-shadow",
-      data: route.pathData,
+      data: mode === "relief" ? route.elevationPathData : route.pathData,
       getPath: (datum) => datum.path,
       getColor: [2, 8, 8, 210],
-      getWidth: 11,
+      getWidth: mode === "relief" ? 15 : 11,
       widthUnits: "pixels",
       capRounded: true,
       jointRounded: true
     }),
     new PathLayer<PathDatum>({
       id: "route-remaining",
-      data: route.pathData,
+      data: mode === "relief" ? route.elevationPathData : route.pathData,
       getPath: (datum) => datum.path,
-      getColor: [91, 112, 105, 220],
+      getColor: mode === "relief" ? [128, 126, 49, 235] : [91, 112, 105, 220],
       getWidth: 5,
       widthUnits: "pixels",
       capRounded: true,
@@ -69,10 +97,10 @@ export function buildRouteLayers({ route, progress, current, activeEventId }: Ro
     }),
     new PathLayer<PathDatum>({
       id: "route-completed",
-      data: completedPath,
+      data: mode === "relief" ? completedElevationPath(route.elevationPathData[0].path, progress) : completedPath,
       getPath: (datum) => datum.path,
       getColor: [82, 242, 173, 255],
-      getWidth: 6,
+      getWidth: mode === "relief" ? 8 : 6,
       widthUnits: "pixels",
       capRounded: true,
       jointRounded: true
@@ -139,6 +167,57 @@ export function buildRouteLayers({ route, progress, current, activeEventId }: Ro
       fontWeight: 700
     })
   ].filter(Boolean) as LayersList;
+}
+
+function completedElevationPath(path: [number, number, number][], progress: number): ElevationPathDatum[] {
+  const lastIndex = Math.min(path.length - 1, Math.floor(Math.max(0, Math.min(1, progress)) * (path.length - 1)));
+  return [{ path: path.slice(0, lastIndex + 1) }];
+}
+
+function createHexCells(coordinates: Coordinate[]): HexCellDatum[] {
+  const longitudes = coordinates.map(([longitude]) => longitude);
+  const latitudes = coordinates.map(([, latitude]) => latitude);
+  const minLongitude = Math.min(...longitudes);
+  const maxLongitude = Math.max(...longitudes);
+  const minLatitude = Math.min(...latitudes);
+  const maxLatitude = Math.max(...latitudes);
+  const span = Math.max(maxLongitude - minLongitude, maxLatitude - minLatitude, 0.001);
+  const radius = span / 16;
+  const width = Math.sqrt(3) * radius;
+  const height = radius * 1.5;
+  const cells: HexCellDatum[] = [];
+
+  for (let row = -2; row < 15; row += 1) {
+    for (let column = -2; column < 18; column += 1) {
+      const center: Coordinate = [
+        minLongitude + column * width + (row % 2 === 0 ? 0 : width / 2),
+        minLatitude + row * height
+      ];
+      const nearest = nearestRouteProgress(center, coordinates, radius * 1.18);
+      cells.push({ polygon: hexagon(center, radius), routeProgress: nearest });
+    }
+  }
+  return cells;
+}
+
+function nearestRouteProgress(center: Coordinate, coordinates: Coordinate[], threshold: number): number | null {
+  let nearestIndex = -1;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+  coordinates.forEach(([longitude, latitude], index) => {
+    const distance = Math.hypot(longitude - center[0], latitude - center[1]);
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestIndex = index;
+    }
+  });
+  return nearestDistance <= threshold ? nearestIndex / Math.max(1, coordinates.length - 1) : null;
+}
+
+function hexagon([longitude, latitude]: Coordinate, radius: number): Coordinate[] {
+  return Array.from({ length: 6 }, (_, index) => {
+    const angle = (Math.PI / 180) * (60 * index - 30);
+    return [longitude + radius * Math.cos(angle), latitude + radius * Math.sin(angle)] as Coordinate;
+  });
 }
 
 function eventColor(event: RouteEvent): [number, number, number, number] {

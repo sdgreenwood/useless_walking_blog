@@ -25,4 +25,4 @@ Status: deck.gl migration plan, 2026-08-24.
 
 ## Deferred work
 
-Grade/pace/elevation coloring, route density, comparative traces, beauty/suffering/absurdity overlays, and live commentary effects are intentionally deferred until a product need selects them.
+Grade/pace coloring, route density, comparative traces, beauty/suffering/absurdity overlays, and live commentary effects are intentionally deferred until a product need selects them. The selected V1 visualization extensions are complete: Current, Hex Ghost, and Relief share one replay state and one layer-composition boundary.

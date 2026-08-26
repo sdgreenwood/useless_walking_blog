@@ -6,6 +6,7 @@ import { WebMercatorViewport } from "@deck.gl/core";
 import type { MapViewState } from "@deck.gl/core";
 import { Map } from "react-map-gl/maplibre";
 import { buildRouteLayers, createVisualizationRoute } from "@/lib/visualization/route-layers";
+import type { VisualizationMode } from "@/lib/visualization/route-layers";
 import type { Coordinate, ReplayRoute } from "@/lib/replay-types";
 
 type Props = {
@@ -13,21 +14,22 @@ type Props = {
   current: Coordinate;
   progress: number;
   activeEventId?: string;
+  mode: VisualizationMode;
 };
 
 const BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/dark";
 
-export function RouteVisualization({ route, current, progress, activeEventId }: Props) {
+export function RouteVisualization({ route, current, progress, activeEventId, mode }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ width: 1000, height: 600 });
   const visualizationRoute = useMemo(() => createVisualizationRoute(route), [route]);
   const initialViewState = useMemo(
-    () => fitRouteView(visualizationRoute.coordinates, size.width, size.height),
-    [size.height, size.width, visualizationRoute.coordinates]
+    () => fitRouteView(visualizationRoute.coordinates, size.width, size.height, mode),
+    [mode, size.height, size.width, visualizationRoute.coordinates]
   );
   const layers = useMemo(
-    () => buildRouteLayers({ route: visualizationRoute, progress, current, activeEventId }),
-    [activeEventId, current, progress, visualizationRoute]
+    () => buildRouteLayers({ route: visualizationRoute, progress, current, activeEventId, mode }),
+    [activeEventId, current, mode, progress, visualizationRoute]
   );
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export function RouteVisualization({ route, current, progress, activeEventId }: 
   }, []);
 
   return (
-    <div className="route-visualization" ref={containerRef} role="img" aria-label="Animated visualization of the replay route">
+    <div className={`route-visualization visualization-${mode}`} ref={containerRef} role="img" aria-label={`Animated ${modeLabel(mode)} visualization of the replay route`}>
       <DeckGL
         initialViewState={initialViewState}
         controller={{ dragRotate: false, touchRotate: false }}
@@ -60,7 +62,7 @@ export function RouteVisualization({ route, current, progress, activeEventId }: 
   );
 }
 
-export function fitRouteView(coordinates: Coordinate[], width: number, height: number): MapViewState {
+export function fitRouteView(coordinates: Coordinate[], width: number, height: number, mode: VisualizationMode = "current"): MapViewState {
   const longitudes = coordinates.map(([longitude]) => longitude);
   const latitudes = coordinates.map(([, latitude]) => latitude);
   const bounds: [[number, number], [number, number]] = [
@@ -68,14 +70,20 @@ export function fitRouteView(coordinates: Coordinate[], width: number, height: n
     [Math.max(...longitudes), Math.max(...latitudes)]
   ];
   const viewport = new WebMercatorViewport({ width, height }).fitBounds(bounds, {
-    padding: Math.max(32, Math.min(72, Math.min(width, height) * 0.12)),
+    padding: Math.max(32, Math.min(mode === "relief" ? 105 : 72, Math.min(width, height) * (mode === "relief" ? 0.18 : 0.12))),
     maxZoom: 17
   });
   return {
     longitude: viewport.longitude,
     latitude: viewport.latitude,
     zoom: viewport.zoom,
-    pitch: 0,
-    bearing: 0
+    pitch: mode === "relief" ? 52 : 0,
+    bearing: mode === "relief" ? -18 : 0
   };
+}
+
+function modeLabel(mode: VisualizationMode): string {
+  if (mode === "hex-ghost") return "Hex Ghost";
+  if (mode === "relief") return "Relief Broadcast";
+  return "current map";
 }

@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { ElevationProfile } from "./elevation-profile";
 import { clampProgress, formatClock, formatDistance, sampleAtProgress, visibleCommentary } from "@/lib/replay-math";
 import type { ReplayDocument } from "@/lib/replay-types";
+import type { VisualizationMode } from "@/lib/visualization/route-layers";
 
 const RouteVisualization = dynamic(() => import("./route-visualization").then((module) => module.RouteVisualization), { ssr: false });
 const REPLAY_SECONDS = 90;
@@ -17,6 +18,7 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
   const [mode, setMode] = useState<ReplayMode>("Condensed");
+  const [visualizationMode, setVisualizationMode] = useState<VisualizationMode>("current");
   const previousFrame = useRef<number | null>(null);
   const current = useMemo(() => sampleAtProgress(route.samples, progress), [route.samples, progress]);
   const commentary = useMemo(() => {
@@ -82,11 +84,26 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
 
       <section className="replay-grid">
         <div className="map-stage">
+          <div className="visualization-switcher" role="group" aria-label="Map visualization">
+            {([
+              ["current", "Current"],
+              ["hex-ghost", "Hex Ghost"],
+              ["relief", "Relief"]
+            ] as const).map(([value, label]) => (
+              <button
+                className={visualizationMode === value ? "active" : ""}
+                key={value}
+                onClick={() => setVisualizationMode(value)}
+                aria-pressed={visualizationMode === value}
+              >{label}</button>
+            ))}
+          </div>
           <RouteVisualization
             route={route}
             current={current.coordinates}
             progress={progress}
             activeEventId={activeEvent?.id}
+            mode={visualizationMode}
           />
           <div className="scorebug">
             <span>{Math.round(progress * 100)}%</span>

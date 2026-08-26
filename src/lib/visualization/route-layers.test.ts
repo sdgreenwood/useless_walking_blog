@@ -40,4 +40,22 @@ describe("deck.gl route layer composition", () => {
     expect(completed).toHaveLength(5_001);
     expect(completed.at(-1)).toEqual(coordinates[5_000]);
   });
+
+  it("adds deterministic territory cells only in Hex Ghost mode", () => {
+    const visualizationRoute = createVisualizationRoute(route);
+    const layers = buildRouteLayers({
+      route: visualizationRoute,
+      progress: 0.5,
+      current: route.samples[0].coordinates,
+      mode: "hex-ghost"
+    });
+    expect(visualizationRoute.hexCells.length).toBeGreaterThan(100);
+    expect((layers as Array<{ id: string }>).map((layer) => layer.id)).toContain("hex-ghost-territory");
+  });
+
+  it("preserves sample elevation for Relief Broadcast", () => {
+    const visualizationRoute = createVisualizationRoute(route);
+    expect(visualizationRoute.elevationPathData[0].path).toHaveLength(route.samples.length);
+    expect(visualizationRoute.elevationPathData[0].path.every((coordinate) => coordinate.length === 3)).toBe(true);
+  });
 });

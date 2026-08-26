@@ -27,11 +27,13 @@ The replay has a normalized `0...1` clock compressed to 90 seconds at 1×. Route
 
 Controls provide play/pause, restart, continuous scrubbing, 0.5×/1×/2×/4× speed, and previous/next major-event navigation. Clicking the elevation profile seeks to that route position. Condensed, Highlights, and Instant Recap are represented as mode controls; specialized timeline behavior remains a subsequent interaction tranche.
 
+The map-stage toggle independently selects Current, Hex Ghost, or Relief. Current is the original broadcast map. Hex Ghost turns repeated territory into a subdued green cellular field whose visited cells appear as progress advances. Relief pitches the view and uses real sample elevation to make climbs legible without changing the elevation chart or replay timing. The toggle is reachable above the map on desktop and spans the available width on mobile.
+
 ## Components
 
 - `ReplayExperience`: replay clock, state, modes, metrics, commentary, and controls
 - `RouteVisualization`: deck.gl host and replaceable quiet basemap adapter
-- `buildRouteLayers`: reusable PathLayer, ScatterplotLayer, and TextLayer composition for route, progress, position, events, endpoints, and active-event annotation
+- `buildRouteLayers`: reusable PathLayer, PolygonLayer, ScatterplotLayer, and TextLayer composition for route, progress, position, events, endpoints, territory cells, elevation trace, and active-event annotation
 - `ElevationProfile`: compact SVG visualization and seek surface
 - `replay-math`: framework-independent interpolation, formatting, and commentary timing
 
