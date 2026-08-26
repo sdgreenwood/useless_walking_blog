@@ -50,6 +50,7 @@ Updated: 2026-08-24.
 - Curated replay and mobile-commentary commit `ec111f1` is pushed to `origin/main` and deployed.
 - Commentary-cadence commit `b9860c7` is pushed to `origin/main` and deployed.
 - deck.gl migration commit `25f1931` is pushed to `origin/main` and deployed.
+- visualization-mode commit `be176cd` is pushed to `origin/main`; Hex Ghost and Relief are live and verified in production.
 - V1 is deployed on Vercel at `https://useless-walking-blog.vercel.app`.
 
 ## Current gates

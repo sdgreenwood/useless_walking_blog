@@ -23,7 +23,7 @@ Prepare the next replay import, live-ingestion design, or visualization layer re
 - A complete local deck.gl migration now owns route, completed progress, current position, start/finish, events, and active annotations through reusable layers. The old imperative MapLibre renderer is removed; MapLibre/OpenFreeMap remains only a replaceable basemap child.
 - Migration checks pass: strict TypeScript, ESLint, 36 tests including a 10,000-point full-fidelity path, production build, desktop/mobile browser playback, and no deck.gl runtime errors.
 - The deck.gl migration is live. Production verification confirms the new visualization host, removal of the legacy route container, 390 px playback without overflow, and correct Multioak event navigation.
-- Current, Hex Ghost, and Relief visualization modes are implemented locally behind a map-stage toggle. They share replay progress and deterministic route data; deployment is not yet performed.
+- Current, Hex Ghost, and Relief visualization modes are live behind the map-stage toggle. Production verification confirms both new modes activate with zero runtime errors; they share replay progress and deterministic route data.
 
 ## Fixture replay gate
 
@@ -55,3 +55,4 @@ Await the next owner-selected tranche. Keep OpenAI optional and import-time only
 - Commit `ec111f1` publishes the two curated stair replays and mobile commentary-first layout; both replay URLs and the three-card replay desk are live and verified.
 - Commit `b9860c7` increases all three replays to ten commentary calls; the Vercel production replay reports `10/10` and no runtime errors.
 - Commit `25f1931` makes deck.gl the primary visualization framework; the Vercel production replay is live and verified.
+- Commit `be176cd` adds Hex Ghost and Relief presentation modes; both are live and verified on the Vercel production replay.
