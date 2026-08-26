@@ -24,7 +24,7 @@ Prepare the next replay import, live-ingestion design, or visualization layer re
 - Migration checks pass: strict TypeScript, ESLint, 36 tests including a 10,000-point full-fidelity path, production build, desktop/mobile browser playback, and no deck.gl runtime errors.
 - The deck.gl migration is live. Production verification confirms the new visualization host, removal of the legacy route container, 390 px playback without overflow, and correct Multioak event navigation.
 - Current, Hex Ghost, and Relief visualization modes are live behind the map-stage toggle. Production verification confirms both new modes activate with zero runtime errors; they share replay progress and deterministic route data.
-- A DEM-backed Relief correction is implemented locally: Mapzen terrain tiles from AWS Open Data provide the surface and all replay overlays share the elevated frame. The owner explicitly approved disclosure of visible route-area tile coordinates to AWS. Deployment is pending.
+- The DEM-backed Relief correction is live: Mapzen terrain tiles from AWS Open Data provide the surface and all replay overlays share the elevated frame. Production verification passed on Multioak at desktop and 390 px with attribution, no overflow, and zero runtime errors. The owner explicitly approved disclosure of visible route-area tile coordinates to AWS.
 
 ## Fixture replay gate
 
@@ -57,3 +57,4 @@ Await the next owner-selected tranche. Keep OpenAI optional and import-time only
 - Commit `b9860c7` increases all three replays to ten commentary calls; the Vercel production replay reports `10/10` and no runtime errors.
 - Commit `25f1931` makes deck.gl the primary visualization framework; the Vercel production replay is live and verified.
 - Commit `be176cd` adds Hex Ghost and Relief presentation modes; both are live and verified on the Vercel production replay.
+- Commit `eed2ec0` adds the DEM-backed Relief terrain surface and aligned elevated replay overlays; the production Multioak replay is live and verified.
