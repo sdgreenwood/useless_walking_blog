@@ -23,6 +23,7 @@ Updated: 2026-08-24.
 - The former imperative MapLibre route-source component has been removed. Replay timing and interpolation remain independent application/domain logic.
 - The replay map now offers Current, Hex Ghost, and Relief presentation modes. Hex Ghost derives a deterministic territory grid from route geometry; Relief preserves sample elevation in a pitched deck.gl trace. Both consume the existing normalized progress and create no new route facts.
 - Relief now uses open Mapzen Terrarium DEM tiles from AWS Open Data for an actual MapLibre terrain surface and restrained hillshade. All deck.gl route markers and annotations share the elevated coordinate frame; Current and Hex Ghost remain flat.
+- Relief presentation now samples the loaded DEM along the route so deck.gl overlays use the same display surface as MapLibre terrain. Hillshade sits below streets and labels; recorded GPS elevation remains unchanged as analytical evidence.
 - Two user-authorized WalkingLab routes are curated as `multioak-stairs` and `oakhurst-stairs`, with hand-authored commentary anchored to deterministic halfway events.
 
 ## Verified

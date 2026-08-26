@@ -60,4 +60,12 @@ describe("deck.gl route layer composition", () => {
     expect(visualizationRoute.endpointData.every((point) => point.elevatedCoordinates.length === 3)).toBe(true);
     expect(visualizationRoute.eventData).toHaveLength(route.events.length);
   });
+
+  it("uses sampled terrain elevation as the Relief display datum", () => {
+    const terrain = route.samples.map(() => 125);
+    const visualizationRoute = createVisualizationRoute(route, terrain);
+    expect(visualizationRoute.elevationPathData[0].path.every((coordinate) => coordinate[2] === 128)).toBe(true);
+    expect(visualizationRoute.endpointData.every((point) => point.elevatedCoordinates[2] === 128)).toBe(true);
+    expect(visualizationRoute.eventData.every((datum) => datum.elevatedCoordinates[2] === 128)).toBe(true);
+  });
 });

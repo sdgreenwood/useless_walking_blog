@@ -29,14 +29,19 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
   const mapRef = useRef<MapRef>(null);
   const [size, setSize] = useState({ width: 1000, height: 600 });
   const [mapReady, setMapReady] = useState(false);
-  const visualizationRoute = useMemo(() => createVisualizationRoute(route), [route]);
+  const [terrainElevations, setTerrainElevations] = useState<Array<number | null> | null>(null);
+  const visualizationRoute = useMemo(() => createVisualizationRoute(route, terrainElevations), [route, terrainElevations]);
+  const currentDisplayElevation = useMemo(
+    () => terrainElevations ? elevationAtProgress(route, terrainElevations, progress) : currentElevationMeters,
+    [currentElevationMeters, progress, route, terrainElevations]
+  );
   const initialViewState = useMemo(
     () => fitRouteView(visualizationRoute.coordinates, size.width, size.height, mode),
     [mode, size.height, size.width, visualizationRoute.coordinates]
   );
   const layers = useMemo(
-    () => buildRouteLayers({ route: visualizationRoute, progress, current, currentElevationMeters, activeEventId, mode }),
-    [activeEventId, current, currentElevationMeters, mode, progress, visualizationRoute]
+    () => buildRouteLayers({ route: visualizationRoute, progress, current, currentElevationMeters: currentDisplayElevation, activeEventId, mode }),
+    [activeEventId, current, currentDisplayElevation, mode, progress, visualizationRoute]
   );
 
   useEffect(() => {
@@ -67,6 +72,7 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
       });
     }
     if (!map.getLayer(HILLSHADE_LAYER_ID)) {
+      const firstStreetLayer = map.getStyle().layers.find((layer) => layer.type === "line" || layer.type === "symbol")?.id;
       map.addLayer({
         id: HILLSHADE_LAYER_ID,
         type: "hillshade",
@@ -78,13 +84,21 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
           "hillshade-accent-color": "#193b2b",
           "hillshade-exaggeration": 0.45
         }
-      });
+      }, firstStreetLayer);
     }
 
     const relief = mode === "relief";
     map.setLayoutProperty(HILLSHADE_LAYER_ID, "visibility", relief ? "visible" : "none");
     map.setTerrain(relief ? { source: TERRAIN_SOURCE_ID, exaggeration: 1 } : null);
-  }, [mapReady, mode]);
+
+    if (!relief || terrainElevations) return;
+    const sampleTerrain = () => {
+      const elevations = route.samples.map((sample) => map.queryTerrainElevation(sample.coordinates));
+      if (elevations.some((elevation) => elevation !== null)) setTerrainElevations(elevations);
+    };
+    map.once("idle", sampleTerrain);
+    return () => { map.off("idle", sampleTerrain); };
+  }, [mapReady, mode, route.samples, terrainElevations]);
 
   return (
     <div className={`route-visualization visualization-${mode}`} ref={containerRef} role="img" aria-label={`Animated ${modeLabel(mode)} visualization of the replay route`}>
@@ -130,4 +144,17 @@ function modeLabel(mode: VisualizationMode): string {
   if (mode === "hex-ghost") return "Hex Ghost";
   if (mode === "relief") return "Relief Broadcast";
   return "current map";
+}
+
+function elevationAtProgress(route: ReplayRoute, elevations: Array<number | null>, progress: number): number | null {
+  let low = 0;
+  let high = route.samples.length - 1;
+  while (low < high) {
+    const middle = Math.floor((low + high) / 2);
+    if (route.samples[middle].progress < progress) low = middle + 1;
+    else high = middle;
+  }
+  const prior = Math.max(0, low - 1);
+  const index = Math.abs(route.samples[prior].progress - progress) <= Math.abs(route.samples[low].progress - progress) ? prior : low;
+  return elevations[index] ?? null;
 }

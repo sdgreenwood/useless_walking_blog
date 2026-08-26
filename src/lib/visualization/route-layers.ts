@@ -33,9 +33,10 @@ type ElevationPathDatum = { path: [number, number, number][] };
 type HexCellDatum = { polygon: Coordinate[]; routeProgress: number | null };
 const RELIEF_ROUTE_OFFSET_METERS = 3;
 
-export function createVisualizationRoute(route: ReplayRoute): VisualizationRoute {
+export function createVisualizationRoute(route: ReplayRoute, terrainElevations: Array<number | null> | null = null): VisualizationRoute {
   const start = route.geometry.coordinates[0];
   const finish = route.geometry.coordinates.at(-1)!;
+  const displayElevation = (index: number) => terrainElevations?.[index] ?? route.samples[index]?.elevationMeters;
   return {
     coordinates: route.geometry.coordinates,
     events: route.events,
@@ -43,18 +44,31 @@ export function createVisualizationRoute(route: ReplayRoute): VisualizationRoute
     finish,
     pathData: [{ path: route.geometry.coordinates }],
     endpointData: [
-      { coordinates: start, elevatedCoordinates: elevate(start, route.samples[0]?.elevationMeters), kind: "start" },
-      { coordinates: finish, elevatedCoordinates: elevate(finish, route.samples.at(-1)?.elevationMeters), kind: "finish" }
+      { coordinates: start, elevatedCoordinates: elevate(start, displayElevation(0)), kind: "start" },
+      { coordinates: finish, elevatedCoordinates: elevate(finish, displayElevation(route.samples.length - 1)), kind: "finish" }
     ],
     eventData: route.events.map((event) => {
-      const sampleIndex = Math.round(event.routeProgress * Math.max(0, route.samples.length - 1));
-      return { event, elevatedCoordinates: elevate(event.coordinates, route.samples[sampleIndex]?.elevationMeters) };
+      const sampleIndex = nearestProgressIndex(route, event.routeProgress);
+      return { event, elevatedCoordinates: elevate(event.coordinates, displayElevation(sampleIndex)) };
     }),
     elevationPathData: [{
-      path: route.samples.map((sample) => elevate(sample.coordinates, sample.elevationMeters))
+      path: route.samples.map((sample, index) => elevate(sample.coordinates, displayElevation(index)))
     }],
     hexCells: createHexCells(route.geometry.coordinates)
   };
+}
+
+function nearestProgressIndex(route: ReplayRoute, progress: number): number {
+  let bestIndex = 0;
+  let bestDelta = Number.POSITIVE_INFINITY;
+  route.samples.forEach((sample, index) => {
+    const delta = Math.abs(sample.progress - progress);
+    if (delta < bestDelta) {
+      bestDelta = delta;
+      bestIndex = index;
+    }
+  });
+  return bestIndex;
 }
 
 export function completedRoutePath(coordinates: Coordinate[], current: Coordinate, progress: number): Coordinate[] {
