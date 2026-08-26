@@ -13,6 +13,7 @@ Updated: 2026-08-24.
 - Framework-independent normalized route domain and WalkingLab schema-v1 importer.
 - WalkingLab privacy projection excludes HealthKit UUIDs, device/source identifiers, update identity, export time, and absolute timestamps before analysis.
 - GPX importer and deterministic versioned route analysis with segment-safe elevation math.
+- A dependency-free TCX adapter projects only positioned trackpoints into the normalized route contract, discarding sensor-only points and metadata. Eight supplied historical TCX walks pass dry import and exist only as ignored mode-0600 private candidates pending location/commentary review.
 - Privacy-trimmed replay pipeline, deterministic fallback commentary, and optional one-time server-only OpenAI commentary.
 - Deep replay schema validation at publish and build boundaries.
 - Ignored mode-0600 candidate generation, local-only visual preview, and guarded curated-file publication.

@@ -16,7 +16,7 @@ export function parseReplayDocument(value: unknown, expectedId?: string): Replay
   if (expectedId && id !== expectedId) fail("route.id must match its replay filename");
   text(route.name, "route.name");
   if (typeof route.createdAt !== "string" || !Number.isFinite(Date.parse(route.createdAt))) fail("route.createdAt must be ISO-8601");
-  if (!new Set(["fixture", "walkinglab", "gpx"]).has(String(route.source))) fail("route.source is invalid");
+  if (!new Set(["fixture", "walkinglab", "gpx", "tcx"]).has(String(route.source))) fail("route.source is invalid");
 
   const geometry = object(route.geometry, "route.geometry");
   if (geometry.type !== "LineString") fail("route.geometry must be a LineString");

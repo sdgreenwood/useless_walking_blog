@@ -1,6 +1,6 @@
 # Route privacy and publishing
 
-Walking routes are precise location history. Walking Ocho treats raw WalkingLab JSON and GPX as private input, even when the intended replay will eventually be public.
+Walking routes are precise location history. Walking Ocho treats raw WalkingLab JSON, GPX, and TCX as private input, even when the intended replay will eventually be public.
 
 ## Data stages
 
@@ -8,7 +8,7 @@ Walking routes are precise location history. Walking Ocho treats raw WalkingLab 
 2. **Private candidate:** stored mode-0600 under ignored `private-imports/`. It contains publishable coordinates and therefore remains sensitive.
 3. **Curated replay:** contains only relative timing, analyzed metrics/events, commentary, and reviewed route geometry. It is intentionally public and committed under `data/replays/`.
 
-WalkingLab import removes HealthKit UUIDs, update identities, device/source details, export time, and absolute timestamps. GPX import reads only track geometry, relative time, and elevation. Neither importer makes coordinates anonymous.
+WalkingLab import removes HealthKit UUIDs, update identities, device/source details, export time, and absolute timestamps. GPX and TCX import read only positioned track geometry, relative time, and elevation; TCX sensor-only points and sensor metadata are discarded. No importer makes coordinates anonymous.
 
 ## Default protection
 

@@ -11,7 +11,7 @@ Walking Ocho separates input parsing from route truth. `importGpxRoute(xml)` and
 - Missing time/elevation remains `null`; analysis does not substitute zero.
 - The output and stable event IDs are versioned as analysis version 1.
 
-GPX metadata is intentionally discarded. The adapter reads track segments, latitude, longitude, optional elevation, and optional ISO timestamps. Invalid points become import issues; a document without any valid track point is rejected.
+GPX metadata is intentionally discarded. The adapter reads track segments, latitude, longitude, optional elevation, and optional ISO timestamps. TCX uses the same normalized boundary: only trackpoints containing a position are retained, sensor-only points and sensor metadata are discarded, timestamps become relative elapsed seconds, and absolute workout identifiers/times are not retained. Invalid positioned points become import issues; a document without any valid positioned track point is rejected.
 
 ## Algorithms
 

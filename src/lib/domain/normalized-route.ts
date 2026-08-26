@@ -23,7 +23,7 @@ export type ImportIssue = {
 export type NormalizedRoute = {
   schemaVersion: 1;
   source: {
-    kind: "walkinglab" | "gpx";
+    kind: "walkinglab" | "gpx" | "tcx";
     schemaVersion: number | null;
   };
   activityType: string | null;

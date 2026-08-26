@@ -33,7 +33,7 @@ export type ReplayRoute = {
   id: string;
   name: string;
   createdAt: string;
-  source: "fixture" | "walkinglab" | "gpx";
+  source: "fixture" | "walkinglab" | "gpx" | "tcx";
   geometry: { type: "LineString"; coordinates: Coordinate[] };
   samples: RouteSample[];
   distanceMeters: number;

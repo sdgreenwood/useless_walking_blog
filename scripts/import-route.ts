@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { importGpxRoute } from "../src/lib/importers/gpx";
 import { importWalkingLabRoute } from "../src/lib/importers/walkinglab";
+import { importTcxRoute } from "../src/lib/importers/tcx";
 import { buildReplay } from "../src/lib/pipeline/build-replay";
 import { generateCommentary } from "../src/lib/commentary/openai-adapter";
 import type { CommentaryGenerationInput } from "../src/lib/commentary/types";
@@ -21,9 +22,12 @@ if (commentaryMode !== "deterministic" && commentaryMode !== "openai") throw new
 
 const absoluteInput = path.resolve(inputPath);
 const text = fs.readFileSync(absoluteInput, "utf8");
-const normalized = absoluteInput.toLowerCase().endsWith(".gpx")
+const lowerInput = absoluteInput.toLowerCase();
+const normalized = lowerInput.endsWith(".gpx")
   ? importGpxRoute(text)
-  : importWalkingLabRoute(JSON.parse(text) as unknown);
+  : lowerInput.endsWith(".tcx")
+    ? importTcxRoute(text)
+    : importWalkingLabRoute(JSON.parse(text) as unknown);
 const createdAt = new Date().toISOString();
 const base = buildReplay(normalized, { id, name, createdAt, trimStartMeters, trimEndMeters });
 

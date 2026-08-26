@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Prepare the next replay import, live-ingestion design, or visualization layer requested by the owner.
+Review and curate the eight newly supplied historical TCX walks without exposing raw files or precise locations prematurely.
 
 ## Current state
 
@@ -26,6 +26,7 @@ Prepare the next replay import, live-ingestion design, or visualization layer re
 - Current, Hex Ghost, and Relief visualization modes are live behind the map-stage toggle. Production verification confirms both new modes activate with zero runtime errors; they share replay progress and deterministic route data.
 - The DEM-backed Relief correction is live: Mapzen terrain tiles from AWS Open Data provide the surface and all replay overlays share the elevated frame. Production verification passed on Multioak at desktop and 390 px with attribution, no overflow, and zero runtime errors. The owner explicitly approved disclosure of visible route-area tile coordinates to AWS.
 - The root-cause spatial audit is live. It proves the coordinate/tile/decoder pipeline with five controls, adds `?spatial-debug=1`, removes the unexplained 3 m lift, and disables MapLibre terrain camera clamping so both canvases share a sea-level view frame. Recorded GPS elevation remains analysis evidence. Production verification passed the hidden proof mode and ordinary Relief view without terrain-camera or overzoom warnings.
+- Eight additional historical TCX walks (17.21–34.90 miles) are available locally. A tested TCX importer discards sensor-only points and metadata; all eight passed deterministic dry import and have ignored mode-0600 candidates with default 200 m endpoint trimming. Automated quality analysis found no unusable candidate, but seven carry reviewable GPS/elevation flags. They are not published and still require owner location review and commentary curation.
 
 ## Fixture replay gate
 
@@ -42,7 +43,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Await the next owner-selected tranche. Keep OpenAI optional and import-time only unless a separately approved architecture change is requested.
+Perform private visual/location review of the eight TCX candidates, resolve flagged GPS/elevation anomalies, curate commentary, and publish only after the owner supplies the required precise-location confirmation.
 
 ## External gates
 

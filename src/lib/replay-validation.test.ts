@@ -37,4 +37,10 @@ describe("parseReplayDocument", () => {
     scheduled.route.commentary[0].displayProgress = 1.1;
     expect(() => parseReplayDocument(scheduled)).toThrow("displayProgress");
   });
+
+  it("accepts TCX as a normalized replay source", () => {
+    const tcx = structuredClone(demo) as unknown as ReplayDocument;
+    tcx.route.source = "tcx";
+    expect(parseReplayDocument(tcx).route.source).toBe("tcx");
+  });
 });
