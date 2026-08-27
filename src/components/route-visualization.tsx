@@ -9,7 +9,7 @@ import type { MapRef } from "react-map-gl/maplibre";
 import { buildRouteLayers, createVisualizationRoute } from "@/lib/visualization/route-layers";
 import type { VisualizationMode } from "@/lib/visualization/route-layers";
 import type { Coordinate, ReplayRoute } from "@/lib/replay-types";
-import { DEM_DATA_MAX_ZOOM, DEM_MAX_ZOOM, DEM_TILE_SIZE, longitudeLatitudeToXyzTile } from "@/lib/visualization/spatial-reference";
+import { acceptCompleteTerrainElevations, DEM_DATA_MAX_ZOOM, DEM_MAX_ZOOM, DEM_TILE_SIZE, longitudeLatitudeToXyzTile } from "@/lib/visualization/spatial-reference";
 
 type Props = {
   route: ReplayRoute;
@@ -32,8 +32,9 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
   const mapRef = useRef<MapRef>(null);
   const [size, setSize] = useState({ width: 1000, height: 600 });
   const [mapReady, setMapReady] = useState(false);
-  const [terrainElevations, setTerrainElevations] = useState<Array<number | null> | null>(null);
+  const [terrainResult, setTerrainResult] = useState<{ routeId: string; elevations: number[] } | null>(null);
   const [inspectedCoordinate, setInspectedCoordinate] = useState<Coordinate | null>(null);
+  const terrainElevations = terrainResult?.routeId === route.id ? terrainResult.elevations : null;
   const visualizationRoute = useMemo(() => createVisualizationRoute(route, terrainElevations), [route, terrainElevations]);
   const currentDisplayElevation = useMemo(
     () => terrainElevations ? elevationAtProgress(route, terrainElevations, progress) : currentElevationMeters,
@@ -43,6 +44,7 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
     () => fitRouteView(visualizationRoute.coordinates, size.width, size.height, mode, spatialDebug),
     [mode, size.height, size.width, spatialDebug, visualizationRoute.coordinates]
   );
+  const reliefReady = mode !== "relief" || terrainElevations !== null;
   const layers = useMemo(
     () => buildRouteLayers({ route: visualizationRoute, progress, current, currentElevationMeters: currentDisplayElevation, activeEventId, mode, spatialDebug }),
     [activeEventId, current, currentDisplayElevation, mode, progress, spatialDebug, visualizationRoute]
@@ -110,18 +112,20 @@ export function RouteVisualization({ route, current, currentElevationMeters, pro
     if (!relief || terrainElevations) return;
     const sampleTerrain = () => {
       const elevations = route.samples.map((sample) => map.queryTerrainElevation(sample.coordinates));
-      if (elevations.some((elevation) => elevation !== null)) setTerrainElevations(elevations);
+      const completeElevations = acceptCompleteTerrainElevations(elevations);
+      if (completeElevations) setTerrainResult({ routeId: route.id, elevations: completeElevations });
     };
-    map.once("idle", sampleTerrain);
+    sampleTerrain();
+    map.on("idle", sampleTerrain);
     return () => { map.off("idle", sampleTerrain); };
-  }, [mapReady, mode, route.samples, spatialDebug, terrainElevations]);
+  }, [mapReady, mode, route.id, route.samples, spatialDebug, terrainElevations]);
 
   return (
     <div className={`route-visualization visualization-${mode}`} ref={containerRef} role="img" aria-label={`Animated ${modeLabel(mode)} visualization of the replay route`}>
       <DeckGL
         initialViewState={initialViewState}
         controller={{ dragRotate: false, touchRotate: false }}
-        layers={layers}
+        layers={reliefReady ? layers : []}
         onClick={(info) => {
           if (spatialDebug && info.coordinate) setInspectedCoordinate([info.coordinate[0], info.coordinate[1]]);
         }}
@@ -179,7 +183,7 @@ function modeLabel(mode: VisualizationMode): string {
   return "current map";
 }
 
-function elevationAtProgress(route: ReplayRoute, elevations: Array<number | null>, progress: number): number | null {
+function elevationAtProgress(route: ReplayRoute, elevations: number[], progress: number): number {
   let low = 0;
   let high = route.samples.length - 1;
   while (low < high) {
@@ -189,5 +193,5 @@ function elevationAtProgress(route: ReplayRoute, elevations: Array<number | null
   }
   const prior = Math.max(0, low - 1);
   const index = Math.abs(route.samples[prior].progress - progress) <= Math.abs(route.samples[low].progress - progress) ? prior : low;
-  return elevations[index] ?? null;
+  return elevations[index];
 }

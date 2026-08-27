@@ -29,6 +29,7 @@ Updated: 2026-08-24.
 - Relief now uses open Mapzen Terrarium DEM tiles from AWS Open Data for an actual MapLibre terrain surface and restrained hillshade. All deck.gl route markers and annotations share the elevated coordinate frame; Current and Hex Ghost remain flat.
 - Relief presentation now samples the loaded DEM along the route so deck.gl overlays use the same display surface as MapLibre terrain. Hillshade sits below streets and labels; recorded GPS elevation remains unchanged as analytical evidence.
 - The spatial root-cause audit proves WGS84/GeoJSON ordering, Web Mercator/XYZ tile math, Terrarium decoding, and five Multioak controls. The unexplained 3 m route lift is removed; MapLibre terrain camera clamping is disabled so deck.gl and MapLibre share one sea-level view frame. `?spatial-debug=1` exposes route/DEM bounds and controls.
+- Relief enforces one complete DEM-derived vertical datum per route. Partial/non-finite profiles remain unrendered and are resampled instead of falling back to workout altitude or sea level; completed profiles are keyed to their replay ID.
 - Two user-authorized WalkingLab routes are curated as `multioak-stairs` and `oakhurst-stairs`, with hand-authored commentary anchored to deterministic halfway events.
 
 ## Verified
@@ -48,6 +49,7 @@ Updated: 2026-08-24.
 - The deck.gl migration passes strict TypeScript, ESLint, 36 tests, a 10,000-point full-fidelity layer test, production static build, desktop browser acceptance, mobile playback acceptance at 390 px, and zero deck.gl runtime errors.
 - Thirty-one tests pass across importers, analysis, commentary privacy/schema, replay math, pipeline privacy, fragmented-route rejection, and deep replay validation.
 - The supplied private WalkingLab export passed a local count-only compatibility check: one segment, 2,257 samples, zero importer issues, and zero tested private-metadata leaks. No route values or identifiers were printed or committed.
+- The Relief datum invariant passes 51 tests, strict TypeScript, clean ESLint, the 21-page production build, and desktop/mobile visual acceptance on the February loop replay.
 
 ## External state
 

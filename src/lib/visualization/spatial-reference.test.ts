@@ -1,11 +1,17 @@
 import { describe, expect, it } from "vitest";
 import multioak from "../../../data/replays/multioak-stairs.json";
 import type { ReplayDocument } from "@/lib/replay-types";
-import { boundsPolygon, longitudeLatitudeToWorld, longitudeLatitudeToXyzTile, routeBounds, terrariumElevationMeters, tilesCoveringBounds, worldToLongitudeLatitude, xyzTileBounds } from "./spatial-reference";
+import { acceptCompleteTerrainElevations, boundsPolygon, longitudeLatitudeToWorld, longitudeLatitudeToXyzTile, routeBounds, terrariumElevationMeters, tilesCoveringBounds, worldToLongitudeLatitude, xyzTileBounds } from "./spatial-reference";
 
 const route = (multioak as unknown as ReplayDocument).route;
 
 describe("canonical spatial reference", () => {
+  it("rejects partial or invalid terrain profiles instead of mixing elevation datums", () => {
+    expect(acceptCompleteTerrainElevations([251, null, 253])).toBeNull();
+    expect(acceptCompleteTerrainElevations([251, Number.NaN, 253])).toBeNull();
+    expect(acceptCompleteTerrainElevations([251, 252, 253])).toEqual([251, 252, 253]);
+  });
+
   it("round-trips five route controls through normalized Web Mercator world coordinates", () => {
     const controls = [0, 0.25, 0.5, 0.75, 1].map((progress) => route.samples[Math.round(progress * (route.samples.length - 1))].coordinates);
     controls.forEach((coordinate) => {

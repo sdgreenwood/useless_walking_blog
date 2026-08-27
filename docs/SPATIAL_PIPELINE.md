@@ -22,7 +22,7 @@ Relief uses Mapzen Terrain Tiles from AWS Open Data at `terrarium/{z}/{x}/{y}.pn
 
 MapLibre places each tile at its Web Mercator footprint and decodes meters as `(R × 256 + G + B / 256) − 32768`. It privately constructs/stitches the mesh; the app performs no pixel interpolation, edge/center choice, row inversion, mesh indexing, or model transform. Hillshade and terrain use separate MapLibre sources with the identical DEM URL/configuration, as recommended by MapLibre, and terrain uses exaggeration 1. Hillshade is below roads/labels.
 
-For Relief overlays, `queryTerrainElevation([longitude, latitude])` supplies MapLibre's absolute display height at each sample; deck.gl uses the same horizontal tuple and that z value. Recorded GPS elevation remains the independent analysis/chart evidence.
+For Relief overlays, `queryTerrainElevation([longitude, latitude])` supplies MapLibre's absolute display height at every sample; deck.gl uses the same horizontal tuple and that z value. The overlay is withheld while any DEM result is null or non-finite, and sampling continues after terrain-idle events until the profile is complete. Partial DEM profiles are never combined with recorded workout altitude or sea level. Recorded GPS elevation remains the independent analysis/chart evidence.
 
 ## Explicit conventions
 
@@ -61,6 +61,7 @@ There is no app-owned terrain wireframe to expose because MapLibre owns the priv
 | Mapzen Terrarium, tile size 256, data z0–15 | Proven source contract | Retained; renderer capped at z14 to match basemap TileJSON |
 | Hillshade below roads/labels | Presentation-only | Retained |
 | DEM sampling for deck.gl z | Necessary in split renderer | Retained |
+| GPS/sea-level fallback for partial DEM sampling | Mixed vertical datums inside one overlay | Removed; Relief waits for one complete DEM profile |
 | `+3 m` route lift | Unexplained compensation | Removed |
 | Relief max view zoom 15 | Source-resolution bound | Retained |
 | Pitch 38°, bearing −12° | Presentation, not correction | Retained; debug uses 0°/0° |

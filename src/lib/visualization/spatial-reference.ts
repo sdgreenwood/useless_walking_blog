@@ -5,6 +5,13 @@ export const DEM_DATA_MAX_ZOOM = 15;
 export const DEM_MAX_ZOOM = 14;
 export const DEM_TILE_SIZE = 256;
 
+/** Accept a terrain profile only when every point shares the DEM datum. */
+export function acceptCompleteTerrainElevations(elevations: Array<number | null>): number[] | null {
+  return elevations.every((elevation): elevation is number => elevation !== null && Number.isFinite(elevation))
+    ? elevations
+    : null;
+}
+
 export type XyzTile = { z: number; x: number; y: number };
 export type GeographicBounds = [west: number, south: number, east: number, north: number];
 
