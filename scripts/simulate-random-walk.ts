@@ -23,7 +23,7 @@ for (const element of document.elements) {
   if (element.type === "node") nodes.set((element as OsmNode).id, element as OsmNode);
   if (element.type === "way") sourceWays.push(element as OsmWay);
 }
-const ways = sourceWays.filter((way) => walkable(way, nodes));
+const ways = sourceWays.filter(walkable);
 
 const rawEdges: RawEdge[] = [];
 const incident = new Map<number, number[]>();
@@ -64,7 +64,7 @@ const summary = {
     coverage: "every undirected street segment in the largest reachable component traversed at least once",
     choice: "uniform among incident segments, including the segment just used",
     start: "uniform random junction with at least three incident segments",
-    water: "ferries/non-highway links and bridge ways at least 200 meters long are excluded; the frozen graph is land-focused but should be audited visually before publication",
+    water: "ferries, non-highway links, and every OSM way tagged as a bridge are excluded; HPI is therefore zero by construction",
     walkable: "public highway ways excluding motorway/trunk families and explicit foot/access prohibitions"
   },
   network: {
@@ -88,24 +88,14 @@ const summary = {
 };
 console.log(JSON.stringify(summary, null, 2));
 
-function walkable(way: OsmWay, nodes: Map<number, OsmNode>): boolean {
+function walkable(way: OsmWay): boolean {
   const tags = way.tags ?? {};
   const highway = tags.highway;
   if (!highway || tags.area === "yes") return false;
   if (["motorway", "motorway_link", "trunk", "trunk_link", "raceway", "construction", "proposed", "abandoned", "elevator"].includes(highway)) return false;
   if (["no", "private"].includes(tags.access) || ["no", "private"].includes(tags.foot)) return false;
-  if (tags.bridge && tags.bridge !== "no" && wayLength(way, nodes) >= 200) return false;
+  if (tags.bridge && tags.bridge !== "no") return false;
   return true;
-}
-
-function wayLength(way: OsmWay, nodes: Map<number, OsmNode>): number {
-  let meters = 0;
-  for (let index = 1; index < way.nodes.length; index += 1) {
-    const a = nodes.get(way.nodes[index - 1]);
-    const b = nodes.get(way.nodes[index]);
-    if (a && b) meters += haversine(a, b);
-  }
-  return meters;
 }
 
 function collapseSegments(edges: RawEdge[], incident: Map<number, number[]>, junctions: Set<number>): Segment[] {

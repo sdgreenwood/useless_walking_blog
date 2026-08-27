@@ -1,6 +1,6 @@
 # Randomly walking San Francisco until nothing is left
 
-Status: research prototype; preliminary results, not yet a public page.
+Status: published editorial V1 with reproducible offline simulator.
 
 ## Product decision
 
@@ -24,7 +24,7 @@ There is no route planning, memory, preference for novelty, or mercy.
 
 ## Frozen preliminary graph
 
-The prototype queried OpenStreetMap through Overpass at `2026-08-27T01:28:35Z` for highway ways in San Francisco's administrative boundary. It excludes motorway/trunk families, explicit private/no-foot ways, ferries, and bridge ways at least 200 meters long. It then selects the largest connected component.
+The prototype queried OpenStreetMap through Overpass at `2026-08-27T01:28:35Z` for highway ways in San Francisco's administrative boundary. It excludes motorway/trunk families, explicit private/no-foot ways, ferries, and every way tagged as a bridge. It then selects the largest connected component. This deliberately conservative rule can remove legitimate land overpasses, but it gives the V1 walker no authorized water-crossing mechanism and makes HPI zero by construction.
 
 Preliminary graph:
 
@@ -33,7 +33,7 @@ Preliminary graph:
 - 434.14 km / 269.76 mi of unique segment length;
 - 6,482 underlying OSM node-to-node edges.
 
-The bridge-length rule is a conservative proxy, not a proof of land intersection. Before publication, freeze the graph as a versioned artifact and visually audit its boundary, long bridges, parks, disconnected sidewalk systems, and all apparent water crossings. The current numbers are suitable for deciding whether the idea is interesting; they are not yet a claim about a canonical total of San Francisco street mileage.
+These figures describe the filtered largest component, not a canonical total of San Francisco street mileage. OSM tagging and disconnected sidewalk/path systems remain limitations; the page states the filter rather than quietly presenting the result as municipal truth.
 
 ## Preliminary result: 1,000 seeded walks
 
@@ -41,10 +41,10 @@ Seed family: `20260826...`; walking time is distance divided by a constant 4.8 k
 
 | Outcome | Distance | Unique-mile multiple | Revisited traversals | Nominal 8-hour days |
 | --- | ---: | ---: | ---: | ---: |
-| Fast (10th percentile) | 14,024 km / 8,714 mi | 32.3× | 96.8% | 365 |
-| Typical (median) | 19,634 km / 12,200 mi | 45.2× | 97.8% | 511 |
-| Slow (90th percentile) | 29,350 km / 18,237 mi | 67.6× | 98.5% | 764 |
-| Unusually slow (99th percentile) | 53,397 km / 33,179 mi | 123.0× | 99.2% | 1,391 |
+| Fast (10th percentile) | 13,787 km / 8,566 mi | 31.8× | 96.8% | 359 |
+| Typical (median) | 19,357 km / 12,028 mi | 44.6× | 97.7% | 504 |
+| Slow (90th percentile) | 30,531 km / 18,971 mi | 70.3× | 98.6% | 795 |
+| Unusually slow (99th percentile) | 48,433 km / 30,095 mi | 111.6× | 99.1% | 1,261 |
 
 These are simulation percentiles, not confidence bounds. They are conditional on this graph, filter, segmentation rule, random-number generator, and stopping definition.
 
@@ -110,9 +110,8 @@ Do not silently refresh the graph for a published article. Store the source time
 
 ## Before publication
 
-1. Replace the bridge-length proxy with a geometric land/water audit or a reviewed allow/deny list.
-2. Render the frozen graph and inspect missing connections, islands, private paths, park boundaries, and apparent crossings.
-3. Add automated tests on small graphs for uniform choice, edge coverage, dead ends, parallel edges, and seeded repeatability.
-4. Decide whether “street segment” includes sidewalks and park paths or only street centerlines; publish both as a sensitivity comparison if the distinction is editorially useful.
-5. Run at least three filter variants and report how much the median changes.
-6. Add elevation only as a second-stage elapsed-time model. Do not let grade influence the baseline random choices.
+1. Replace the conservative all-bridge exclusion with a geometric land/water audit if legitimate land overpasses materially change the component.
+2. Add automated tests on small graphs for uniform choice, edge coverage, dead ends, parallel edges, and seeded repeatability.
+3. Decide whether “street segment” includes sidewalks and park paths or only street centerlines; publish both as a sensitivity comparison if the distinction is editorially useful.
+4. Run at least three filter variants and report how much the median changes.
+5. Add elevation only as a second-stage elapsed-time model. Do not let grade influence the baseline random choices.

@@ -28,6 +28,18 @@ export default function Home() {
         <div><strong>Privacy reviewed</strong><span>Only curated routes are published.</span></div>
       </section>
 
+      <section className="research-promo">
+        <div>
+          <p className="eyebrow">Department of unnecessary research</p>
+          <h2>What if a walker tried to cover San Francisco by making the dumbest possible decision at every intersection?</h2>
+        </div>
+        <div>
+          <strong>12,028 miles</strong>
+          <span>Median simulated walk</span>
+          <Link href="/research/random-walk-san-francisco">Read the field report →</Link>
+        </div>
+      </section>
+
       <section className="replay-desk" id="replays">
         <div className="section-heading">
           <div><p className="eyebrow">Replay desk</p><h2>Featured coverage</h2></div>

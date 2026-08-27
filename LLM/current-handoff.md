@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Decide whether to turn the San Francisco random-walk research prototype into a published editorial lab.
+Verify the published San Francisco random-walk editorial lab and bridge-free HPI policy in production.
 
 ## Current state
 
@@ -28,7 +28,7 @@ Decide whether to turn the San Francisco random-walk research prototype into a p
 - The root-cause spatial audit is live. It proves the coordinate/tile/decoder pipeline with five controls, adds `?spatial-debug=1`, removes the unexplained 3 m lift, and disables MapLibre terrain camera clamping so both canvases share a sea-level view frame. Recorded GPS elevation remains analysis evidence. Production verification passed the hidden proof mode and ordinary Relief view without terrain-camera or overzoom warnings.
 - Eight additional historical TCX walks (17.21–34.90 miles) passed deterministic import with default 200 m endpoint trimming. After the owner supplied `I_REVIEWED_PRECISE_LOCATION`, their curated replay projections were added under `data/replays/`; raw TCX inputs and ignored mode-0600 candidates remain outside Git. Automated quality analysis found no unusable candidate, though seven retain reviewable GPS/elevation flags in the private import record.
 - The February 2018 replay is editorially identified as `The Minus-Eight Neighborhood Loop Classic`. Its ten owner-informed calls are scheduled against verified recurring loop returns and relative elapsed time; the route geometry supports roughly 22 neighborhood cycles over eight hours. The temperature and family anecdote remain explicitly owner-supplied context, not computed route facts.
-- A separate, non-production San Francisco random-walk research prototype now exists in `scripts/simulate-random-walk.ts` with a blog-ready methods/results draft in `docs/RANDOM_WALK_SAN_FRANCISCO.md`. A 1,000-seed exploratory run on a public OSM snapshot produced a 19,634 km median edge-cover walk over a 434 km largest component. The result is preliminary until the pedestrian graph and water boundary are visually audited; it is intentionally not wired into replay pages.
+- The San Francisco random-walk research lab is implemented as a separate editorial page at `/research/random-walk-san-francisco`, backed by the reproducible offline simulator and a documented OSM snapshot/filter. V1 excludes every bridge-tagged way, making Hydroplaning Incidents zero by construction. The 1,000-seed bridge-free run produced a 19,357 km median edge-cover walk over a 434 km largest component; the page discloses that this is a filtered graph, not canonical city street mileage.
 
 ## Fixture replay gate
 
@@ -45,7 +45,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-If the owner approves the research direction, freeze and visually audit the OSM graph, add small-graph simulator tests, and build the deck.gl “last stupid block” editorial animation. Do not merge it into historical replay business logic.
+Verify the research page at desktop and mobile after deployment. Future refinement may replace conservative all-bridge exclusion with audited land geometry and add small-graph simulator tests; keep the lab separate from historical replay business logic.
 
 ## External gates
 
