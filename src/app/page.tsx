@@ -37,6 +37,7 @@ export default function Home() {
           <strong>12,028 miles</strong>
           <span>Median simulated walk</span>
           <Link href="/research/random-walk-san-francisco">Read the field report →</Link>
+          <Link href="/research/hundred-city-league">View the 100-city league →</Link>
         </div>
       </section>
 

@@ -98,6 +98,33 @@ footer span { color:var(--text); font-weight:900; text-transform:uppercase; }
 .methods-note > p:not(.eyebrow) { max-width:920px; }
 .methods-note a { display:inline-block; margin-top:12px; color:var(--accent); font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
 .methods-actions { display:flex; flex-wrap:wrap; gap:10px 24px; }
+.league-hero { padding-bottom:64px; }
+.league-podium { display:grid; grid-template-columns:1.45fr .55fr; gap:14px; margin-bottom:100px; }
+.league-verdict, .league-relief { border:1px solid var(--line); background:#0a0f11; padding:clamp(28px,5vw,64px); }
+.league-verdict h2 { max-width:850px; margin:0; font-size:clamp(38px,6vw,76px); line-height:.92; letter-spacing:-.06em; }
+.league-verdict blockquote { max-width:820px; margin:36px 0; color:#c5d1cc; font-size:clamp(18px,2vw,24px); line-height:1.5; }
+.league-verdict dl { display:flex; flex-wrap:wrap; gap:32px; margin:0; }
+.league-verdict dl div { display:flex; flex-direction:column; gap:5px; }
+.league-verdict dt { color:var(--muted); font-size:9px; letter-spacing:.12em; text-transform:uppercase; }
+.league-verdict dd { margin:0; font-size:24px; font-weight:900; }
+.league-relief { display:flex; flex-direction:column; justify-content:flex-end; }
+.league-relief > strong { color:var(--accent); font-size:clamp(28px,4vw,48px); line-height:.95; letter-spacing:-.05em; }
+.league-relief > p:last-child { color:#aab7b1; line-height:1.6; }
+.league-table-section { padding:64px 0 20px; border-top:1px solid var(--line); }
+.league-table-wrap { margin-top:44px; overflow-x:auto; border:1px solid var(--line); }
+.league-table { width:100%; min-width:860px; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+.league-table th { position:sticky; top:0; padding:13px 14px; background:#101719; color:var(--muted); font-size:9px; letter-spacing:.1em; text-align:left; text-transform:uppercase; }
+.league-table td { padding:15px 14px; border-top:1px solid var(--line); vertical-align:middle; }
+.league-table tr:hover td { background:#0e1714; }
+.league-table tr.censored td:first-child { box-shadow:inset 3px 0 var(--accent); }
+.league-table td:first-child strong { color:var(--accent); font:800 17px ui-monospace,SFMono-Regular,Menlo,monospace; }
+.league-table td:not(:first-child) { min-width:132px; }
+.league-table td:nth-child(2) { min-width:190px; }
+.league-table td b, .league-table td strong, .league-table td span { display:block; }
+.league-table td span { margin-top:4px; color:var(--muted); font-size:10px; }
+.league-table td strong { font-size:14px; }
+.league-commentary { margin-top:90px; }
+.league-methods { margin-top:0; }
 .replay-utility { max-width:1480px; margin:0 auto; padding:16px 24px 0; display:flex; justify-content:space-between; align-items:center; }
 .replay-utility > a { color:var(--muted); font-size:12px; }
 .share-button { padding:9px 12px; cursor:pointer; }
@@ -164,6 +191,7 @@ h1 { margin:0; font-size:clamp(28px,4vw,48px); letter-spacing:-.04em; }
   .research-scoreboard { grid-template-columns:repeat(2,1fr); }
   .research-scoreboard div:nth-child(2) { border-right:0; }
   .coverage-figure, .outcome-section { padding:32px; }
+  .league-podium { grid-template-columns:1fr; }
   .shell { padding:14px; }
   .replay-grid { grid-template-columns:1fr; grid-template-areas:"commentary" "map" "analysis" "controls"; }
   .map-stage { min-height:55vh; }
@@ -194,6 +222,11 @@ h1 { margin:0; font-size:clamp(28px,4vw,48px); letter-spacing:-.04em; }
   .outcome-bars dl { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
   .outcome-bars dl div { flex-direction:column; }
   .methods-note { margin-top:58px; padding:24px 18px; }
+  .league-podium { margin-bottom:68px; }
+  .league-verdict, .league-relief { padding:26px 18px; }
+  .league-verdict dl { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .league-verdict dd { font-size:18px; }
+  .league-table-section { padding-top:48px; }
   .section-heading { align-items:flex-start; flex-direction:column; gap:8px; }
   .replay-card { grid-template-columns:1fr; }
   .route-thumbnail { min-height:210px; }

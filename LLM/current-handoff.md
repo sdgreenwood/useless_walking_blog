@@ -33,6 +33,7 @@ Maintain the replay desk, bridge-free research report, and seeded random-walk ma
 - The simulator can emit a finite static replay projection. Seed `20261178` now supplies `random-walk-san-francisco-marathon`: the first 42.28 km of the representative median walk, with 513 geometry samples, 12 deterministic events, and ten commentary calls synchronized to progress and computed revisit counts. The excerpt is public OSM-derived simulation data and requires no private-route review or model call.
 - The seeded marathon replay is live from commit `5465ceb` and linked from the research page and replay desk. Production verification passed at desktop and 390 px with zero horizontal overflow; 4× playback advanced to the computed 32.7% revisit call at 15% route progress. One non-blocking OpenFreeMap style warning requests a missing `wood-pattern` sprite; route, playback, and commentary remained functional.
 - Relief overlays now enforce a single vertical datum: partial or invalid terrain profiles are rejected, sampling continues until every route sample has a finite DEM height, and the overlay remains withheld instead of mixing DEM, workout altitude, and sea level. Route-keyed terrain state prevents cross-replay reuse. Local verification passes strict TypeScript, clean ESLint, 51 tests, and the 21-page production build.
+- The Hundred-City Random Walk League preseason is generated from 100 fresh OSM relation-boundary graphs and ten deterministic attempts per city. A 250-traversals-per-segment limit produces explicit censored results rather than guessed finishes; difficulty ranks completion rate first and normalized median distance second. The static aggregate contains 1,000 attempts, 55 cities with at least one DNF, and deterministic result-grounded commentary. Cape Coral ranks hardest and New Orleans least difficult under this versioned contract.
 
 ## Fixture replay gate
 
@@ -49,7 +50,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Await the next owner-selected story or route. Future refinement may replace conservative all-bridge exclusion with audited land geometry, add small-graph simulator tests, and suppress the provider's missing `wood-pattern` sprite warning if the basemap style does not resolve it upstream.
+After production verification, deepen the Hundred-City League seed count only as a separately labeled season update; do not silently overwrite the ten-seed preseason. Future refinement may replace conservative all-bridge exclusion with audited land geometry and suppress the provider's missing `wood-pattern` sprite warning if the basemap style does not resolve it upstream.
 
 ## External gates
 

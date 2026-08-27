@@ -12,7 +12,8 @@
     "import:route": "NODE_OPTIONS=--conditions=react-server tsx scripts/import-route.ts",
     "preview:route": "tsx scripts/preview-route.ts",
     "publish:route": "tsx scripts/publish-route.ts",
-    "simulate:random-walk": "tsx scripts/simulate-random-walk.ts"
+    "simulate:random-walk": "tsx scripts/simulate-random-walk.ts",
+    "simulate:city-league": "tsx scripts/run-hundred-city-league.ts"
   },
   "dependencies": {
     "@deck.gl/core": "^9.3.10",

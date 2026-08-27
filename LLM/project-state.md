@@ -16,6 +16,7 @@ Updated: 2026-08-24.
 - A dependency-free TCX adapter projects only positioned trackpoints into the normalized route contract, discarding sensor-only points and metadata. Eight supplied historical TCX walks passed guarded import and owner location review; only their endpoint-trimmed curated replay projections are public, while raw inputs and mode-0600 candidates remain ignored.
 - The February 2018 curated replay has owner-informed winter-loop commentary reduced to ten calls and synchronized to geometry-confirmed returns plus relative elapsed time. Owner memories supply the minus-eight-degree start and back-hall-closet story; deterministic route data supplies distance, duration, progress, and loop recurrence.
 - A deliberately separate San Francisco random-walk research lab collapses an Overpass highway snapshot into decision-to-decision segments and runs reproducible, uniformly random edge-cover simulations. Its public editorial page presents the bridge-free 1,000-run distribution, revisit mechanics, transparent graph limitations, and HPI zero policy without coupling research logic to historical replays.
+- A separate Hundred-City League applies the pure-random policy to the Census Vintage 2025 top-100 incorporated-place roster. Fresh OSM relation graphs, ten deterministic attempts per city, explicit censoring, resumable checkpoints, a static aggregate, result-grounded commentary, and a responsive full ranking are implemented without game mechanics or public runtime simulation.
 - The research simulator can also emit a bounded `simulation` replay source. The published seed-20261178 marathon excerpt preserves actual graph traversal geometry, constant-speed relative time, computed revisit commentary, and the bridge-free HPI boundary without pretending the complete median walk is a practical web payload.
 - Privacy-trimmed replay pipeline, deterministic fallback commentary, and optional one-time server-only OpenAI commentary.
 - Deep replay schema validation at publish and build boundaries.
@@ -49,6 +50,7 @@ Updated: 2026-08-24.
 - The deck.gl migration passes strict TypeScript, ESLint, 36 tests, a 10,000-point full-fidelity layer test, production static build, desktop browser acceptance, mobile playback acceptance at 390 px, and zero deck.gl runtime errors.
 - Thirty-one tests pass across importers, analysis, commentary privacy/schema, replay math, pipeline privacy, fragmented-route rejection, and deep replay validation.
 - The supplied private WalkingLab export passed a local count-only compatibility check: one segment, 2,257 samples, zero importer issues, and zero tested private-metadata leaks. No route values or identifiers were printed or committed.
+- The city-league simulator has synthetic graph coverage for deterministic completion, censoring, summaries, and bridge/access filtering. The full suite passes 55 tests, strict TypeScript, and clean ESLint.
 - The Relief datum invariant passes 51 tests, strict TypeScript, clean ESLint, the 21-page production build, and desktop/mobile visual acceptance on the February loop replay.
 
 ## External state
