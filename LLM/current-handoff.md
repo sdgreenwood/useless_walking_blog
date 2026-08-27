@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Publish and verify the seeded bridge-free random-walk marathon excerpt as a replay-desk example.
+Maintain the replay desk, bridge-free research report, and seeded random-walk marathon example; await the next owner-selected story or route.
 
 ## Current state
 
@@ -31,6 +31,7 @@ Publish and verify the seeded bridge-free random-walk marathon excerpt as a repl
 - The San Francisco random-walk research lab is implemented as a separate editorial page at `/research/random-walk-san-francisco`, backed by the reproducible offline simulator and a documented OSM snapshot/filter. V1 excludes every bridge-tagged way, making Hydroplaning Incidents zero by construction. The 1,000-seed bridge-free run produced a 19,357 km median edge-cover walk over a 434 km largest component; the page discloses that this is a filtered graph, not canonical city street mileage.
 - The research lab and updated Minus-Eight Loop replay are live from commit `01ff7b2`. Production verification passed at desktop and 390 px: the research page has no horizontal overflow, expected HPI/mileage copy, and zero browser warnings or errors; the February replay serves its new title and closet commentary.
 - The simulator can emit a finite static replay projection. Seed `20261178` now supplies `random-walk-san-francisco-marathon`: the first 42.28 km of the representative median walk, with 513 geometry samples, 12 deterministic events, and ten commentary calls synchronized to progress and computed revisit counts. The excerpt is public OSM-derived simulation data and requires no private-route review or model call.
+- The seeded marathon replay is live from commit `5465ceb` and linked from the research page and replay desk. Production verification passed at desktop and 390 px with zero horizontal overflow; 4× playback advanced to the computed 32.7% revisit call at 15% route progress. One non-blocking OpenFreeMap style warning requests a missing `wood-pattern` sprite; route, playback, and commentary remained functional.
 
 ## Fixture replay gate
 
@@ -47,7 +48,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Validate, push, and verify the random-walk marathon replay and research-page link. Future refinement may replace conservative all-bridge exclusion with audited land geometry and add small-graph simulator tests.
+Await the next owner-selected story or route. Future refinement may replace conservative all-bridge exclusion with audited land geometry, add small-graph simulator tests, and suppress the provider's missing `wood-pattern` sprite warning if the basemap style does not resolve it upstream.
 
 ## External gates
 
@@ -67,3 +68,4 @@ Validate, push, and verify the random-walk marathon replay and research-page lin
 - Commit `cd5b208` proves and corrects the spatial pipeline; the production Multioak proof and public Relief modes are live and verified.
 - Commit `9a2fecb` publishes the eight owner-reviewed TCX replay projections; all eight production URLs returned HTTP 200 after Vercel deployment.
 - Commit `01ff7b2` publishes the bridge-free random-walk field report and synchronized Minus-Eight Loop commentary; both production routes were verified after Vercel deployment.
+- Commit `5465ceb` publishes the seeded random-walk marathon replay generator, static replay, research-page link, and `simulation` replay source boundary; production playback and responsive layout were verified.
