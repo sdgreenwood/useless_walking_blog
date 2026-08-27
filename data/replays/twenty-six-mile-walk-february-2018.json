@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "route": {
     "id": "twenty-six-mile-walk-february-2018",
-    "name": "26.36 Mile Walk · February 2018",
+    "name": "The Minus-Eight Neighborhood Loop Classic",
     "createdAt": "2026-08-26T21:20:21.379Z",
     "source": "tcx",
     "geometry": {
@@ -59228,420 +59228,78 @@
       {
         "eventId": "analysis-v1-001-start",
         "speaker": "play_by_play",
-        "text": "Coverage is underway with 41.98 kilometers of walking now officially on the record.",
+        "text": "It is minus eight degrees Fahrenheit in Minneapolis. The walker has selected a neighborhood loop and, against every available cue from nature, intends to repeat it.",
         "importance": 3,
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-002-high_point",
-        "speaker": "color",
-        "text": "The broadcast reaches its verified high point at 296 meters.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-003-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 130 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-004-descent",
-        "speaker": "field_reporter",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-005-descent",
-        "speaker": "play_by_play",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-006-descent",
-        "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-007-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 162 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-008-climb",
-        "speaker": "field_reporter",
-        "text": "A sustained climb develops over 110 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-009-descent",
-        "speaker": "play_by_play",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
         "eventId": "analysis-v1-010-descent",
+        "displayProgress": 0.087,
         "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-011-descent",
-        "speaker": "stats_desk",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-012-descent",
-        "speaker": "field_reporter",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-013-climb",
-        "speaker": "play_by_play",
-        "text": "A sustained climb develops over 174 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-014-descent",
-        "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-015-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 184 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-016-climb",
-        "speaker": "field_reporter",
-        "text": "A sustained climb develops over 149 meters. Tactical options remain limited.",
+        "text": "The same neighborhood is back on screen. Not a replay error—he has simply chosen another dumb winter loop.",
         "importance": 2,
         "source": "deterministic"
       },
       {
         "eventId": "analysis-v1-017-climb",
-        "speaker": "play_by_play",
-        "text": "A sustained climb develops over 153 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-018-climb",
-        "speaker": "color",
-        "text": "A sustained climb develops over 108 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-019-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 155 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-020-descent",
+        "displayProgress": 0.223,
         "speaker": "field_reporter",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-021-climb",
-        "speaker": "play_by_play",
-        "text": "A sustained climb develops over 194 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-022-descent",
-        "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-023-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 129 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-024-descent",
-        "speaker": "field_reporter",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-025-climb",
-        "speaker": "play_by_play",
-        "text": "A sustained climb develops over 128 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-026-descent",
-        "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-027-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 150 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-028-climb",
-        "speaker": "field_reporter",
-        "text": "A sustained climb develops over 160 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-029-descent",
-        "speaker": "play_by_play",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
+        "text": "Five loops are in the books. Dad remains a healthy scratch: the tiny back-hall closet has won the matchup and will not release him for even one lap.",
         "importance": 2,
         "source": "deterministic"
       },
       {
         "eventId": "analysis-v1-030-descent",
-        "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-031-climb",
+        "displayProgress": 0.359,
         "speaker": "stats_desk",
-        "text": "A sustained climb develops over 131 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-032-descent",
-        "speaker": "field_reporter",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-033-climb",
-        "speaker": "play_by_play",
-        "text": "A sustained climb develops over 120 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-034-descent",
-        "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-035-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 129 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-036-climb",
-        "speaker": "field_reporter",
-        "text": "A sustained climb develops over 180 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-037-descent",
-        "speaker": "play_by_play",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-038-climb",
-        "speaker": "color",
-        "text": "A sustained climb develops over 130 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-039-descent",
-        "speaker": "stats_desk",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-040-climb",
-        "speaker": "field_reporter",
-        "text": "A sustained climb develops over 247 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-041-descent",
-        "speaker": "play_by_play",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
+        "text": "Eight verified returns through familiar territory. The neighborhood now knows the walker better than several members of his extended family.",
         "importance": 2,
         "source": "deterministic"
       },
       {
         "eventId": "analysis-v1-042-halfway",
-        "speaker": "color",
-        "text": "Halfway has arrived, making the remaining distance exactly as real as the distance already discussed.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-043-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 151 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-044-descent",
-        "speaker": "field_reporter",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-045-climb",
+        "displayProgress": 0.499,
         "speaker": "play_by_play",
-        "text": "A sustained climb develops over 204 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-046-descent",
-        "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-047-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 424 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-048-descent",
-        "speaker": "field_reporter",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-049-descent",
-        "speaker": "play_by_play",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
+        "text": "Halfway: roughly eleven loops after a minus-eight-degree start, and the closet project continues to hold a commanding lead over father-son outdoor recreation.",
+        "importance": 3,
         "source": "deterministic"
       },
       {
         "eventId": "analysis-v1-050-climb",
+        "displayProgress": 0.641,
         "speaker": "color",
-        "text": "A sustained climb develops over 130 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-051-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 163 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-052-descent",
-        "speaker": "field_reporter",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-053-climb",
-        "speaker": "play_by_play",
-        "text": "A sustained climb develops over 141 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-054-climb",
-        "speaker": "color",
-        "text": "A sustained climb develops over 151 meters. Tactical options remain limited.",
+        "text": "Fourteen trips around the neighborhood. You could spend your time living, or you could inspect the same frozen blocks again, I guess.",
         "importance": 2,
         "source": "deterministic"
       },
       {
         "eventId": "analysis-v1-055-descent",
-        "speaker": "stats_desk",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-056-climb",
+        "displayProgress": 0.728,
         "speaker": "field_reporter",
-        "text": "A sustained climb develops over 210 meters. Tactical options remain limited.",
-        "importance": 2,
-        "source": "deterministic"
-      },
-      {
-        "eventId": "analysis-v1-057-descent",
-        "speaker": "play_by_play",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
+        "text": "Sixteen loops. Dad has still not appeared. Sources close to the back-hall closet describe the cleaning operation as extremely small and apparently endless.",
         "importance": 2,
         "source": "deterministic"
       },
       {
         "eventId": "analysis-v1-058-descent",
-        "speaker": "color",
-        "text": "The route turns downhill, returning previously acquired elevation to the course.",
+        "displayProgress": 0.774,
+        "speaker": "stats_desk",
+        "text": "Seventeen loops and counting. The course has changed tactically in one important respect: absolutely nothing.",
         "importance": 2,
         "source": "deterministic"
       },
       {
         "eventId": "analysis-v1-059-climb",
-        "speaker": "stats_desk",
-        "text": "A sustained climb develops over 272 meters. Tactical options remain limited.",
+        "displayProgress": 0.96,
+        "speaker": "play_by_play",
+        "text": "OH MY GOODNESS, THE WALKER IS ALMOST AT THE FINISH—AND HE IS STILL WALKING!!!!! Twenty-one winter loops completed with no detectable increase in speed or judgment.",
         "importance": 2,
         "source": "deterministic"
       },
       {
         "eventId": "analysis-v1-060-finish",
-        "speaker": "field_reporter",
-        "text": "The route is complete. Officials can confirm that continued walking is no longer required.",
+        "speaker": "color",
+        "text": "Twenty-two neighborhood loops, 26.36 miles, and zero appearances from Dad. The closet has claimed a clean sweep. History will decide whether an eight-hour walk that started at minus eight was the stronger use of time.",
         "importance": 3,
         "source": "deterministic"
       }

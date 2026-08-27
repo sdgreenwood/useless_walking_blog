@@ -14,6 +14,7 @@ Updated: 2026-08-24.
 - WalkingLab privacy projection excludes HealthKit UUIDs, device/source identifiers, update identity, export time, and absolute timestamps before analysis.
 - GPX importer and deterministic versioned route analysis with segment-safe elevation math.
 - A dependency-free TCX adapter projects only positioned trackpoints into the normalized route contract, discarding sensor-only points and metadata. Eight supplied historical TCX walks passed guarded import and owner location review; only their endpoint-trimmed curated replay projections are public, while raw inputs and mode-0600 candidates remain ignored.
+- The February 2018 curated replay has owner-informed winter-loop commentary reduced to ten calls and synchronized to geometry-confirmed returns plus relative elapsed time. Owner memories supply the minus-eight-degree start and back-hall-closet story; deterministic route data supplies distance, duration, progress, and loop recurrence.
 - A deliberately separate San Francisco random-walk research prototype can collapse an Overpass highway snapshot into decision-to-decision segments and run reproducible, uniformly random edge-cover simulations. Its preliminary 1,000-run findings and an editorial deck.gl concept are documented; publication remains gated on graph/water audit and simulator tests.
 - Privacy-trimmed replay pipeline, deterministic fallback commentary, and optional one-time server-only OpenAI commentary.
 - Deep replay schema validation at publish and build boundaries.
