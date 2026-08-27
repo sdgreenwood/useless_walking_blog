@@ -37,7 +37,7 @@ Review and, when explicitly authorized, publish the locally complete Johto Leagu
 - Production verification for the California/Crystal correction passes Goethite's grid audit, 55 tests, strict TypeScript, clean ESLint, the 22-page production build, desktop cutaway seek/canvas checks, and 390 px replay/research no-overflow checks. The live cutaway advances to 19.1%, reports signal acquired, renders at 318 px on mobile, and produces zero browser errors. The known OpenFreeMap `wood-pattern` warning remains non-blocking locally.
 - A standalone local `johto-league-san-francisco-exhibition` bundle reuses the corrected public simulation and passed Goethite grid with ten original calls informed by Crystal LLM's public field-note themes. It uses no game assets, makes no official-collaboration claim, and performs no public generation.
 - Simulation routes can now be enriched offline from Mapzen Terrarium DEM tiles using the canonical XYZ/Web Mercator transform. The California and Johto replay artifacts record zoom, acquisition time, attribution, and `terrarium-dem` provenance; their deterministic analysis reports 977.1 m of cumulative gain over the repetitive 42.275 km route. The UI labels this evidence `DEM-derived`.
-- Local acceptance for this unpushed tranche passes 60 tests, strict TypeScript, clean ESLint, `git diff --check`, and the 23-page production build including `/replay/johto-league-san-francisco-exhibition`.
+- Commit `43ab153` publishes this tranche. Acceptance passes 60 tests, strict TypeScript, clean ESLint, `git diff --check`, and the 23-page production build. The production Johto replay returns HTTP 200 with its title, DEM provenance label, and Crystal field-note attribution.
 
 ## Fixture replay gate
 
@@ -77,3 +77,4 @@ After production verification, deepen the Hundred-City League seed count only as
 - Commit `5465ceb` publishes the seeded random-walk marathon replay generator, static replay, research-page link, and `simulation` replay source boundary; production playback and responsive layout were verified.
 - Commit `dacef22` publishes the measured Hundred-City League preseason, resumable simulator, frozen Census roster, result-grounded commentary, and full standings. Vercel production verification passed all 100 rows at desktop and 390 px with no page overflow or browser warnings/errors.
 - Commit `5b3f691` corrects the San Francisco geography, publishes the new California marathon and audited Crystal coordinate cutaway, archives the Córdoba prototype from discovery, and is live on Vercel with mobile production acceptance.
+- Commit `43ab153` publishes the standalone Johto League exhibition and deterministic DEM elevation authoring path; production content verification passed.
