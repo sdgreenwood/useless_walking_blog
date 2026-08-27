@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Maintain the published replay desk and bridge-free San Francisco random-walk field report; await the next owner-selected story or route.
+Publish and verify the seeded bridge-free random-walk marathon excerpt as a replay-desk example.
 
 ## Current state
 
@@ -30,6 +30,7 @@ Maintain the published replay desk and bridge-free San Francisco random-walk fie
 - The February 2018 replay is editorially identified as `The Minus-Eight Neighborhood Loop Classic`. Its ten owner-informed calls are scheduled against verified recurring loop returns and relative elapsed time; the route geometry supports roughly 22 neighborhood cycles over eight hours. The temperature and family anecdote remain explicitly owner-supplied context, not computed route facts.
 - The San Francisco random-walk research lab is implemented as a separate editorial page at `/research/random-walk-san-francisco`, backed by the reproducible offline simulator and a documented OSM snapshot/filter. V1 excludes every bridge-tagged way, making Hydroplaning Incidents zero by construction. The 1,000-seed bridge-free run produced a 19,357 km median edge-cover walk over a 434 km largest component; the page discloses that this is a filtered graph, not canonical city street mileage.
 - The research lab and updated Minus-Eight Loop replay are live from commit `01ff7b2`. Production verification passed at desktop and 390 px: the research page has no horizontal overflow, expected HPI/mileage copy, and zero browser warnings or errors; the February replay serves its new title and closet commentary.
+- The simulator can emit a finite static replay projection. Seed `20261178` now supplies `random-walk-san-francisco-marathon`: the first 42.28 km of the representative median walk, with 513 geometry samples, 12 deterministic events, and ten commentary calls synchronized to progress and computed revisit counts. The excerpt is public OSM-derived simulation data and requires no private-route review or model call.
 
 ## Fixture replay gate
 
@@ -46,7 +47,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Await the next owner-selected story or route. Future random-walk refinement may replace conservative all-bridge exclusion with audited land geometry and add small-graph simulator tests; keep the lab separate from historical replay business logic.
+Validate, push, and verify the random-walk marathon replay and research-page link. Future refinement may replace conservative all-bridge exclusion with audited land geometry and add small-graph simulator tests.
 
 ## External gates
 

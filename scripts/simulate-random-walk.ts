@@ -1,10 +1,13 @@
 import fs from "node:fs";
+import { buildReplay } from "../src/lib/pipeline/build-replay";
+import type { NormalizedRouteSample } from "../src/lib/domain/normalized-route";
+import type { Commentary, Coordinate } from "../src/lib/replay-types";
 
 type OsmNode = { type: "node"; id: number; lat: number; lon: number };
 type OsmWay = { type: "way"; id: number; nodes: number[]; tags?: Record<string, string> };
 type OsmDocument = { osm3s?: { timestamp_osm_base?: string }; elements: Array<OsmNode | OsmWay | { type: string }> };
 type RawEdge = { id: number; a: number; b: number; meters: number; wayId: number };
-type Segment = { id: number; a: number; b: number; meters: number; rawEdges: number };
+type Segment = { id: number; a: number; b: number; meters: number; rawEdges: number; nodeIds: number[] };
 
 const args = Object.fromEntries(process.argv.slice(2).map((value) => {
   const match = value.match(/^--([^=]+)=(.+)$/);
@@ -15,6 +18,9 @@ const osmPath = args.osm;
 if (!osmPath) throw new Error("Missing --osm=/path/to/overpass.json");
 const runs = integer(args.runs ?? "100", "runs");
 const seed = integer(args.seed ?? "20260826", "seed");
+const exampleOutput = args["example-output"];
+const exampleSeed = integer(args["example-seed"] ?? "20261178", "example-seed");
+const exampleKilometers = positive(args["example-km"] ?? "42.195", "example-km");
 
 const document = JSON.parse(fs.readFileSync(osmPath, "utf8")) as OsmDocument;
 const nodes = new Map<number, OsmNode>();
@@ -87,6 +93,7 @@ const summary = {
   }
 };
 console.log(JSON.stringify(summary, null, 2));
+if (exampleOutput) writeExampleReplay(exampleOutput, exampleSeed, exampleKilometers * 1000);
 
 function walkable(way: OsmWay): boolean {
   const tags = way.tags ?? {};
@@ -108,14 +115,16 @@ function collapseSegments(edges: RawEdge[], incident: Map<number, number[]>, jun
       let edgeId = firstId;
       let meters = 0;
       let rawCount = 0;
+      const nodeIds = [start];
       while (true) {
         const edge = edges[edgeId];
         visited[edgeId] = 1;
         meters += edge.meters;
         rawCount += 1;
         const next = edge.a === current ? edge.b : edge.a;
+        nodeIds.push(next);
         if (junctions.has(next)) {
-          segments.push({ id: segments.length, a: start, b: next, meters, rawEdges: rawCount });
+          segments.push({ id: segments.length, a: start, b: next, meters, rawEdges: rawCount, nodeIds });
           break;
         }
         const choices = (incident.get(next) ?? []).filter((candidate) => candidate !== edgeId);
@@ -177,6 +186,97 @@ function simulate(seed: number, starts: number[], adjacency: Map<number, number[
   };
 }
 
+function writeExampleReplay(outputPath: string, seed: number, targetMeters: number): void {
+  const random = mulberry32(seed);
+  let currentNode = starts[Math.floor(random() * starts.length)];
+  const visited = new Set<number>();
+  const samples: NormalizedRouteSample[] = [sampleForNode(currentNode, 0, 0)];
+  const snapshots: Array<{ distanceMeters: number; traversals: number; uniqueSegments: number }> = [];
+  let distanceMeters = 0;
+  let traversals = 0;
+  while (distanceMeters < targetMeters) {
+    const choices = adjacency.get(currentNode)!;
+    const segment = segmentById.get(choices[Math.floor(random() * choices.length)])!;
+    const forward = segment.a === currentNode;
+    const path = forward ? segment.nodeIds : [...segment.nodeIds].reverse();
+    for (let index = 1; index < path.length; index += 1) {
+      const prior = nodes.get(path[index - 1])!;
+      const current = nodes.get(path[index])!;
+      distanceMeters += haversine(prior, current);
+      samples.push(sampleForNode(path[index], samples.length, distanceMeters));
+    }
+    visited.add(segment.id);
+    traversals += 1;
+    snapshots.push({ distanceMeters, traversals, uniqueSegments: visited.size });
+    currentNode = forward ? segment.b : segment.a;
+  }
+
+  const built = buildReplay({
+    schemaVersion: 1,
+    source: { kind: "simulation", schemaVersion: 1 },
+    activityType: "random_walk_simulation",
+    durationSeconds: distanceMeters / (4800 / 3600),
+    segments: [{ index: 0, samples }],
+    issues: []
+  }, {
+    id: "random-walk-san-francisco-marathon",
+    name: "The First Marathon of a 12,028-Mile Problem",
+    createdAt: "2026-08-27T01:28:35.000Z",
+    trimStartMeters: 0,
+    trimEndMeters: 0
+  });
+  built.replay.route.commentary = exampleCommentary(built.replay.route.events, snapshots, built.replay.route.distanceMeters);
+  fs.writeFileSync(outputPath, `${JSON.stringify(built.replay, null, 2)}\n`, { flag: "wx" });
+  console.error(`Example replay written: ${outputPath}`);
+}
+
+function sampleForNode(nodeId: number, sequence: number, distanceMeters: number): NormalizedRouteSample {
+  const node = nodes.get(nodeId)!;
+  return {
+    sequence,
+    elapsedSeconds: distanceMeters / (4800 / 3600),
+    coordinates: [node.lon, node.lat] as Coordinate,
+    elevationMeters: null,
+    horizontalAccuracyMeters: null,
+    verticalAccuracyMeters: null
+  };
+}
+
+function exampleCommentary(events: Array<{ id: string; routeProgress: number }>, snapshots: Array<{ distanceMeters: number; traversals: number; uniqueSegments: number }>, totalMeters: number): Commentary[] {
+  const targets = [0, 0.12, 0.23, 0.35, 0.48, 0.5, 0.64, 0.77, 0.9, 1];
+  const used = new Set<string>();
+  return targets.map((progress, index) => {
+    const event = [...events]
+      .filter((candidate) => !used.has(candidate.id))
+      .sort((a, b) => Math.abs(a.routeProgress - progress) - Math.abs(b.routeProgress - progress))[0];
+    used.add(event.id);
+    const snapshot = snapshots.find((candidate) => candidate.distanceMeters >= totalMeters * progress) ?? snapshots.at(-1)!;
+    const revisitShare = snapshot.traversals === 0 ? 0 : (snapshot.traversals - snapshot.uniqueSegments) / snapshot.traversals;
+    const texts = [
+      "Seed 20261178 is underway. At every intersection, the walker will make a fair and completely uninformed decision.",
+      `The revisit desk is open: ${percent(revisitShare)} of segment choices so far have returned to previously covered ground.`,
+      "No destination has been selected because destinations are a form of planning, and planning has been disallowed.",
+      `Race control reports ${snapshot.uniqueSegments} distinct segments acquired. The walker remembers none of them.`,
+      "This is not a route through San Francisco so much as an argument with adjacency.",
+      "Halfway through the excerpt. The full median problem remains approximately twelve thousand miles long.",
+      `Revisit rate: ${percent(revisitShare)}. Progress is occurring, but largely in an emotional sense.`,
+      "HPI remains zero. Every bridge-tagged way was removed before the walker could develop maritime ambitions.",
+      "OH MY GOODNESS, THE WALKER IS ALMOST AT THE MARATHON MARK—AND STILL HAS NO IDEA WHERE HE IS GOING!!!!!",
+      "The first random marathon is complete. The representative full seed has roughly 19,314 kilometers left to wander."
+    ];
+    return {
+      eventId: event.id,
+      displayProgress: progress === 0 || progress === 1 ? undefined : progress,
+      speaker: (["play_by_play", "stats_desk", "color", "field_reporter"] as const)[index % 4],
+      text: texts[index],
+      importance: index === 0 || index === 5 || index === 9 ? 3 : 2,
+      source: "deterministic"
+    };
+  });
+}
+
+function percent(value: number): string { return `${(value * 100).toFixed(1)}%`; }
+
 function pick<T>(values: T[], quantile: number): T {
   return values[Math.min(values.length - 1, Math.floor((values.length - 1) * quantile))];
 }
@@ -212,5 +312,10 @@ function mulberry32(seed: number): () => number {
 function integer(value: string, name: string): number {
   const parsed = Number(value);
   if (!Number.isInteger(parsed) || parsed <= 0) throw new Error(`--${name} must be a positive integer`);
+  return parsed;
+}
+function positive(value: string, name: string): number {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) throw new Error(`--${name} must be positive`);
   return parsed;
 }

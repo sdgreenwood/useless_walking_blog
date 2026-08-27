@@ -92,8 +92,13 @@ The simulator is `scripts/simulate-random-walk.ts`. It accepts an Overpass JSON 
 npm run simulate:random-walk -- \
   --osm=/path/to/frozen-sf-highways.json \
   --runs=1000 \
-  --seed=20260826
+  --seed=20260826 \
+  --example-output=data/replays/random-walk-san-francisco-marathon.json \
+  --example-seed=20261178 \
+  --example-km=42.195
 ```
+
+The optional example flags emit a static replay projection of the seeded walk's first marathon distance. The published excerpt contains 513 route samples, ten progress-synchronized commentary calls, and no model-generated facts. It is intentionally finite; the full 19,357 km representative seed remains an aggregate research result rather than a browser payload.
 
 The exploratory Overpass query was:
 

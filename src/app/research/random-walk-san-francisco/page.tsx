@@ -80,7 +80,10 @@ export default function RandomWalkSanFrancisco() {
         <aside className="methods-note">
           <p className="eyebrow">Methods, because apparently this is research</p>
           <p>Public OSM highway ways inside San Francisco’s administrative boundary were filtered to remove motorway/trunk families, explicit private or no-foot access, ferries, and all bridge-tagged ways. Shape points were collapsed between decision nodes. Results are deterministic for the published seeds and conditional on this graph definition—not a canonical measurement of every sidewalk in San Francisco.</p>
-          <Link href="/">Return to the replay desk →</Link>
+          <div className="methods-actions">
+            <Link href="/replay/random-walk-san-francisco-marathon">Watch the first random marathon →</Link>
+            <Link href="/">Return to the replay desk →</Link>
+          </div>
         </aside>
       </article>
     </main>

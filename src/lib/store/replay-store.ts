@@ -34,7 +34,9 @@ export function listReplays(): ReplayListing[] {
     distanceMeters: route.distanceMeters,
     elevationGainMeters: route.elevationGainMeters,
     durationSeconds: route.durationSeconds,
-    description: "A controlled demonstration of hills, judgment, and broadcast-grade walking."
+    description: route.source === "simulation"
+      ? "A seeded bridge-free random walk with no destination, no memory, and an increasingly busy revisit desk."
+      : "A controlled demonstration of hills, judgment, and broadcast-grade walking."
   }));
 }
 

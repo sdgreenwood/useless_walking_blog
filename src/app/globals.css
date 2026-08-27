@@ -97,6 +97,7 @@ footer span { color:var(--text); font-weight:900; text-transform:uppercase; }
 .methods-note { margin-top:80px; padding:34px; border:1px solid var(--line); color:#aab7b1; line-height:1.65; }
 .methods-note > p:not(.eyebrow) { max-width:920px; }
 .methods-note a { display:inline-block; margin-top:12px; color:var(--accent); font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
+.methods-actions { display:flex; flex-wrap:wrap; gap:10px 24px; }
 .replay-utility { max-width:1480px; margin:0 auto; padding:16px 24px 0; display:flex; justify-content:space-between; align-items:center; }
 .replay-utility > a { color:var(--muted); font-size:12px; }
 .share-button { padding:9px 12px; cursor:pointer; }

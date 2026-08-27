@@ -43,4 +43,10 @@ describe("parseReplayDocument", () => {
     tcx.route.source = "tcx";
     expect(parseReplayDocument(tcx).route.source).toBe("tcx");
   });
+
+  it("accepts a deterministic simulation replay source", () => {
+    const simulation = structuredClone(demo) as unknown as ReplayDocument;
+    simulation.route.source = "simulation";
+    expect(parseReplayDocument(simulation).route.source).toBe("simulation");
+  });
 });
