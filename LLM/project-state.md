@@ -63,6 +63,7 @@ Updated: 2026-08-24.
 - deck.gl migration commit `25f1931` is pushed to `origin/main` and deployed.
 - visualization-mode commit `be176cd` is pushed to `origin/main`; Hex Ghost and Relief are live and verified in production.
 - DEM terrain commit `eed2ec0` is pushed to `origin/main`; Mapzen-backed Relief is live and verified on desktop and mobile.
+- Hundred-City League commit `dacef22` is pushed to `origin/main`; the 100-city/1,000-attempt preseason table is live and verified on desktop and mobile.
 - V1 is deployed on Vercel at `https://useless-walking-blog.vercel.app`.
 
 ## Current gates

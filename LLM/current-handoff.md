@@ -71,3 +71,4 @@ After production verification, deepen the Hundred-City League seed count only as
 - Commit `9a2fecb` publishes the eight owner-reviewed TCX replay projections; all eight production URLs returned HTTP 200 after Vercel deployment.
 - Commit `01ff7b2` publishes the bridge-free random-walk field report and synchronized Minus-Eight Loop commentary; both production routes were verified after Vercel deployment.
 - Commit `5465ceb` publishes the seeded random-walk marathon replay generator, static replay, research-page link, and `simulation` replay source boundary; production playback and responsive layout were verified.
+- Commit `dacef22` publishes the measured Hundred-City League preseason, resumable simulator, frozen Census roster, result-grounded commentary, and full standings. Vercel production verification passed all 100 rows at desktop and 390 px with no page overflow or browser warnings/errors.
