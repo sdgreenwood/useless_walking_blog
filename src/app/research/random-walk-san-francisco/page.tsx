@@ -1,15 +1,29 @@
 import Link from "next/link";
+import leagueData from "../../../../data/research/hundred-city-league.json";
 
-const outcomes = [
-  { label: "Fast · P10", km: 13787, miles: 8566, multiple: 31.8, revisit: "96.8%", days: 359 },
-  { label: "Typical · Median", km: 19357, miles: 12028, multiple: 44.6, revisit: "97.7%", days: 504 },
-  { label: "Slow · P90", km: 30531, miles: 18971, multiple: 70.3, revisit: "98.6%", days: 795 },
-  { label: "Unusually slow · P99", km: 48433, miles: 30095, multiple: 111.6, revisit: "99.1%", days: 1261 }
-];
+const sanFrancisco = leagueData.cities.find((entry) => entry.city.name === "San Francisco" && entry.city.state === "California");
+if (!sanFrancisco) throw new Error("Hundred-City League artifact is missing San Francisco, California");
+
+const outcomeSource = [
+  ["Fast · P10", sanFrancisco.simulation.fast],
+  ["Typical · Median", sanFrancisco.simulation.typical],
+  ["Slow · P90", sanFrancisco.simulation.slow],
+  ["Unusually slow · P99", sanFrancisco.simulation.unusuallySlow]
+] as const;
+const outcomes = outcomeSource.map(([label, result]) => ({
+  label,
+  km: result.distanceKilometers,
+  miles: result.distanceKilometers * 0.621371,
+  multiple: result.coverageMultiple,
+  revisit: result.revisitShare,
+  days: result.nominalEightHourWalkingDays
+}));
+const typical = sanFrancisco.simulation.typical;
+const network = sanFrancisco.graph;
 
 export const metadata = {
-  title: "Randomly Walking San Francisco | Walking Ocho",
-  description: "One thousand simulations of a walker with no plan, no memory, and no permission to use bridges."
+  title: "Randomly Walking San Francisco, California | Walking Ocho",
+  description: "A corrected seeded simulation of a walker covering San Francisco, California with no plan, no memory, and no permission to use bridges."
 };
 
 export default function RandomWalkSanFrancisco() {
@@ -22,45 +36,46 @@ export default function RandomWalkSanFrancisco() {
 
       <article className="research-article">
         <header className="research-hero">
-          <p className="eyebrow">Field report 001 · San Francisco</p>
-          <h1>270 miles of street.<br /><em>12,028 miles of walking.</em></h1>
+          <p className="eyebrow">Corrected field report 001 · San Francisco, California</p>
+          <h1>{miles(network.streetKilometers)} miles of network.<br /><em>{miles(typical.distanceKilometers)} miles of walking.</em></h1>
           <p>We released a simulated pedestrian at a random intersection and required a uniform random choice at every junction until every reachable segment had been walked. No memory. No strategy. No mercy.</p>
+          <p className="research-correction"><strong>Geography correction:</strong> the original prototype&apos;s ambiguous OSM name query selected San Francisco, Córdoba, Argentina. This report and its new replay use verified California relation 111968. The old replay remains available only as a labeled archive.</p>
           <div className="research-scoreboard" aria-label="Typical simulation result">
-            <Stat value="44.6×" label="Unique mileage" />
-            <Stat value="97.7%" label="Revisited traversals" />
-            <Stat value="504" label="Eight-hour days" />
+            <Stat value={`${typical.coverageMultiple.toFixed(1)}×`} label="Unique mileage" />
+            <Stat value={percent(typical.revisitShare)} label="Revisited traversals" />
+            <Stat value={Math.round(typical.nominalEightHourWalkingDays).toLocaleString()} label="Eight-hour days" />
             <Stat value="0" label="HPI" />
           </div>
         </header>
 
         <section className="coverage-figure" aria-labelledby="coverage-title">
           <div className="figure-heading">
-            <div><p className="eyebrow">The median result</p><h2 id="coverage-title">One useful traversal. Forty-three more, for character.</h2></div>
-            <span>434 km unique / 19,357 km walked</span>
+            <div><p className="eyebrow">The median preseason result</p><h2 id="coverage-title">One useful traversal. One hundred sixteen more, for character.</h2></div>
+            <span>{Math.round(network.streetKilometers).toLocaleString()} km unique / {Math.round(typical.distanceKilometers).toLocaleString()} km walked</span>
           </div>
-          <div className="lap-stack" aria-label="Forty-five horizontal traces representing the median distance multiple">
+          <div className="lap-stack" aria-label="Representative traces from the median distance multiple">
             {Array.from({ length: 45 }, (_, index) => <i className={index === 0 ? "unique" : "revisit"} key={index} />)}
           </div>
-          <div className="figure-legend"><span><i className="unique" /> First useful coverage</span><span><i className="revisit" /> Returning to somewhere already covered</span></div>
-          <p className="hpi-callout"><strong>HPI: 0</strong> Hydroplaning Incidents were eliminated by removing every OSM way tagged as a bridge. The commissioner has denied the walker maritime powers.</p>
+          <div className="figure-legend"><span><i className="unique" /> First useful coverage</span><span><i className="revisit" /> A representative slice of returning somewhere already covered</span></div>
+          <p className="hpi-callout"><strong>HPI: 0</strong> Hydro-Pedestrian Incidents were eliminated by removing every OSM way tagged as a bridge. The commissioner has denied the walker maritime powers.</p>
         </section>
 
         <section className="research-copy two-column-copy">
           <div><p className="eyebrow">The rule</p><h2>At every intersection, roll the city-sized die.</h2></div>
           <div>
-            <p>The start is a random reachable junction. Every connected walkable segment has equal odds, including the segment just used. Coverage means traversing every undirected segment in the largest connected bridge-free component at least once.</p>
-            <p>The graph contains 2,940 junctions, 4,923 decision-to-decision segments, and 434.05 kilometers of unique segment length. The source was an OpenStreetMap snapshot dated August 27, 2026.</p>
+            <p>The start is a uniformly random reachable junction with at least three incident segments. Every connected walkable segment has equal odds, including the segment just used. Coverage means traversing every undirected segment in the largest connected bridge-free component at least once.</p>
+            <p>The verified California graph contains {network.reachableJunctions.toLocaleString()} junctions, {network.reachableSegments.toLocaleString()} decision-to-decision segments, and {network.streetKilometers.toLocaleString(undefined, { maximumFractionDigits: 1 })} kilometers of unique segment length. Its OSM boundary is explicitly recorded as San Francisco, California, United States.</p>
           </div>
         </section>
 
         <section className="outcome-section">
-          <div className="figure-heading"><div><p className="eyebrow">1,000 seeded simulations</p><h2>There is no good outcome. Only less slow.</h2></div><span>Seed family 20260826…</span></div>
+          <div className="figure-heading"><div><p className="eyebrow">10-seed league preseason</p><h2>There is no good outcome. Only less slow.</h2></div><span>Deterministic seeds 20440000…</span></div>
           <div className="outcome-bars">
             {outcomes.map((outcome) => (
               <article key={outcome.label}>
-                <div><strong>{outcome.label}</strong><span>{outcome.km.toLocaleString()} km · {outcome.miles.toLocaleString()} mi</span></div>
+                <div><strong>{outcome.label}</strong><span>{Math.round(outcome.km).toLocaleString()} km · {Math.round(outcome.miles).toLocaleString()} mi</span></div>
                 <div className="outcome-track"><i style={{ width: `${(outcome.km / outcomes.at(-1)!.km) * 100}%` }} /></div>
-                <dl><div><dt>Street multiple</dt><dd>{outcome.multiple}×</dd></div><div><dt>Revisits</dt><dd>{outcome.revisit}</dd></div><div><dt>8-hour days</dt><dd>{outcome.days.toLocaleString()}</dd></div></dl>
+                <dl><div><dt>Street multiple</dt><dd>{outcome.multiple.toFixed(1)}×</dd></div><div><dt>Revisits</dt><dd>{percent(outcome.revisit)}</dd></div><div><dt>8-hour days</dt><dd>{Math.round(outcome.days).toLocaleString()}</dd></div></dl>
               </article>
             ))}
           </div>
@@ -79,9 +94,10 @@ export default function RandomWalkSanFrancisco() {
 
         <aside className="methods-note">
           <p className="eyebrow">Methods, because apparently this is research</p>
-          <p>Public OSM highway ways inside San Francisco’s administrative boundary were filtered to remove motorway/trunk families, explicit private or no-foot access, ferries, and all bridge-tagged ways. Shape points were collapsed between decision nodes. Results are deterministic for the published seeds and conditional on this graph definition—not a canonical measurement of every sidewalk in San Francisco.</p>
+          <p>Public OSM highway ways inside verified relation 111968 were filtered to remove motorway/trunk families, explicit private or no-foot access, ferries, and all bridge-tagged ways. Shape points were collapsed between decision nodes. Results are deterministic for the published seeds and conditional on this graph definition—not a canonical measurement of every sidewalk in San Francisco.</p>
           <div className="methods-actions">
-            <Link href="/replay/random-walk-san-francisco-marathon">Watch the first random marathon →</Link>
+            <Link href="/replay/random-walk-san-francisco-california-marathon">Watch the corrected California marathon →</Link>
+            <Link href="/research/hundred-city-league">See the Hundred-City League →</Link>
             <Link href="/">Return to the replay desk →</Link>
           </div>
         </aside>
@@ -92,4 +108,12 @@ export default function RandomWalkSanFrancisco() {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return <div><strong>{value}</strong><span>{label}</span></div>;
+}
+
+function miles(kilometers: number): string {
+  return Math.round(kilometers * 0.621371).toLocaleString();
+}
+
+function percent(value: number): string {
+  return `${(value * 100).toFixed(1)}%`;
 }

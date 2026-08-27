@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { ElevationProfile } from "./elevation-profile";
+import { CrystalCutaway } from "./crystal-cutaway";
 import { clampProgress, formatClock, formatDistance, sampleAtProgress, visibleCommentary } from "@/lib/replay-math";
 import type { ReplayDocument } from "@/lib/replay-types";
 import type { VisualizationMode } from "@/lib/visualization/route-layers";
@@ -164,6 +165,8 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
           <label>Speed<select value={speed} onChange={(event) => setSpeed(Number(event.target.value))}>{[0.5, 1, 2, 4].map((value) => <option key={value} value={value}>{value}×</option>)}</select></label>
           <button aria-label="Restart replay" onClick={() => { setPlaying(false); setProgress(0); }}>Restart</button>
         </section>
+
+        <CrystalCutaway replayId={route.id} progress={progress} onSeek={(value) => { setPlaying(false); setProgress(value); }} />
       </section>
     </main>
   );

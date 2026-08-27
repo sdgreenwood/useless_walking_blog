@@ -25,9 +25,10 @@ function loadCuratedReplays(): ReplayDocument[] {
 }
 
 const replays = [parseReplayDocument(demoReplay, "demo-championship-loop"), ...loadCuratedReplays()];
+const archivedReplayIds = new Set(["random-walk-san-francisco-marathon"]);
 
 export function listReplays(): ReplayListing[] {
-  return replays.map(({ route }) => ({
+  return replays.filter(({ route }) => !archivedReplayIds.has(route.id)).map(({ route }) => ({
     id: route.id,
     name: route.name,
     date: route.createdAt,

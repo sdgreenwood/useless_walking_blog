@@ -13,7 +13,8 @@
     "preview:route": "tsx scripts/preview-route.ts",
     "publish:route": "tsx scripts/publish-route.ts",
     "simulate:random-walk": "tsx scripts/simulate-random-walk.ts",
-    "simulate:city-league": "tsx scripts/run-hundred-city-league.ts"
+    "simulate:city-league": "tsx scripts/run-hundred-city-league.ts",
+    "package:crystal-cutaway": "tsx scripts/package-crystal-cutaway.ts"
   },
   "dependencies": {
     "@deck.gl/core": "^9.3.10",

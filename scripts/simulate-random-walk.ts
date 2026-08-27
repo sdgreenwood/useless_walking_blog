@@ -21,6 +21,10 @@ const seed = integer(args.seed ?? "20260826", "seed");
 const exampleOutput = args["example-output"];
 const exampleSeed = integer(args["example-seed"] ?? "20261178", "example-seed");
 const exampleKilometers = positive(args["example-km"] ?? "42.195", "example-km");
+const exampleId = args["example-id"] ?? "random-walk-san-francisco-marathon";
+const exampleName = args["example-name"] ?? "The First Marathon of a 12,028-Mile Problem";
+const exampleCreatedAt = args["example-created-at"] ?? "2026-08-27T01:28:35.000Z";
+const examplePlace = args["example-place"];
 
 const document = JSON.parse(fs.readFileSync(osmPath, "utf8")) as OsmDocument;
 const nodes = new Map<number, OsmNode>();
@@ -219,9 +223,9 @@ function writeExampleReplay(outputPath: string, seed: number, targetMeters: numb
     segments: [{ index: 0, samples }],
     issues: []
   }, {
-    id: "random-walk-san-francisco-marathon",
-    name: "The First Marathon of a 12,028-Mile Problem",
-    createdAt: "2026-08-27T01:28:35.000Z",
+    id: exampleId,
+    name: exampleName,
+    createdAt: exampleCreatedAt,
     trimStartMeters: 0,
     trimEndMeters: 0
   });
@@ -252,7 +256,7 @@ function exampleCommentary(events: Array<{ id: string; routeProgress: number }>,
     used.add(event.id);
     const snapshot = snapshots.find((candidate) => candidate.distanceMeters >= totalMeters * progress) ?? snapshots.at(-1)!;
     const revisitShare = snapshot.traversals === 0 ? 0 : (snapshot.traversals - snapshot.uniqueSegments) / snapshot.traversals;
-    const texts = [
+    const legacyTexts = [
       "Seed 20261178 is underway. At every intersection, the walker will make a fair and completely uninformed decision.",
       `The revisit desk is open: ${percent(revisitShare)} of segment choices so far have returned to previously covered ground.`,
       "No destination has been selected because destinations are a form of planning, and planning has been disallowed.",
@@ -264,11 +268,24 @@ function exampleCommentary(events: Array<{ id: string; routeProgress: number }>,
       "OH MY GOODNESS, THE WALKER IS ALMOST AT THE MARATHON MARK—AND STILL HAS NO IDEA WHERE HE IS GOING!!!!!",
       "The first random marathon is complete. The representative full seed has roughly 19,314 kilometers left to wander."
     ];
+    const remainingSegments = Math.max(0, graphSegments.length - snapshot.uniqueSegments);
+    const correctedTexts = [
+      `Seed ${exampleSeed} is underway in ${examplePlace}. Every intersection will receive a fair and completely uninformed decision.`,
+      `The revisit desk is open: ${percent(revisitShare)} of segment choices so far have returned to previously covered ground.`,
+      "No destination has been selected because destinations are a form of planning, and planning has been disallowed.",
+      `Race control reports ${snapshot.uniqueSegments} distinct segments acquired. The walker remembers none of them.`,
+      `This is not a route through ${examplePlace} so much as an argument with adjacency.`,
+      "Halfway through the excerpt. Complete city coverage remains somebody else's extremely long problem.",
+      `Revisit rate: ${percent(revisitShare)}. Progress is occurring, but largely in an emotional sense.`,
+      "HPI remains zero. Every bridge-tagged way was removed before the walker could develop maritime ambitions.",
+      "OH MY GOODNESS, THE WALKER IS ALMOST AT THE MARATHON MARK—AND STILL IS NOT GOING ANYWHERE IN PARTICULAR!!!!!",
+      `The random marathon is complete. ${remainingSegments.toLocaleString()} reachable city segments remain unvisited by this excerpt.`
+    ];
     return {
       eventId: event.id,
       displayProgress: progress === 0 || progress === 1 ? undefined : progress,
       speaker: (["play_by_play", "stats_desk", "color", "field_reporter"] as const)[index % 4],
-      text: texts[index],
+      text: (examplePlace ? correctedTexts : legacyTexts)[index],
       importance: index === 0 || index === 5 || index === 9 ? 3 : 2,
       source: "deterministic"
     };

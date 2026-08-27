@@ -71,5 +71,6 @@ Refreshing a published season requires a deliberate new season/version. Do not s
 
 ## Relationship to the original San Francisco report
 
-The new season uses fresh, consistent OSM snapshots for every city, including San Francisco. The raw graph behind the earlier standalone report is unavailable, and its published 4,923-segment preliminary graph is materially smaller than the fresh season graph. The original article remains a separate versioned experiment and is not inserted into this league table.
+The league's explicit city/state Nominatim lookup correctly resolves relation `111968`, San Francisco, California. A later coordinate audit proved that the earlier standalone name-only Overpass query selected San Francisco, Córdoba, Argentina. Its 4,923-segment graph and replay are therefore preserved only as a clearly labeled historical archive and are not California evidence.
 
+The corrected California article reads the league's recorded graph and ten-seed preseason distribution. A newly versioned 42.275 km replay excerpt uses the correct relation and seed `20440001`; it does not rewrite the old artifact.

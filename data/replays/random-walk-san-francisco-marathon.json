@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "route": {
     "id": "random-walk-san-francisco-marathon",
-    "name": "The First Marathon of a 12,028-Mile Problem",
+    "name": "Archived: The Córdoba Random Marathon",
     "createdAt": "2026-08-27T01:28:35.000Z",
     "source": "simulation",
     "geometry": {
@@ -7934,7 +7934,7 @@
         "eventId": "analysis-v1-005-distance_milestone",
         "displayProgress": 0.48,
         "speaker": "play_by_play",
-        "text": "This is not a route through San Francisco so much as an argument with adjacency.",
+        "text": "This is not a route through San Francisco, Córdoba so much as an argument with adjacency.",
         "importance": 2,
         "source": "deterministic"
       },
