@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import cutawayData from "../../data/research/crystal-cutaways/sf-california-random-marathon-west.json";
+import californiaCutawayData from "../../data/research/crystal-cutaways/sf-california-random-marathon-west.json";
+import johtoCutawayData from "../../data/research/crystal-cutaways/johto-league-sf-west.json";
 
 type CrystalCutawayArtifact = {
   replayId: string;
@@ -24,15 +25,16 @@ type CrystalCutawayArtifact = {
   attribution: string;
 };
 
-const cutaway = cutawayData as CrystalCutawayArtifact;
+const cutaways = [californiaCutawayData, johtoCutawayData] as CrystalCutawayArtifact[];
 
 export function CrystalCutaway({ replayId, progress, onSeek }: { replayId: string; progress: number; onSeek: (progress: number) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const acquired = progress >= cutaway.triggerProgress;
+  const cutaway = cutaways.find((candidate) => candidate.replayId === replayId);
+  const acquired = cutaway ? progress >= cutaway.triggerProgress : false;
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !cutaway) return;
     const context = canvas.getContext("2d");
     if (!context) return;
     const draw = () => {
@@ -60,9 +62,9 @@ export function CrystalCutaway({ replayId, progress, onSeek }: { replayId: strin
     const observer = new ResizeObserver(draw);
     observer.observe(canvas);
     return () => observer.disconnect();
-  }, []);
+  }, [cutaway]);
 
-  if (replayId !== cutaway.replayId) return null;
+  if (!cutaway) return null;
 
   return (
     <section className={`crystal-cutaway ${acquired ? "signal-acquired" : "signal-pending"}`} aria-label="Crystal coordinate map cutaway">
@@ -85,6 +87,9 @@ export function CrystalCutaway({ replayId, progress, onSeek }: { replayId: strin
         <p className="crystal-provenance">
           Audit passed · generator <a href={`${cutaway.generator.repository}/commit/${cutaway.generator.commit}`}>{cutaway.generator.commit.slice(0, 7)}</a> · {cutaway.attribution}
         </p>
+        {replayId === "johto-league-san-francisco-exhibition" ? (
+          <p className="crystal-provenance">Exhibition commentary informed by <a href="https://ryanculligan.com/crystal-agent-progress">Crystal LLM&apos;s public field notes</a>; all lines here are original Walking Ocho copy.</p>
+        ) : null}
       </div>
       <figure className="crystal-grid-figure">
         <canvas ref={canvasRef} role="img" aria-label="Black and mint rendering of the audited Crystal grid at the replay cutaway location" />

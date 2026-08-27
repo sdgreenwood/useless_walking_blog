@@ -153,7 +153,7 @@ export function ReplayExperience({ replay }: { replay: ReplayDocument }) {
             <Metric label="Total gain" value={route.elevationGainMeters === null ? "—" : `${Math.round(route.elevationGainMeters)} m`} />
             <Metric label="Remaining" value={formatDistance(route.distanceMeters - current.distanceMeters)} />
           </div>
-          <div className="profile-heading"><span>Elevation profile</span><small>{route.stats.lowestElevationMeters === null || route.stats.highestElevationMeters === null ? "No elevation evidence" : `${route.stats.lowestElevationMeters}–${route.stats.highestElevationMeters} m`}</small></div>
+          <div className="profile-heading"><span>Elevation profile</span><small>{route.stats.lowestElevationMeters === null || route.stats.highestElevationMeters === null ? "No elevation evidence" : `${route.stats.lowestElevationMeters}–${route.stats.highestElevationMeters} m${route.elevationSource?.kind === "terrarium-dem" ? " · DEM-derived" : ""}`}</small></div>
           <ElevationProfile samples={route.samples} progress={progress} onSeek={setProgress} />
         </section>
 

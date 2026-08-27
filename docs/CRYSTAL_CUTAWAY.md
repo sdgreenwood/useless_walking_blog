@@ -21,6 +21,7 @@ The corrected replay uses:
 - 42.275 km bounded excerpt;
 - 3,124 route samples;
 - replay ID `random-walk-san-francisco-california-marathon`.
+- replay ID `johto-league-san-francisco-exhibition` reuses the same passed public-geography grid as a standalone narrative exhibition; see `docs/JOHTO_LEAGUE_REPLAY.md`.
 
 The research article now reads its California graph and distribution from the checked-in Hundred-City League aggregate instead of retaining the invalid Córdoba measurements.
 

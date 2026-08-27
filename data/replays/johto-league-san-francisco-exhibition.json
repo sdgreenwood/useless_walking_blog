@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "route": {
-    "id": "random-walk-san-francisco-california-marathon",
-    "name": "The California Random Marathon",
+    "id": "johto-league-san-francisco-exhibition",
+    "name": "Johto League: More Map Than Progress",
     "createdAt": "2026-08-27T16:21:02.000Z",
     "source": "simulation",
     "geometry": {
@@ -47087,81 +47087,81 @@
     ],
     "commentary": [
       {
-        "eventId": "analysis-v1-001-start",
         "speaker": "play_by_play",
-        "text": "Seed 20440001 is underway in San Francisco, California. Every intersection will receive a fair and completely uninformed decision.",
+        "text": "Tonight's interleague exhibition pairs one memoryless California walker with a Crystal correspondent who has spent the day losing an argument with Ice Path.",
         "importance": 3,
+        "eventId": "analysis-v1-001-start",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-002-distance_milestone",
         "displayProgress": 0.12,
         "speaker": "stats_desk",
-        "text": "The revisit desk is open: 47.6% of segment choices so far have returned to previously covered ground.",
+        "text": "California revisit desk: 47.6%. The Johto desk recognizes this as the same corridor wearing a different expression.",
         "importance": 2,
+        "eventId": "analysis-v1-002-distance_milestone",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-003-distance_milestone",
         "displayProgress": 0.23,
         "speaker": "color",
-        "text": "No destination has been selected because destinations are a form of planning, and planning has been disallowed.",
+        "text": "Blackthorn can be visible and still not be a route. San Francisco can be mapped and still not be a plan.",
         "importance": 2,
+        "eventId": "analysis-v1-003-distance_milestone",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-004-distance_milestone",
         "displayProgress": 0.35,
         "speaker": "field_reporter",
-        "text": "Race control reports 207 distinct segments acquired. The walker remembers none of them.",
+        "text": "Two hundred seven distinct segments acquired. This is officially more map than progress.",
         "importance": 2,
+        "eventId": "analysis-v1-004-distance_milestone",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-005-distance_milestone",
         "displayProgress": 0.48,
         "speaker": "play_by_play",
-        "text": "This is not a route through San Francisco, California so much as an argument with adjacency.",
+        "text": "The frozen floor has become a California intersection. Different surface, identical refusal to learn anything.",
         "importance": 2,
+        "eventId": "analysis-v1-005-distance_milestone",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-006-halfway",
         "displayProgress": 0.5,
         "speaker": "stats_desk",
-        "text": "Halfway through the excerpt. Complete city coverage remains somebody else's extremely long problem.",
+        "text": "Halftime: neither side has acquired a badge, a destination, or a defensible reason to continue.",
         "importance": 3,
+        "eventId": "analysis-v1-006-halfway",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-007-distance_milestone",
         "displayProgress": 0.64,
         "speaker": "color",
-        "text": "Revisit rate: 56.9%. Progress is occurring, but largely in an emotional sense.",
+        "text": "Revisit rate: 56.9%. This is a route problem, not a party problem. The San Francisco entry has neither.",
         "importance": 2,
+        "eventId": "analysis-v1-007-distance_milestone",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-009-distance_milestone",
         "displayProgress": 0.77,
         "speaker": "field_reporter",
-        "text": "HPI remains zero. Every bridge-tagged way was removed before the walker could develop maritime ambitions.",
+        "text": "HPI remains zero. Johto has ice; California had every bridge removed before the walker could attempt a water-type strategy.",
         "importance": 2,
+        "eventId": "analysis-v1-009-distance_milestone",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-010-distance_milestone",
         "displayProgress": 0.9,
         "speaker": "play_by_play",
-        "text": "OH MY GOODNESS, THE WALKER IS ALMOST AT THE MARATHON MARK—AND STILL IS NOT GOING ANYWHERE IN PARTICULAR!!!!!",
-        "importance": 2,
+        "text": "OH MY GOODNESS, THE EXIT IS PRACTICALLY VISIBLE—AND BOTH COMPETITORS ARE STILL WALKING PAST IT!!!!!",
+        "importance": 3,
+        "eventId": "analysis-v1-010-distance_milestone",
         "source": "deterministic"
       },
       {
-        "eventId": "analysis-v1-012-finish",
         "speaker": "stats_desk",
-        "text": "The random marathon is complete. 99,854 reachable city segments remain unvisited by this excerpt.",
+        "text": "The marathon exhibition is complete. 99,854 city segments remain, and the commission awards the trophy for More Map Than Progress.",
         "importance": 3,
+        "eventId": "analysis-v1-012-finish",
         "source": "deterministic"
       }
     ],

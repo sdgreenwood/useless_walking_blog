@@ -1,5 +1,12 @@
 # Project state
 
+## 2026-08-27 — Johto League replay and simulation elevation (local)
+
+- Added a static Johto League replay with ten deterministic, original collaboration calls informed by the public Crystal LLM field notes and a separately packaged passed Goethite cutaway.
+- Added an offline Terrarium DEM enrichment command that reuses the canonical spatial transform, records provenance, and refuses silent elevation replacement or output overwrite.
+- Enriched the corrected California simulation and its Johto narrative variant: 3,124 samples, 42.275 km, 977.1 m deterministic cumulative gain, 56.0–174.9 m elevation range.
+- Verified 60 tests, TypeScript, ESLint, `git diff --check`, and a 23-page production build. This tranche is not committed, pushed, or deployed pending explicit authorization.
+
 Updated: 2026-08-24.
 
 ## Implemented

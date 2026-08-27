@@ -38,6 +38,13 @@ export type ReplayRoute = {
   samples: RouteSample[];
   distanceMeters: number;
   elevationGainMeters: number | null;
+  elevationSource?: {
+    kind: "recorded" | "terrarium-dem";
+    dataset: string;
+    attribution: string;
+    sampledAt?: string;
+    zoom?: number;
+  };
   durationSeconds: number | null;
   stats: {
     averagePaceSecondsPerKilometer: number | null;

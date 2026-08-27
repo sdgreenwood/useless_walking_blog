@@ -45,6 +45,17 @@ export function parseReplayDocument(value: unknown, expectedId?: string): Replay
   const distanceMeters = bounded(route.distanceMeters, "route.distanceMeters", 0.01);
   if (Math.abs(previousDistance - distanceMeters) > Math.max(1, distanceMeters * 0.001)) fail("route distance must match final sample");
   optionalFinite(route.elevationGainMeters, "route.elevationGainMeters", 0);
+  if (route.elevationSource !== undefined) {
+    const elevationSource = object(route.elevationSource, "route.elevationSource");
+    if (!new Set(["recorded", "terrarium-dem"]).has(String(elevationSource.kind))) fail("route.elevationSource.kind is invalid");
+    text(elevationSource.dataset, "route.elevationSource.dataset");
+    text(elevationSource.attribution, "route.elevationSource.attribution");
+    if (elevationSource.sampledAt !== undefined && (typeof elevationSource.sampledAt !== "string" || !Number.isFinite(Date.parse(elevationSource.sampledAt)))) fail("route.elevationSource.sampledAt must be ISO-8601");
+    if (elevationSource.zoom !== undefined) {
+      const zoom = number(elevationSource.zoom, "route.elevationSource.zoom");
+      if (!Number.isInteger(zoom) || zoom < 0 || zoom > 24) fail("route.elevationSource.zoom is invalid");
+    }
+  }
   optionalFinite(route.durationSeconds, "route.durationSeconds", 0);
   const stats = object(route.stats, "route.stats");
   optionalFinite(stats.averagePaceSecondsPerKilometer, "stats.averagePaceSecondsPerKilometer", 0);

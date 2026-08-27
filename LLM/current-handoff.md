@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Maintain the replay desk, bridge-free research report, and seeded random-walk marathon example; await the next owner-selected story or route.
+Review and, when explicitly authorized, publish the locally complete Johto League replay bundle and deterministic simulation-elevation authoring path.
 
 ## Current state
 
@@ -35,6 +35,9 @@ Maintain the replay desk, bridge-free research report, and seeded random-walk ma
 - Relief overlays now enforce a single vertical datum: partial or invalid terrain profiles are rejected, sampling continues until every route sample has a finite DEM height, and the overlay remains withheld instead of mixing DEM, workout altitude, and sea level. Route-keyed terrain state prevents cross-replay reuse. Local verification passes strict TypeScript, clean ESLint, 51 tests, and the 21-page production build.
 - The Hundred-City Random Walk League preseason is generated from 100 fresh OSM relation-boundary graphs and ten deterministic attempts per city. A 250-traversals-per-segment limit produces explicit censored results rather than guessed finishes; difficulty ranks completion rate first and normalized median distance second. The static aggregate contains 1,000 attempts, 55 cities with at least one DNF, and deterministic result-grounded commentary. Cape Coral ranks hardest and New Orleans least difficult under this versioned contract.
 - Production verification for the California/Crystal correction passes Goethite's grid audit, 55 tests, strict TypeScript, clean ESLint, the 22-page production build, desktop cutaway seek/canvas checks, and 390 px replay/research no-overflow checks. The live cutaway advances to 19.1%, reports signal acquired, renders at 318 px on mobile, and produces zero browser errors. The known OpenFreeMap `wood-pattern` warning remains non-blocking locally.
+- A standalone local `johto-league-san-francisco-exhibition` bundle reuses the corrected public simulation and passed Goethite grid with ten original calls informed by Crystal LLM's public field-note themes. It uses no game assets, makes no official-collaboration claim, and performs no public generation.
+- Simulation routes can now be enriched offline from Mapzen Terrarium DEM tiles using the canonical XYZ/Web Mercator transform. The California and Johto replay artifacts record zoom, acquisition time, attribution, and `terrarium-dem` provenance; their deterministic analysis reports 977.1 m of cumulative gain over the repetitive 42.275 km route. The UI labels this evidence `DEM-derived`.
+- Local acceptance for this unpushed tranche passes 60 tests, strict TypeScript, clean ESLint, `git diff --check`, and the 23-page production build including `/replay/johto-league-san-francisco-exhibition`.
 
 ## Fixture replay gate
 
