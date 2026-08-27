@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Ship and verify the eight owner-reviewed historical TCX replays while keeping raw inputs and private candidates excluded.
+Decide whether to turn the San Francisco random-walk research prototype into a published editorial lab.
 
 ## Current state
 
@@ -27,6 +27,7 @@ Ship and verify the eight owner-reviewed historical TCX replays while keeping ra
 - The DEM-backed Relief correction is live: Mapzen terrain tiles from AWS Open Data provide the surface and all replay overlays share the elevated frame. Production verification passed on Multioak at desktop and 390 px with attribution, no overflow, and zero runtime errors. The owner explicitly approved disclosure of visible route-area tile coordinates to AWS.
 - The root-cause spatial audit is live. It proves the coordinate/tile/decoder pipeline with five controls, adds `?spatial-debug=1`, removes the unexplained 3 m lift, and disables MapLibre terrain camera clamping so both canvases share a sea-level view frame. Recorded GPS elevation remains analysis evidence. Production verification passed the hidden proof mode and ordinary Relief view without terrain-camera or overzoom warnings.
 - Eight additional historical TCX walks (17.21–34.90 miles) passed deterministic import with default 200 m endpoint trimming. After the owner supplied `I_REVIEWED_PRECISE_LOCATION`, their curated replay projections were added under `data/replays/`; raw TCX inputs and ignored mode-0600 candidates remain outside Git. Automated quality analysis found no unusable candidate, though seven retain reviewable GPS/elevation flags in the private import record.
+- A separate, non-production San Francisco random-walk research prototype now exists in `scripts/simulate-random-walk.ts` with a blog-ready methods/results draft in `docs/RANDOM_WALK_SAN_FRANCISCO.md`. A 1,000-seed exploratory run on a public OSM snapshot produced a 19,634 km median edge-cover walk over a 434 km largest component. The result is preliminary until the pedestrian graph and water boundary are visually audited; it is intentionally not wired into replay pages.
 
 ## Fixture replay gate
 
@@ -43,7 +44,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Validate, push, and verify the eight curated TCX replays on Vercel. Keep future raw imports and candidates private.
+If the owner approves the research direction, freeze and visually audit the OSM graph, add small-graph simulator tests, and build the deck.gl “last stupid block” editorial animation. Do not merge it into historical replay business logic.
 
 ## External gates
 
@@ -61,3 +62,4 @@ Validate, push, and verify the eight curated TCX replays on Vercel. Keep future 
 - Commit `be176cd` adds Hex Ghost and Relief presentation modes; both are live and verified on the Vercel production replay.
 - Commit `eed2ec0` adds the DEM-backed Relief terrain surface and aligned elevated replay overlays; the production Multioak replay is live and verified.
 - Commit `cd5b208` proves and corrects the spatial pipeline; the production Multioak proof and public Relief modes are live and verified.
+- Commit `9a2fecb` publishes the eight owner-reviewed TCX replay projections; all eight production URLs returned HTTP 200 after Vercel deployment.

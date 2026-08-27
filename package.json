@@ -11,7 +11,8 @@
     "test": "vitest run",
     "import:route": "NODE_OPTIONS=--conditions=react-server tsx scripts/import-route.ts",
     "preview:route": "tsx scripts/preview-route.ts",
-    "publish:route": "tsx scripts/publish-route.ts"
+    "publish:route": "tsx scripts/publish-route.ts",
+    "simulate:random-walk": "tsx scripts/simulate-random-walk.ts"
   },
   "dependencies": {
     "@deck.gl/core": "^9.3.10",
