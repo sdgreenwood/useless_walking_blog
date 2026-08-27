@@ -2,7 +2,7 @@
 
 ## Current objective
 
-Verify the published San Francisco random-walk editorial lab and bridge-free HPI policy in production.
+Maintain the published replay desk and bridge-free San Francisco random-walk field report; await the next owner-selected story or route.
 
 ## Current state
 
@@ -29,6 +29,7 @@ Verify the published San Francisco random-walk editorial lab and bridge-free HPI
 - Eight additional historical TCX walks (17.21–34.90 miles) passed deterministic import with default 200 m endpoint trimming. After the owner supplied `I_REVIEWED_PRECISE_LOCATION`, their curated replay projections were added under `data/replays/`; raw TCX inputs and ignored mode-0600 candidates remain outside Git. Automated quality analysis found no unusable candidate, though seven retain reviewable GPS/elevation flags in the private import record.
 - The February 2018 replay is editorially identified as `The Minus-Eight Neighborhood Loop Classic`. Its ten owner-informed calls are scheduled against verified recurring loop returns and relative elapsed time; the route geometry supports roughly 22 neighborhood cycles over eight hours. The temperature and family anecdote remain explicitly owner-supplied context, not computed route facts.
 - The San Francisco random-walk research lab is implemented as a separate editorial page at `/research/random-walk-san-francisco`, backed by the reproducible offline simulator and a documented OSM snapshot/filter. V1 excludes every bridge-tagged way, making Hydroplaning Incidents zero by construction. The 1,000-seed bridge-free run produced a 19,357 km median edge-cover walk over a 434 km largest component; the page discloses that this is a filtered graph, not canonical city street mileage.
+- The research lab and updated Minus-Eight Loop replay are live from commit `01ff7b2`. Production verification passed at desktop and 390 px: the research page has no horizontal overflow, expected HPI/mileage copy, and zero browser warnings or errors; the February replay serves its new title and closet commentary.
 
 ## Fixture replay gate
 
@@ -45,7 +46,7 @@ The fixture-first gate enabled analysis and commentary implementation without re
 
 ## Recommended next assignment
 
-Verify the research page at desktop and mobile after deployment. Future refinement may replace conservative all-bridge exclusion with audited land geometry and add small-graph simulator tests; keep the lab separate from historical replay business logic.
+Await the next owner-selected story or route. Future random-walk refinement may replace conservative all-bridge exclusion with audited land geometry and add small-graph simulator tests; keep the lab separate from historical replay business logic.
 
 ## External gates
 
@@ -64,3 +65,4 @@ Verify the research page at desktop and mobile after deployment. Future refineme
 - Commit `eed2ec0` adds the DEM-backed Relief terrain surface and aligned elevated replay overlays; the production Multioak replay is live and verified.
 - Commit `cd5b208` proves and corrects the spatial pipeline; the production Multioak proof and public Relief modes are live and verified.
 - Commit `9a2fecb` publishes the eight owner-reviewed TCX replay projections; all eight production URLs returned HTTP 200 after Vercel deployment.
+- Commit `01ff7b2` publishes the bridge-free random-walk field report and synchronized Minus-Eight Loop commentary; both production routes were verified after Vercel deployment.
